@@ -12,24 +12,10 @@ export const createEvent = async (req, res) => {
       eventLocation,
       date,
       email,
-      sponsors,
       eventPhoneNumber,
       theme,
     } = req.body;
     const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    const sponsorPictures = req.files.map((file) => ({
-      picturePath: file.path,
-    }));
-
-    const sponsorsData = Array.isArray(sponsors)
-      ? sponsors.map((sponsor, index) => ({
-          name: sponsor.name,
-          picturePath: sponsorPictures[index].picturePath,
-        }))
-      : [];
 
     const newEvent = new Event({
       userId,
@@ -45,7 +31,6 @@ export const createEvent = async (req, res) => {
       description,
       userPicturePath: user.picturePath,
       bannerpicturePath,
-      sponsors: sponsorsData,
       likes: {},
     });
     await newEvent.save();

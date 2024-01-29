@@ -25,10 +25,7 @@ const MyEventWidget = ({picturePath}) => {
     const [eventName , setEventName] = useState("");  
     const[eventLocation, setEventLocation] = useState("");
     const [eventDate, setEventDate]= useState("");  
-    const [sponsorData, setSponsorData] = useState([
-      { name: "", picturePath: null },
-    ]);
-    
+   
     const [eventPhoneNumber, setEventPhoneNumber]= useState("");  
     const[eventTheme, setEventTheme] = useState("");
     const[eventEmail, setEventEmail] = useState("");
@@ -49,10 +46,7 @@ const MyEventWidget = ({picturePath}) => {
         formData.append("eventPhoneNumber", eventPhoneNumber);
         formData.append("theme", eventTheme);
         formData.append("email", eventEmail);
-        sponsorData.forEach((sponsor, index) => {
-          formData.append(`sponsors[${index}][name]`, sponsor.name);
-          formData.append(`sponsors[${index}][picturePath]`, sponsor.picturePath);
-        });
+        
         if(image){
 
             formData.append("picture", image);
@@ -76,24 +70,11 @@ const MyEventWidget = ({picturePath}) => {
         setEventPhoneNumber("");
         setEventEmail("");
         setEventTheme("");
-        setSponsorData("");
+       
 
     }
 
-    const handleSponsorChange = (index, field, value) => {
-      const updatedSponsorData = [...sponsorData];
-      updatedSponsorData[index][field] = value;
-      setSponsorData(updatedSponsorData);
-    };
-  
-    const addSponsor = () => {
-      setSponsorData([...sponsorData, { name: "", picturePath: null }]);
-    };
-    const removeSponsor = (index) => {
-      const updatedSponsorData = [...sponsorData];
-      updatedSponsorData.splice(index, 1);
-      setSponsorData(updatedSponsorData);
-    };
+   
   return (
     <WidgetWrapper >
     <FlexBetween  >
@@ -192,9 +173,7 @@ const MyEventWidget = ({picturePath}) => {
 
           }}
         />
-        <FlexBetween>
-          
-        </FlexBetween>
+       
     {isImage && (
         <Box  
         border={`1px solid ${medium}`}
@@ -241,69 +220,7 @@ const MyEventWidget = ({picturePath}) => {
         </Box>
     )}
 
-{sponsorData.map((sponsor, index) => (
-        <Box key={index}>
-          <InputBase
-            placeholder={`Sponsor Name ${index + 1}`}
-            onChange={(e) => handleSponsorChange(index, "name", e.target.value)}
-            value={sponsor.name}
-            sx={{
-              width: "100%",
-              backgroundColor: palette.neutral.light,
-              borderRadius: "2rem",
-              padding: "1rem 2rem",
-              marginTop: "1rem",
-            }}
-          />
-          <Dropzone
-            acceptedFiles=".jpg,.jpeg,.png"
-            multiple={false}
-            onDrop={(acceptedFiles) =>
-              handleSponsorChange(index, "picturePath", acceptedFiles[0])
-            }
-          >
-            {({ getRootProps, getInputProps }) => (
-              <Box
-                {...getRootProps()}
-                border={`2px dashed ${palette.primary.main}`}
-                p="1rem"
-                width="100%"
-                sx={{ "&:hover": { cursor: "pointer" }, marginTop: "1rem" }}
-              >
-                <input {...getInputProps()} />
-                {!sponsor.picturePath ? (
-                  <p>Add Sponsor Picture Here</p>
-                ) : (
-                  <FlexBetween>
-                    <Typography>{sponsor.picturePath.name}</Typography>
-                    <EditOutlined />
-                  </FlexBetween>
-                )}
-              </Box>
-            )}
-          </Dropzone>
-          <IconButton
-        sx={{
-          padding: "1rem",
-          borderRadius: "1.5rem",
-          "&:hover": {
-            padding: "1rem",
-            borderRadius: "1.5rem",
-          },
-        }}
-        onClick={addSponsor}
-      >
-        <AddOutlined />
-        <Typography>Add Sponsor</Typography>
-      </IconButton>
-      <IconButton
-            onClick={() => removeSponsor(index)}
-            sx={{ width: "15%" }}
-          >
-            <DeleteOutlined />
-          </IconButton>
-        </Box>
-      ))}
+
       
     <Divider sx={{margin: "1.25rem 0"}}></Divider>
 

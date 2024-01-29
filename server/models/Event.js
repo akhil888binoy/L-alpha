@@ -1,17 +1,11 @@
 import mongoose from "mongoose";
 
-const sponsorSchema = new mongoose.Schema({
-  name: String,
-  picturePath: String,
-});
-
 const eventSchema = mongoose.Schema(
   {
     userId: {
       type: String,
       required: true,
     },
-    sponsors: [sponsorSchema],
 
     firstName: {
       type: String,

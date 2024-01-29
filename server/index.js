@@ -17,6 +17,7 @@ import { createEvent } from "./controllers/events.js";
 import User from "./models/User.js";
 import Event from "./models/Event.js";
 import { users, events } from "./data/index.js";
+import { verify } from "crypto";
 /*CONFIGURATION*/
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -43,14 +44,7 @@ const upload = multer({ storage });
 
 /*ROUTES WITH FILES*/
 app.post("/auth/register", upload.single("picture"), register);
-app.post(
-  "/events", // Log the request body to the console
-  upload.fields([
-    { name: "picture", maxCount: 1 },
-    { name: "sponsors", maxCount: 20 }, // Match the field name
-  ]),
-  createEvent
-);
+app.post("/events", verifyToken, upload.single("picture"), createEvent);
 
 /*ROUTES*/
 app.use("/auth", authRoutes);
