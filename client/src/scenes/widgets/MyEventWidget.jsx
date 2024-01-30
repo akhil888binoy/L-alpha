@@ -21,11 +21,13 @@ const MyEventWidget = ({picturePath}) => {
     const dispatch = useDispatch();
     const [isImage, setIsImage] = useState(false);
     const [image, setImage] = useState(null);
+    const [islogoImage, setIsLogoImage] = useState(false);
+    const [logoimage, setLogoImage] = useState(null);
     const [description, setDescription] = useState("");    
     const [eventName , setEventName] = useState("");  
     const[eventLocation, setEventLocation] = useState("");
     const [eventDate, setEventDate]= useState("");  
-   
+    const [ticketSold, setTicketSold] = useState("");
     const [eventPhoneNumber, setEventPhoneNumber]= useState("");  
     const[eventTheme, setEventTheme] = useState("");
     const[eventEmail, setEventEmail] = useState("");
@@ -35,6 +37,20 @@ const MyEventWidget = ({picturePath}) => {
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
     const mediumMain = palette.neutral.mediumMain;
     const medium = palette.neutral.medium;
+    const [marketingPlans, setMarketingPlans] = useState([]); // State to store marketing plans
+
+    // Function to add a marketing plan
+    const addMarketingPlan = () => {
+      setMarketingPlans([...marketingPlans, { budget: "", heading: "", description: "" }]);
+    };
+
+    // Function to handle changes in marketing plan inputs
+    const handleMarketingPlanChange = (index, field, value) => {
+      const updatedPlans = [...marketingPlans];
+      updatedPlans[index][field] = value;
+      setMarketingPlans(updatedPlans);
+    };
+
 
     const handleEvent = async() =>{
         const formData = new FormData();
@@ -46,12 +62,24 @@ const MyEventWidget = ({picturePath}) => {
         formData.append("eventPhoneNumber", eventPhoneNumber);
         formData.append("theme", eventTheme);
         formData.append("email", eventEmail);
-        
+        formData.append("ticketSold", ticketSold);
+           // Append marketing plans to formData
+           marketingPlans.forEach((plan, index) => {
+            formData.append(`marketingPlans[${index}][budget]`, plan.budget);
+            formData.append(`marketingPlans[${index}][heading]`, plan.heading);
+            formData.append(`marketingPlans[${index}][description]`, plan.description);
+          });
+  
         if(image){
 
             formData.append("picture", image);
             formData.append("bannerpicturePath", image.name);
         }
+        if(logoimage){
+
+          formData.append("logopicture", logoimage);
+          formData.append("logopicturePath", logoimage.name);
+      }
        
         
       
@@ -63,6 +91,7 @@ const MyEventWidget = ({picturePath}) => {
         const events = await response.json();
         dispatch(setEvents({events}));
         setImage(null);
+        setLogoImage(null);
         setDescription("");
         setEventName("");
         setEventDate("");
@@ -70,6 +99,9 @@ const MyEventWidget = ({picturePath}) => {
         setEventPhoneNumber("");
         setEventEmail("");
         setEventTheme("");
+        setTicketSold("");
+        setMarketingPlans([]); // Reset marketing plans after submission
+
        
 
     }
@@ -173,6 +205,65 @@ const MyEventWidget = ({picturePath}) => {
 
           }}
         />
+         <InputBase
+          placeholder="write down ticket sold"
+          onChange={(e) => setTicketSold(e.target.value)}
+          value={ticketSold}
+          sx={{
+            width: "100%",
+            backgroundColor: palette.neutral.light,
+            borderRadius: "2rem",
+            padding: "1rem 2rem",
+            marginBottom:"1rem"
+
+          }}
+        />
+        {marketingPlans.map((plan, index) => (
+      <Box key={index}>
+        <InputBase
+          placeholder="Budget"
+          value={plan.budget}
+          onChange={(e) => handleMarketingPlanChange(index, 'budget', e.target.value)}
+          sx={{
+            width: "100%",
+            backgroundColor: palette.neutral.light,
+            borderRadius: "2rem",
+            padding: "1rem 2rem",
+            marginBottom:"1rem"
+          }}
+        />
+        <InputBase
+          placeholder="Heading"
+          value={plan.heading}
+          onChange={(e) => handleMarketingPlanChange(index, 'heading', e.target.value)}
+          sx={{
+            width: "100%",
+            backgroundColor: palette.neutral.light,
+            borderRadius: "2rem",
+            padding: "1rem 2rem",
+            marginBottom:"1rem"
+          }}
+        />
+        <InputBase
+          placeholder="Description"
+          value={plan.description}
+          onChange={(e) => handleMarketingPlanChange(index, 'description', e.target.value)}
+          sx={{
+            width: "100%",
+            backgroundColor: palette.neutral.light,
+            borderRadius: "2rem",
+            padding: "1rem 2rem",
+            marginBottom:"1rem"
+          }}
+        />
+      </Box>
+    ))}
+
+    {/* Button to add more marketing plans */}
+    <IconButton onClick={addMarketingPlan}>
+      <AddOutlined /> <Typography>Add marketing Plan</Typography>
+    </IconButton>
+
        
     {isImage && (
         <Box  
@@ -219,6 +310,53 @@ const MyEventWidget = ({picturePath}) => {
           </Dropzone>
         </Box>
     )}
+    
+                  {/* Logo Picture */}
+{islogoImage && (
+        <Box  
+        border={`1px solid ${medium}`}
+        borderRadius="5px"
+        mt='1rem'
+        p='1rem'
+
+        >
+            <Dropzone
+            acceptedFiles=".jpg,.jpeg,.png"
+            multiple={false}
+            onDrop={(acceptedFiles) => setLogoImage(acceptedFiles[0])}
+          >
+            {({ getRootProps, getInputProps }) => (
+              <FlexBetween>
+                <Box
+                  {...getRootProps()}
+                  border={`2px dashed ${palette.primary.main}`}
+                  p="1rem"
+                  width="100%"
+                  sx={{ "&:hover": { cursor: "pointer" } }}
+                >
+                  <input {...getInputProps()} />
+                  {!logoimage ? (
+                    <p>Add Image Here</p>
+                  ) : (
+                    <FlexBetween>
+                      <Typography>{logoimage.name}</Typography>
+                      <EditOutlined />
+                    </FlexBetween>
+                  )}
+                </Box>
+                {logoimage && (
+                  <IconButton
+                    onClick={() => setLogoImage(null)}
+                    sx={{ width: "15%" }}
+                  >
+                    <DeleteOutlined />
+                  </IconButton>
+                )}
+              </FlexBetween>
+            )}
+          </Dropzone>
+        </Box>
+    )}
 
 
       
@@ -231,6 +369,14 @@ const MyEventWidget = ({picturePath}) => {
                     sx={{"&:hover":{cursor:"pointer", color: medium}}}
                     >
                          BannerImage
+                    </Typography>
+        </FlexBetween>
+        <FlexBetween gap={"0.25rem"} onClick={()=> setIsLogoImage(!islogoImage)}>
+                 <ImageOutlined sx={{color: mediumMain}}></ImageOutlined>   
+                    <Typography color={mediumMain}
+                    sx={{"&:hover":{cursor:"pointer", color: medium}}}
+                    >
+                         Add Event Logo 
                     </Typography>
         </FlexBetween>
 

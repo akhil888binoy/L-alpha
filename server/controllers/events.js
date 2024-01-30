@@ -8,12 +8,15 @@ export const createEvent = async (req, res) => {
       userId,
       description,
       bannerpicturePath,
+      logopicturePath,
       eventName,
       eventLocation,
       date,
       email,
+      ticketSold,
       eventPhoneNumber,
       theme,
+      marketingPlans, // Include marketingPlans in request body
     } = req.body;
     const user = await User.findById(userId);
 
@@ -31,7 +34,10 @@ export const createEvent = async (req, res) => {
       description,
       userPicturePath: user.picturePath,
       bannerpicturePath,
+      logopicturePath,
+      ticketSold,
       likes: {},
+      marketingPlans, // Add marketingPlans to the new event
     });
     await newEvent.save();
 

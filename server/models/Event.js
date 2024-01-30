@@ -1,12 +1,26 @@
 import mongoose from "mongoose";
 
+const marketingPlanSchema = mongoose.Schema({
+  budget: {
+    type: Number,
+    required: true,
+  },
+  heading: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+});
+
 const eventSchema = mongoose.Schema(
   {
     userId: {
       type: String,
       required: true,
     },
-
     firstName: {
       type: String,
       required: true,
@@ -39,11 +53,14 @@ const eventSchema = mongoose.Schema(
     location: String,
     description: String,
     bannerpicturePath: String,
+    logopicturePath: String,
     userPicturePath: String,
+    ticketSold: Number,
     likes: {
       type: Map,
       of: Boolean,
     },
+    marketingPlans: [marketingPlanSchema], // Array of marketing plans
   },
   { timestamps: true }
 );
