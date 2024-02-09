@@ -26,7 +26,7 @@ export const authSlice = createSlice({
       if (state.user) {
         state.user.friends = action.payload.friends;
       } else {
-        console.error("useer friends none-exsistent:(");
+        console.error("user friends none-exsistent:(");
       }
     },
     setEvents: (state, action) => {
@@ -34,7 +34,7 @@ export const authSlice = createSlice({
     },
     setEvent: (state, action) => {
       const updatedEvents = state.events.map((event) => {
-        if (event._id === action.payload.event_id) return action.payload.event;
+        if (event._id === action.payload.event._id) return action.payload.event;
         return event;
       });
       state.events = updatedEvents;

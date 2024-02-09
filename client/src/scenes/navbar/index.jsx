@@ -39,11 +39,11 @@ const Navbar = () => {
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
 
-  const fullName = "hi";
+  const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
-    <FlexBetween padding="1rem 6%" borderRadius={"3rem"} sx={{
-    background: `linear-gradient(to right, #8A3192, #37C2D9)`,
+    <FlexBetween padding="1rem 6%"  sx={{
+    background: "#28002b",
   }}>
       <FlexBetween gap="1.75rem">
         <Typography
@@ -78,13 +78,7 @@ const Navbar = () => {
       {/* DESKTOP NAV */}
       {isNonMobileScreens ? (
         <FlexBetween gap="2rem">
-          <IconButton onClick={() => dispatch(setMode())}>
-            {theme.palette.mode === "dark" ? (
-              <DarkMode sx={{ fontSize: "25px" }} />
-            ) : (
-              <LightMode sx={{ color: dark, fontSize: "25px" }} />
-            )}
-          </IconButton>
+          
           <Typography color={"white"}>Home</Typography>
             <Typography color={"white"}>Events</Typography>
             <Typography color={"white"}>Sponsors</Typography>
@@ -152,16 +146,7 @@ const Navbar = () => {
             alignItems="center"
             gap="3rem"
           >
-            <IconButton
-              onClick={() => dispatch(setMode())}
-              sx={{ fontSize: "25px" }}
-            >
-              {theme.palette.mode === "dark" ? (
-                <DarkMode sx={{ fontSize: "25px" }} />
-              ) : (
-                <LightMode sx={{ color: dark, fontSize: "25px" }} />
-              )}
-            </IconButton>
+           
             <Typography>Home</Typography>
             <Typography>Events</Typography>
             <Typography>Sponsors</Typography>

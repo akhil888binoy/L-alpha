@@ -90,5 +90,7 @@ export const likeEvent = async (req, res) => {
       { new: true }
     );
     res.status(200).json(updatedEvent);
-  } catch (err) {}
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
 };
