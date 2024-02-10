@@ -5,6 +5,7 @@ import {
     FavoriteOutlined,   
     ShareOutlined,
   } from "@mui/icons-material";
+  import { NavLink } from "react-router-dom";
   import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
   import FlexBetween from "components/FlexBetween";
   import Friend from "components/Friend";
@@ -12,6 +13,7 @@ import {
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setEvent } from "state";
+  import Button from '@mui/material/Button'; // Updated import
 
 const EventWidget =({
 eventId,
@@ -38,7 +40,8 @@ likes,
     const loggedInUserId = useSelector((state) => state.user._id);
     const isLiked = Boolean(likes[loggedInUserId]);
     const likeCount = Object.keys(likes).length;
-  
+
+   
     const { palette } = useTheme();
     const main = palette.neutral.main;
     const primary = palette.primary.main;
@@ -154,7 +157,16 @@ likes,
   <Typography color="white" variant="subtitle1">
     {ticketSold}
   </Typography>
+  
 </Box>
+<NavLink to="/eventdetails" style={{ textDecoration: 'none' }}>
+      <Button 
+        variant="contained" 
+        style={{ backgroundColor: '#008080', color: 'white' }} // Teal color
+      >
+        Go to Event Details
+      </Button>
+    </NavLink>
           <IconButton>
             <ShareOutlined />
           </IconButton>

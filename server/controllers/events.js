@@ -59,7 +59,18 @@ export const getFeedEvents = async (req, res) => {
     res.status(404).json({ message: err.message });
   }
 };
-
+export const getEventDetails = async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const event = await Event.findOne({ _id: eventId }); // assuming eventId corresponds to MongoDB _id
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+    res.status(200).json(event);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 export const getUserEvents = async (req, res) => {
   try {
     const { userId } = req.params;
