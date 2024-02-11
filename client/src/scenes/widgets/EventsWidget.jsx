@@ -7,7 +7,7 @@ const EventsWidget = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.events);
   const token = useSelector((state) => state.token);
-
+  
   const getEvents = async () => {
     const response = await fetch("http://localhost:3001/events", {
       method: "GET",

@@ -2,37 +2,33 @@ import React from 'react'
 import Navbar from 'scenes/navbar'
 import { Box , Typography, Button, } from '@mui/material'
 import MainCircle from "../../images/circle.jpg";
+import {useTheme} from '@mui/material';
 
 const LandingPage = () => {
+  const theme = useTheme();
+  const primaryLight = theme.palette.primary.light;
+  const neutralLight = theme.palette.neutral.light;
+
   return (
     <Box>
         <Box bgcolor={"#18001A"} height={"5rem"} width={"100%"}>
         <Navbar></Navbar>
         </Box>
-        <Box height={"50rem"} width={"100%"} bgcolor={"#18001A"} display={"flex"} >
+        <Box height={"50rem"} width={"100%"} bgcolor={"#080808"} display={"flex"} >
         <Box flex={1}   width={"20%"} >
             <Box mt={"10rem"} ml={"5rem"}>
-            <Typography sx={{
-    color: '#FFF',
-    fontFamily: 'Inter',
-    fontSize: 16,
-    fontStyle: 'normal',
-    fontWeight: 300,
-    lineHeight: 'normal',
-    mb:"1rem"
-  }}>Welcome</Typography>
             <Typography  sx={{
     color: '#FFF',
-    fontFamily: 'Inter',
+    
     fontSize: 64,
-    fontStyle: 'normal',
+    fontStyle: 'medium',
     fontWeight: 800,
     lineHeight: 'normal',
     mb:"1rem"
-  }}>L-Alpha </Typography>
+  }}>Get a Sponsor for your Event OR Take your company to the next level  </Typography>
             <Typography sx={{
     color: '#FFF',
-    fontFamily: 'Inter',
+   
     fontSize: 16,
     fontStyle: 'normal',
     fontWeight: 300,
@@ -44,7 +40,7 @@ const LandingPage = () => {
     height: "30px",
     flexShrink: 0,
     borderRadius: 57,
-    background: 'linear-gradient(90deg, #7E489D 32.14%, #5194C3 50%)',
+    background: "#48d1cc",
     color: '#FFF', // Set text color to white
     textTransform: 'none', // Set text to normal case
   }}> Learn More </Button>
@@ -69,7 +65,7 @@ const LandingPage = () => {
       </Box>
         </Box>
         <Box>
-            About Us
+           s
         </Box>
     </Box>
   )

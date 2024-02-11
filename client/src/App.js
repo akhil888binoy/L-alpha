@@ -27,7 +27,7 @@ function App() {
               element={isAuth ? <HomePage /> : <Navigate to="/" />}
             />
             <Route
-              path="/eventdetails/:eventId"
+              path="/events/:eventId/event"
               element={isAuth ? <EventDetailsPage /> : <Navigate to="/" />}
             />
             <Route

@@ -43,7 +43,7 @@ const Navbar = () => {
 
   return (
     <FlexBetween padding="1rem 6%"  sx={{
-    background: "#28002b",
+    background: "#080808",
   }}>
       <FlexBetween gap="1.75rem">
         <Typography
@@ -60,30 +60,33 @@ const Navbar = () => {
         >
         Loot
         </Typography>
-        {isNonMobileScreens && (
-          <FlexBetween
-            backgroundColor={"#8A3192"}
-            borderRadius="9px"
-            gap="3rem"
-            padding="0.1rem 1.5rem"
-          >
-            <InputBase placeholder="Search..." />
-            <IconButton>
-              <Search />
-            </IconButton>
-          </FlexBetween>
-        )}
+        
       </FlexBetween>
 
       {/* DESKTOP NAV */}
       {isNonMobileScreens ? (
         <FlexBetween gap="2rem">
           
-          <Typography color={"white"}>Home</Typography>
-            <Typography color={"white"}>Events</Typography>
-            <Typography color={"white"}>Sponsors</Typography>
-            <Typography color={"white"}>About Us</Typography>
-            <Typography color={"white"}>Terms & Conditions</Typography>
+          <Typography color={"white"} sx={{
+        fontSize: "14px",
+        fontWeight: 'medium',
+      }} >Home</Typography>
+            <Typography color={"white"} sx={{
+        fontSize: "14px",
+        fontWeight: 'medium',
+      }}>Events</Typography>
+            <Typography color={"white"} sx={{
+        fontSize: "14px",
+        fontWeight: 'medium',
+      }}>Sponsors</Typography>
+            <Typography color={"white"} sx={{
+        fontSize: "14px",
+        fontWeight: 'medium',
+      }}>About Us</Typography>
+            <Typography color={"white"} sx={{
+        fontSize: "14px",
+        fontWeight: 'medium',
+      }}>Terms & Conditions</Typography>
           <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}

@@ -6,6 +6,7 @@ import {
     ShareOutlined,
   } from "@mui/icons-material";
   import { NavLink } from "react-router-dom";
+  import { useNavigate } from "react-router-dom";
   import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
   import FlexBetween from "components/FlexBetween";
   import Friend from "components/Friend";
@@ -40,7 +41,7 @@ likes,
     const loggedInUserId = useSelector((state) => state.user._id);
     const isLiked = Boolean(likes[loggedInUserId]);
     const likeCount = Object.keys(likes).length;
-
+    const navigate = useNavigate();
    
     const { palette } = useTheme();
     const main = palette.neutral.main;
@@ -159,14 +160,15 @@ likes,
   </Typography>
   
 </Box>
-<NavLink to="/eventdetails" style={{ textDecoration: 'none' }}>
+
       <Button 
         variant="contained" 
         style={{ backgroundColor: '#008080', color: 'white' }} // Teal color
-      >
+        onClick={() => navigate(`/events/${eventId}/event`)}
+     >
         Go to Event Details
       </Button>
-    </NavLink>
+   
           <IconButton>
             <ShareOutlined />
           </IconButton>
