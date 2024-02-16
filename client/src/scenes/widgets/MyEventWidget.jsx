@@ -120,7 +120,7 @@ const MyEventWidget = ({picturePath}) => {
           value={eventName}
           sx={{
             width: "100%",
-            backgroundColor: "#28002b",
+            backgroundColor: "#080808",
             borderRadius: "2rem",
             padding: "1rem 2rem",
             marginBottom:"1rem",
@@ -134,7 +134,7 @@ const MyEventWidget = ({picturePath}) => {
           value={eventDate}
           sx={{
             width: "100%",
-            backgroundColor: "#28002b",
+            backgroundColor: "#080808",
             borderRadius: "2rem",
             padding: "1rem 2rem",
             marginBottom:"1rem"
@@ -147,7 +147,7 @@ const MyEventWidget = ({picturePath}) => {
           value={eventLocation}
           sx={{
             width: "100%",
-            backgroundColor: "#28002b",
+            backgroundColor: "#080808",
             borderRadius: "2rem",
             padding: "1rem 2rem",
             marginBottom:"1rem"
@@ -160,7 +160,7 @@ const MyEventWidget = ({picturePath}) => {
           value={description}
           sx={{
             width: "100%",
-            backgroundColor: "#28002b",
+            backgroundColor: "#080808",
             borderRadius: "2rem",
             padding: "1rem 2rem",
             marginBottom:"1rem"
@@ -173,7 +173,7 @@ const MyEventWidget = ({picturePath}) => {
           value={eventEmail}
           sx={{
             width: "100%",
-            backgroundColor:"#28002b",
+            backgroundColor:"#080808",
             borderRadius: "2rem",
             padding: "1rem 2rem",
             marginBottom:"1rem"
@@ -186,7 +186,7 @@ const MyEventWidget = ({picturePath}) => {
           value={eventPhoneNumber}
           sx={{
             width: "100%",
-            backgroundColor: "#28002b",
+            backgroundColor: "#080808",
             borderRadius: "2rem",
             padding: "1rem 2rem",
             marginBottom:"1rem"
@@ -199,11 +199,10 @@ const MyEventWidget = ({picturePath}) => {
           value={eventTheme}
           sx={{
             width: "100%",
-            backgroundColor: "#28002b",
+            backgroundColor: "#080808",
             borderRadius: "2rem",
             padding: "1rem 2rem",
             marginBottom:"1rem"
-
           }}
         />
          <InputBase
@@ -212,7 +211,7 @@ const MyEventWidget = ({picturePath}) => {
           value={ticketSold}
           sx={{
             width: "100%",
-            backgroundColor: "#28002b",
+            backgroundColor: "#080808",
             borderRadius: "2rem",
             padding: "1rem 2rem",
             marginBottom:"1rem"
@@ -227,7 +226,7 @@ const MyEventWidget = ({picturePath}) => {
           onChange={(e) => handleMarketingPlanChange(index, 'budget', e.target.value)}
           sx={{
             width: "100%",
-            backgroundColor: "#28002b",
+            backgroundColor: "#080808",
             borderRadius: "2rem",
             padding: "1rem 2rem",
             marginBottom:"1rem"
@@ -239,7 +238,7 @@ const MyEventWidget = ({picturePath}) => {
           onChange={(e) => handleMarketingPlanChange(index, 'heading', e.target.value)}
           sx={{
             width: "100%",
-            backgroundColor: "#28002b",
+            backgroundColor: "#080808",
             borderRadius: "2rem",
             padding: "1rem 2rem",
             marginBottom:"1rem"
@@ -251,7 +250,7 @@ const MyEventWidget = ({picturePath}) => {
           onChange={(e) => handleMarketingPlanChange(index, 'description', e.target.value)}
           sx={{
             width: "100%",
-            backgroundColor:"#28002b",
+            backgroundColor:"#080808",
             borderRadius: "2rem",
             padding: "1rem 2rem",
             marginBottom:"1rem"

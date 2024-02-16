@@ -5,7 +5,7 @@ const LoginPage = () => {
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   return (
-    <Box height={"1000px"} backgroundColor={"#18001A"} >
+    <Box height={"1000px"} backgroundColor={"#080808"} >
       
 
       <Box display="flex">
@@ -41,9 +41,8 @@ const LoginPage = () => {
      m="2rem auto"
     
      borderRadius="1.5rem"
-     backgroundColor="#18001A" // Set a suitable color for the dark background
-     sx={{ border: 3,
-     borderColor: 'primary.main' }}>
+     backgroundColor="#111111" // Set a suitable color for the dark background
+     border="0.2rem solid #1E1E1E">
         <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem" }} color={"white"}>
           Welcome to Loot!
         </Typography>

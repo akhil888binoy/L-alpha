@@ -9,7 +9,9 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "theme";
 import EventDetailsPage from "scenes/eventdetailsPage";
-
+import MainLandingPage from "scenes/MainLandingPage";
+import Footer from "scenes/footer";
+import LandingPageM from "scenes/landingPageM";
 function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -20,7 +22,10 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline></CssBaseline>
           <Routes>
-            <Route path="/" element={<LandingPage></LandingPage>}></Route>
+            <Route
+              path="/"
+              element={<MainLandingPage></MainLandingPage>}
+            ></Route>
             <Route path="/login" element={<LoginPage></LoginPage>}></Route>
             <Route
               path="/home"

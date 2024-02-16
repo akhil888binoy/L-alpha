@@ -18,7 +18,7 @@ const HomePage = () => {
       display={isNonMobileScreens ? "flex": "block"}
       gap="0.5rem"
       justifyContent={"space-between"}
-      bgcolor={"#18001A"}
+      bgcolor={"#080808"}
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
             <UserWidget userId={_id} picturePath={picturePath}>

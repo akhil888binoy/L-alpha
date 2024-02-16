@@ -3,9 +3,9 @@ import { styled } from "@mui/system";
 
 const WidgetWrapper = styled(Box)(({ theme }) => ({
   padding: "1.5rem",
-  border: "5px solid", // Set solid border
-  borderColor: "transparent", // Set border color to transparent to avoid a solid color border
-  borderImage: "linear-gradient(to right, #6f42c1, #8e44ad) 1", // Purple Vader gradient border
+  backgroundColor: "#111111",
+  border:"0.1rem solid #1E1E1E",
+  borderRadius: 6
 }));
 
 export default WidgetWrapper;
