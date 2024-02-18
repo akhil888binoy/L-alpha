@@ -53,12 +53,66 @@ export const createEvent = async (req, res) => {
 
 export const getFeedEvents = async (req, res) => {
   try {
-    const event = await Event.find();
-    res.status(200).json(event);
+    const page = parseInt(req.query.page) - 1 || 0;
+    const limit = parseInt(req.query.limit) || 5;
+    const search = req.query.search || "";
+    let sort = req.query.sort || "date";
+    let theme = req.query.theme || "All";
+    let location = req.query.location || ""; // Get location from query
+
+    // Fetch distinct themes from the database
+    const themeOptions = await Event.distinct("theme");
+
+    // If theme is "All", include all theme options, otherwise split the provided theme string
+    theme === "All"
+      ? (theme = [...themeOptions])
+      : (theme = req.query.theme.split(","));
+
+    // Split and parse the sort parameter
+    req.query.sort ? (sort = req.query.sort.split(",")) : (sort = [sort]);
+    let sortBy = {};
+    if (sort[1]) {
+      sortBy[sort[0]] = sort[1];
+    } else {
+      sortBy[sort[0]] = "asc";
+    }
+
+    // Construct the filter object for MongoDB query
+    let filter = {
+      eventName: { $regex: search, $options: "i" },
+      theme: { $in: theme },
+    };
+
+    // Add location filter if location is provided
+    if (location) {
+      filter.eventLocation = { $regex: location, $options: "i" };
+    }
+
+    // Query events with search, theme filter, sorting, pagination
+    const events = await Event.find(filter)
+      .sort(sortBy)
+      .skip(page * limit)
+      .limit(limit);
+
+    // Count total matching documents for pagination
+    const total = await Event.countDocuments(filter);
+
+    // Prepare response object
+    const response = {
+      error: false,
+      total,
+      page: page + 1,
+      limit,
+      themes: themeOptions,
+      events,
+    };
+
+    res.status(200).json(response);
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
+
 export const getEventDetails = async (req, res) => {
   try {
     const { eventId } = req.params;
