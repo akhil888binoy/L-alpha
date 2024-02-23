@@ -6,6 +6,7 @@ import {
     ShareOutlined,
   } from "@mui/icons-material";
   import LocalActivityIcon from '@mui/icons-material/LocalActivity';
+  import EventIcon from '@mui/icons-material/Event';
   import { NavLink } from "react-router-dom";
   import PlaceIcon from '@mui/icons-material/Place';
   import { useNavigate } from "react-router-dom";
@@ -73,14 +74,14 @@ likes,
         <WidgetWrapper m="2rem 0" >
         <Box display="flex" flexDirection="column" alignItems="center">
         
-          {logopicturePath && (
+          {bannerpicturePath && (
             <img
             width="100%"
             height="100%"
            
             alt="event"
             style={{ borderRadius: "0.75rem", }}
-            src={`http://localhost:3001/assets/${logopicturePath}`}
+            src={`http://localhost:3001/assets/${bannerpicturePath}`}
           />
           )}
           <FlexBetween display="flex" justifyContent="space-between" alignItems="center" width="100%" mt={"1rem"} gap={1}>
@@ -121,7 +122,7 @@ likes,
   textOverflow: "ellipsis",
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
 }}>
-  <PlaceIcon ></PlaceIcon>
+  <PlaceIcon color="primary"></PlaceIcon>
   <Typography color="white" variant="subtitle1" ml={"0.2rem"}>
     {eventLocation}
   </Typography>
@@ -129,11 +130,12 @@ likes,
 
           </FlexBetween>
 
-          <Typography mt={"1rem"} color={"#CCCCCD"}>
+          <Typography mt={"1rem"} color={"grey"}>
       {truncatedDescription}
-      {words.length > 50 && " ..."} {/* Display ellipsis if the description has more than 50 words */}
-    <Button onClick={() => navigate(`/events/${eventId}/event`)}
->Read more</Button>
+      {words.length > 50 && " ..." } {/* Display ellipsis if the description has more than 50 words */}
+      {words.length > 50 &&  <Button onClick={() => navigate(`/events/${eventId}/event`)}
+>Read more</Button> }
+   
     </Typography>
           <Typography color={"white"} mt={"1rem"} fontSize={"1rem"}>
               Marketing Plans:
@@ -171,16 +173,32 @@ likes,
             <Typography>{likeCount}</Typography>
           </Box>
           <Box style={{
-                borderRadius: "2rem",
+               
                 padding: "0.5rem 1rem",
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
                 overflow: "hidden",
                 whiteSpace: "nowrap",
-                border:"0.1rem solid  #1E1E1E",
                 textOverflow: "ellipsis",
-                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",}} bgcolor={ "#080808"}>
+                }} >
+                  <EventIcon color={"primary"}></EventIcon>
+                 
+  <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
+    {date}
+  </Typography>
+  
+</Box>
+          <Box style={{
+                borderRadius: "2rem",
+                padding: "0.5rem 1rem",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "hidden",
+                whiteSpace: "nowrap", 
+                textOverflow: "ellipsis",
+               }} >
                   <LocalActivityIcon color={"primary"}></LocalActivityIcon>
                  
   <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
@@ -204,9 +222,7 @@ likes,
     </Typography>
 </Button>
    
-          <IconButton>
-            <ShareOutlined />
-          </IconButton>
+          
         </Box>
       </WidgetWrapper>  
       );

@@ -22,6 +22,8 @@ const Sort = ({ sort, setSort }) => {
         >
           <MenuItem value="date">Date</MenuItem>
           <MenuItem value="ticketSold">Ticket Sold</MenuItem>
+          <MenuItem value="likes">Likes</MenuItem>
+
           {/* Add other sorting options as MenuItem components */}
         </Select>
         <Select

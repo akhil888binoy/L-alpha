@@ -5,6 +5,9 @@ import { useSelector } from 'react-redux'
 import UserWidget from 'scenes/widgets/UserWidget'
 import MyEventWidget from "scenes/widgets/MyEventWidget";
 import EventsWidget from 'scenes/widgets/EventsWidget'
+import { Link } from 'react-router-dom'
+import {Button} from '@mui/material'
+import EventForm from 'scenes/eventForm'
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)")
   const {_id, picturePath} = useSelector((state)=> state.user);
@@ -29,7 +32,17 @@ const HomePage = () => {
           mt={isNonMobileScreens ? undefined : "2rem"}
           
           >
-            <MyEventWidget picturePath={picturePath}></MyEventWidget>
+             <Link to="/eventForm" >
+      <Button 
+      
+        variant="outlined"
+        color="primary"
+        size="large"
+        sx={{ fontSize: '1.25rem', padding: '12px 24px' }} // Adjust size here
+      >
+        Add your Event
+      </Button>
+    </Link>
             <EventsWidget userId={_id} ></EventsWidget>
           </Box>
           {isNonMobileScreens &&(

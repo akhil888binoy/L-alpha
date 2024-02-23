@@ -10,8 +10,8 @@ import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "theme";
 import EventDetailsPage from "scenes/eventdetailsPage";
 import MainLandingPage from "scenes/MainLandingPage";
-import Footer from "scenes/footer";
-import LandingPageM from "scenes/landingPageM";
+import MainFooter from "scenes/MainFooter";
+import EventForm from "scenes/eventForm";
 function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -32,6 +32,10 @@ function App() {
               element={isAuth ? <HomePage /> : <Navigate to="/" />}
             />
             <Route
+              path="/eventForm"
+              element={isAuth ? <EventForm /> : <Navigate to="/" />}
+            />
+            <Route
               path="/events/:eventId/event"
               element={isAuth ? <EventDetailsPage /> : <Navigate to="/" />}
             />
@@ -40,6 +44,7 @@ function App() {
               element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
             />
           </Routes>
+          <MainFooter></MainFooter>
         </ThemeProvider>
       </BrowserRouter>
     </div>

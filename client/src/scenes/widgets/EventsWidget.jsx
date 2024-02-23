@@ -2,74 +2,82 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setEvents } from "state";
 import EventWidget from "./EventWidget";
+import {Typography} from "@mui/material";
 import Search from "components/Search";
 import Sort from "components/Sort";
 import Theme from "components/Theme";
+import {useMediaQuery} from "@mui/material";
+import { Box } from "@mui/material";
 import CustomPagination from "components/CustomPagination";
 
 const EventsWidget = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.events);
   const token = useSelector((state) => state.token);
-  const [sort, setSort] = useState({ sort: "date", order: "desc" });
-  const [filterTheme, setFilterTheme] = useState([]);
-  const [filterLocation, setFilterLocation] = useState(""); // State for location filter
+  const [sort, setSort] = useState(JSON.parse(localStorage.getItem("eventSort")) || { sort: "date", order: "desc" });
+  const [filterTheme, setFilterTheme] = useState(JSON.parse(localStorage.getItem("eventFilterTheme")) || []);
+  const [filterLocation, setFilterLocation] = useState(JSON.parse(localStorage.getItem("eventFilterLocation")) || "");
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const getEvents = async () => {
-    try {
+  useEffect(() => {
+    const getEvents = async () => {
+      try {
+        const filterThemeString = filterTheme.join(",");
+
+        const response = await fetch(
+          `http://localhost:3001/events?page=${page}&sort=${sort.sort},${sort.order}&theme=${filterThemeString}&search=${search}&location=${filterLocation}`, // Include location in the API request
+          {
+            method: "GET",
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        const data = await response.json();
+
+        dispatch(setEvents({ events: data }));
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    const getUserEvents = async () => {
       const filterThemeString = filterTheme.join(",");
-
       const response = await fetch(
-        `http://localhost:3001/events?page=${page}&sort=${sort.sort},${sort.order}&theme=${filterThemeString}&search=${search}&location=${filterLocation}`, // Include location in the API request
+        `http://localhost:3001/events/${userId}/events?page=${page}&sort=${sort.sort},${sort.order}&theme=${filterThemeString}&search=${search}&location=${filterLocation}`,
         {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
       const data = await response.json();
-
       dispatch(setEvents({ events: data }));
-    } catch (error) {
-      console.error("Error fetching events:", error);
-    }
-  };
+    };
 
-  const getUserEvents = async () => {
-    const response = await fetch(
-      `http://localhost:3001/events/${userId}/events`,
-      {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    const data = await response.json();
-    dispatch(setEvents({ events: data }));
-  };
-
-  useEffect(() => {
     if (isProfile) {
       getUserEvents();
     } else {
       getEvents();
     }
-  }, [sort, filterTheme, filterLocation, page, search]); // Include filterLocation in the dependency array
+  }, [sort, filterTheme, filterLocation, page, search, userId, isProfile, token]);
 
   const handleSortChange = (newSort) => {
     setSort(newSort);
     setPage(1); // Reset page to 1 when sorting changes
+    localStorage.setItem("eventSort", JSON.stringify(newSort));
   };
 
   const handleFilterThemeChange = (newFilterTheme) => {
     setFilterTheme(newFilterTheme);
     setPage(1); // Reset page to 1 when filter changes
+    localStorage.setItem("eventFilterTheme", JSON.stringify(newFilterTheme));
   };
 
-  const handleFilterLocationChange = (newLocation) => { // Function to handle location filter change
+  const handleFilterLocationChange = (newLocation) => {
     setFilterLocation(newLocation);
     setPage(1); // Reset page to 1 when location filter changes
+    localStorage.setItem("eventFilterLocation", JSON.stringify(newLocation));
   };
 
   const handlePageChange = (newPage) => {
@@ -77,70 +85,89 @@ const EventsWidget = ({ userId, isProfile = false }) => {
   };
 
   return (
-    <>
-      {Array.isArray(events.events) &&
-        events.events.map(
-          ({
-            _id,
-            userId,
-            firstName,
-            lastName,
-            eventName,
-            date,
-            eventLocation,
-            email,
-            eventPhoneNumber,
-            description,
-            theme,
-            location,
-            bannerpicturePath,
-            logopicturePath,
-            userPicturePath,
-            ticketSold,
-            marketingPlans,
-            likes,
-          }) => (
-            <EventWidget
-              key={_id}
-              eventId={_id}
-              eventUserId={userId}
-              name={`${firstName} ${lastName}`}
-              eventName={eventName}
-              date={date}
-              eventLocation={eventLocation}
-              email={email}
-              eventPhoneNumber={eventPhoneNumber}
-              description={description}
-              theme={theme}
-              location={location}
-              bannerpicturePath={bannerpicturePath}
-              logopicturePath={logopicturePath}
-              userPicturePath={userPicturePath}
-              ticketSold={ticketSold}
-              marketingPlans={marketingPlans}
-              likes={likes}
-            />
-          )
-        )}
+    <Box>
+      {/* Filters */}
+      <Box mt={3}  >
+        <Box display={"flex"} gap={ isNonMobile?  7 : 2}>
+          <Box>
+          <Sort sort={sort} setSort={handleSortChange} />
+          </Box>
+          <Box textAlign={"center"}>
+            <Typography fontSize={"5rem"} color={"primary"}> Filters </Typography>
+          </Box>
+        </Box>
+        <Box mt={2}>
+        <Search
+          value={filterLocation}
+          onChange={handleFilterLocationChange}
+          placeholder="Search by Location"
+        />
+        </Box>
+        <Box mt={2}>
+        <Theme
+          filterTheme={filterTheme}
+          themes={events.themes ? events.themes : []}
+          setFilterTheme={handleFilterThemeChange}
+        />
+        </Box>
+      </Box>
+      {/* Event Listings */}
+      <Box>
+        {Array.isArray(events.events) &&
+          events.events.map(
+            ({
+              _id,
+              userId,
+              firstName,
+              lastName,
+              eventName,
+              date,
+              eventLocation,
+              email,
+              eventPhoneNumber,
+              description,
+              theme,
+              location,
+              bannerpicturePath,
+              logopicturePath,
+              userPicturePath,
+              ticketSold,
+              marketingPlans,
+              likes,
+            }) => (
+              <EventWidget
+                key={_id}
+                eventId={_id}
+                eventUserId={userId}
+                name={`${firstName} ${lastName}`}
+                eventName={eventName}
+                date={date}
+                eventLocation={eventLocation}
+                email={email}
+                eventPhoneNumber={eventPhoneNumber}
+                description={description}
+                theme={theme}
+                location={location}
+                bannerpicturePath={bannerpicturePath}
+                logopicturePath={logopicturePath}
+                userPicturePath={userPicturePath}
+                ticketSold={ticketSold}
+                marketingPlans={marketingPlans}
+                likes={likes}
+              />
+            )
+          )}
+           <Box display={"flex" } justifyContent={"center"}>
       <CustomPagination
         page={page}
         limit={events.limit ? events.limit : 0}
         total={events.total ? events.total : 0}
         setPage={handlePageChange}
       />
-      <Sort sort={sort} setSort={handleSortChange} />
-     
-      <Search
-        value={filterLocation}
-        onChange={handleFilterLocationChange}
-        placeholder="Search by Location"
-      />
-       <Theme
-        filterTheme={filterTheme}
-        themes={events.themes ? events.themes : []}
-        setFilterTheme={handleFilterThemeChange}
-      />
-    </>
+    </Box>
+        
+      </Box>
+    </Box>
   );
 };
 

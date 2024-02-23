@@ -44,15 +44,7 @@ const upload = multer({ storage });
 
 /*ROUTES WITH FILES*/
 app.post("/auth/register", upload.single("picture"), register);
-app.post(
-  "/events",
-  verifyToken,
-  upload.fields([
-    { name: "picture", maxCount: 1 },
-    { name: "logopicture", maxCount: 1 },
-  ]),
-  createEvent
-);
+app.post("/events", verifyToken, upload.single("picture"), createEvent);
 
 /*ROUTES*/
 app.use("/auth", authRoutes);

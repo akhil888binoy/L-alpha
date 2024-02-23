@@ -6,6 +6,8 @@ import Navbar from "scenes/navbar";
 import MyEventWidget from "scenes/widgets/MyEventWidget";
 import EventsWidget from "scenes/widgets/EventsWidget";
 import UserWidget from "scenes/widgets/UserWidget";
+import { Link } from "react-router-dom";
+import {Button} from "@mui/material";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -46,7 +48,16 @@ const ProfilePage = () => {
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
-          <MyEventWidget picturePath={user.picturePath} />
+           <Link to="/eventForm" >
+      <Button 
+        variant="outlined"
+        color="primary"
+        size="large"
+        sx={{ fontSize: '1.25rem', padding: '12px 24px' }} // Adjust size here
+      >
+        Add your Event
+      </Button>
+    </Link>
           <Box m="2rem 0" />
           <EventsWidget userId={userId} isProfile />
         </Box>

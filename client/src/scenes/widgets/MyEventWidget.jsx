@@ -10,19 +10,30 @@ import {
 } from "@mui/icons-material";
 import { Box, Divider, Typography, InputBase, useTheme, Button , IconButton , useMediaQuery } from "@mui/material";
 import Dropzone from "react-dropzone";
+import { LocalPhone } from "@mui/icons-material";
+import { BorderColor } from "@mui/icons-material";
 import UserImage from "components/UserImage";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setEvents } from "state";
+import LocalActivity from "@mui/icons-material/LocalActivity";
 import FlexBetween from "components/FlexBetween";
+import { Category } from "@mui/icons-material";
+import { Star } from "@mui/icons-material";
+import { Email } from "@mui/icons-material";
+import { LocationOn } from "@mui/icons-material";
+import { InsertInvitation } from "@mui/icons-material";
+import { Celebration } from "@mui/icons-material";
+import { MonetizationOn } from "@mui/icons-material";
+import { Storefront } from "@mui/icons-material";
+import { Description } from "@mui/icons-material";
+
 
 const MyEventWidget = ({picturePath}) => {
     const dispatch = useDispatch();
     const [isImage, setIsImage] = useState(false);
     const [image, setImage] = useState(null);
-    const [islogoImage, setIsLogoImage] = useState(false);
-    const [logoimage, setLogoImage] = useState(null);
     const [description, setDescription] = useState("");    
     const [eventName , setEventName] = useState("");  
     const[eventLocation, setEventLocation] = useState("");
@@ -37,13 +48,16 @@ const MyEventWidget = ({picturePath}) => {
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
     const mediumMain = palette.neutral.mediumMain;
     const medium = palette.neutral.medium;
+    const [highlights, setHighlights] = useState([])
     const [marketingPlans, setMarketingPlans] = useState([]); // State to store marketing plans
 
     // Function to add a marketing plan
     const addMarketingPlan = () => {
       setMarketingPlans([...marketingPlans, { budget: "", heading: "", description: "" }]);
     };
-
+const addHighlight=()=>{
+  setHighlights([...highlights , {highlight:""}]);
+}
     // Function to handle changes in marketing plan inputs
     const handleMarketingPlanChange = (index, field, value) => {
       const updatedPlans = [...marketingPlans];
@@ -51,8 +65,15 @@ const MyEventWidget = ({picturePath}) => {
       setMarketingPlans(updatedPlans);
     };
 
+    const handleHighlightChange=(index, field, value)=>{
+      const updatedHighlights=[...highlights];
+      updatedHighlights[index][field] = value;
+      setHighlights(updatedHighlights);
+    }
+
 
     const handleEvent = async() =>{
+      
         const formData = new FormData();
         formData.append("userId", _id);
         formData.append("description", description);
@@ -69,17 +90,16 @@ const MyEventWidget = ({picturePath}) => {
             formData.append(`marketingPlans[${index}][heading]`, plan.heading);
             formData.append(`marketingPlans[${index}][description]`, plan.description);
           });
+
+          highlights.forEach((highlight,index)=>{
+            formData.append(`highlights[${index}][highlight]`, highlight.highlight);
+          })
   
         if(image){
-
             formData.append("picture", image);
             formData.append("bannerpicturePath", image.name);
         }
-        if(logoimage){
-
-          formData.append("logopicture", logoimage);
-          formData.append("logopicturePath", logoimage.name);
-      }
+        
        
         
       
@@ -91,7 +111,6 @@ const MyEventWidget = ({picturePath}) => {
         const events = await response.json();
         dispatch(setEvents({events}));
         setImage(null);
-        setLogoImage(null);
         setDescription("");
         setEventName("");
         setEventDate("");
@@ -101,7 +120,7 @@ const MyEventWidget = ({picturePath}) => {
         setEventTheme("");
         setTicketSold("");
         setMarketingPlans([]); // Reset marketing plans after submission
-
+        setHighlights([]);
        
 
     }
@@ -109,159 +128,218 @@ const MyEventWidget = ({picturePath}) => {
    
   return (
     <WidgetWrapper >
-    <FlexBetween  >
+    <Box display={"flex"} justifyContent="center" alignItems="center" gap={5}  >
         <UserImage image={picturePath}></UserImage>
-    </FlexBetween>
+        <Typography  fontSize={"4rem"}>Event Form</Typography>
+    </Box>
    
-   
-    <InputBase
-          placeholder="write down event Name"
-          onChange={(e) => setEventName(e.target.value)}
-          value={eventName}
-          sx={{
-            width: "100%",
-            backgroundColor: "#080808",
-            borderRadius: "2rem",
-            padding: "1rem 2rem",
-            marginBottom:"1rem",
-            marginTop:"1rem"
+    <Box mt={2} display="flex" alignItems="center"  marginBottom="1rem" >
+      <Celebration color="primary" fontSize="large" />
+      <InputBase
+        placeholder="write down event Name"
+        onChange={(e) => setEventName(e.target.value)}
+        value={eventName}
+        sx={{
+          width: '100%',
+          backgroundColor: '#080808',
+          borderRadius: '2rem',
+          padding: '1rem 2rem',
+          marginLeft: '1rem', // Add margin to create space between the icon and the input
 
-          }}
-        />
-         <InputBase
-          placeholder="write down event date"
-          onChange={(e) => setEventDate(e.target.value)}
-          value={eventDate}
-          sx={{
-            width: "100%",
-            backgroundColor: "#080808",
-            borderRadius: "2rem",
-            padding: "1rem 2rem",
-            marginBottom:"1rem"
+        }}
+      />
+    </Box>
+    
+        <Box display="flex" alignItems="center" marginBottom="1rem">
+      <InsertInvitation color="primary" fontSize="large" />
+      <InputBase
+        placeholder="write down event date"
+        onChange={(e) => setEventDate(e.target.value)}
+        value={eventDate}
+        sx={{
+          width: '100%',
+          backgroundColor: '#080808',
+          borderRadius: '2rem',
+          padding: '1rem 2rem',
+          marginLeft: '1rem', // Add margin to create space between the icon and the input
+        }}
+      />
+    </Box>
+         
+       <Box display="flex" alignItems="center" marginBottom="1rem">
+      <LocationOn color="primary" fontSize="large" />
+      <InputBase
+        placeholder="write down event location"
+        onChange={(e) => setEventLocation(e.target.value)}
+        value={eventLocation}
+        sx={{
+          width: '100%',
+          backgroundColor: '#080808',
+          borderRadius: '2rem',
+          padding: '1rem 2rem',
+          marginLeft: '1rem', // Add margin to create space between the icon and the input
+        }}
+      />
+    </Box>
+       
+        <Box display="flex" alignItems="center" marginBottom="1rem">
+      <BorderColor color="primary" fontSize="large" />
+      <InputBase
+        placeholder="write down event description"
+        onChange={(e) => setDescription(e.target.value)}
+        value={description}
+        sx={{
+          width: '100%',
+          backgroundColor: '#080808',
+          borderRadius: '2rem',
+          padding: '1rem 2rem',
+          marginLeft: '1rem', // Add margin to create space between the icon and the input
+        }}
+      />
+    </Box>
+    
+         <Box display="flex" alignItems="center" marginBottom="1rem">
+      <Email color="primary" fontSize="large" />
+      <InputBase
+        placeholder="write down event email"
+        onChange={(e) => setEventEmail(e.target.value)}
+        value={eventEmail}
+        sx={{
+          width: '100%',
+          backgroundColor: '#080808',
+          borderRadius: '2rem',
+          padding: '1rem 2rem',
+          marginLeft: '1rem', // Add margin to create space between the icon and the input
+        }}
+      />
+    </Box>
+         
+       <Box display="flex" alignItems="center" marginBottom="1rem">
+      <LocalPhone color="primary" fontSize="large" />
+      <InputBase
+        placeholder="write down event phone number"
+        onChange={(e) => setEventPhoneNumber(e.target.value)}
+        value={eventPhoneNumber}
+        sx={{
+          width: '100%',
+          backgroundColor: '#080808',
+          borderRadius: '2rem',
+          padding: '1rem 2rem',
+          marginLeft: '1rem', // Add margin to create space between the icon and the input
+        }}
+      />
+    </Box>
+        
+        <Box display="flex" alignItems="center" marginBottom="1rem">
+      <Category color="primary" fontSize="large" />
+      <InputBase
+        placeholder="write down event theme"
+        onChange={(e) => setEventTheme(e.target.value)}
+        value={eventTheme}
+        sx={{
+          width: '100%',
+          backgroundColor: '#080808',
+          borderRadius: '2rem',
+          padding: '1rem 2rem',
+          marginLeft: '1rem', // Add margin to create space between the icon and the input
+        }}
+      />
+    </Box>
+        
+        <Box display="flex" alignItems="center" marginBottom="1rem">
+      <LocalActivity color="primary" fontSize="large"/>
+      <InputBase
+        placeholder="write down ticket sold"
+        onChange={(e) => setTicketSold(e.target.value)}
+        value={ticketSold}
+        sx={{
+          width: '100%',
+          backgroundColor: '#080808',
+          borderRadius: '2rem',
+          padding: '1rem 2rem',
+          marginLeft: '1rem', // Add margin to create space between the icon and the input
+        }}
+      />
+    </Box>
+        
+        {/* Highlights input */}
+        {highlights.map((highlight, index) => (
+        <Box key={index} display="flex" alignItems="center" marginBottom="1rem">
+          <Star color="primary" fontSize="large" />
+          <InputBase
+            placeholder="highlight"
+            value={highlight.highlight}
+            onChange={(e) => handleHighlightChange(index, 'highlight', e.target.value)}
+            sx={{
+              width: '100%',
+              backgroundColor: '#080808',
+              borderRadius: '2rem',
+              padding: '1rem 2rem',
+              marginLeft: '1rem', // Add margin to create space between the icon and the input
+            }}
+          />
+        </Box>
+      ))}
 
-          }}
-        />
-        <InputBase
-          placeholder="write down event location"
-          onChange={(e) => setEventLocation(e.target.value)}
-          value={eventLocation}
-          sx={{
-            width: "100%",
-            backgroundColor: "#080808",
-            borderRadius: "2rem",
-            padding: "1rem 2rem",
-            marginBottom:"1rem"
-
-          }}
-        />
-     <InputBase
-          placeholder="write down event description"
-          onChange={(e) => setDescription(e.target.value)}
-          value={description}
-          sx={{
-            width: "100%",
-            backgroundColor: "#080808",
-            borderRadius: "2rem",
-            padding: "1rem 2rem",
-            marginBottom:"1rem"
-
-          }}
-        />
-         <InputBase
-          placeholder="write down event email"
-          onChange={(e) => setEventEmail(e.target.value)}
-          value={eventEmail}
-          sx={{
-            width: "100%",
-            backgroundColor:"#080808",
-            borderRadius: "2rem",
-            padding: "1rem 2rem",
-            marginBottom:"1rem"
-
-          }}
-        />
-        <InputBase
-          placeholder="write down event phone number"
-          onChange={(e) => setEventPhoneNumber(e.target.value)}
-          value={eventPhoneNumber}
-          sx={{
-            width: "100%",
-            backgroundColor: "#080808",
-            borderRadius: "2rem",
-            padding: "1rem 2rem",
-            marginBottom:"1rem"
-
-          }}
-        />
-        <InputBase
-          placeholder="write down event theme"
-          onChange={(e) => setEventTheme(e.target.value)}
-          value={eventTheme}
-          sx={{
-            width: "100%",
-            backgroundColor: "#080808",
-            borderRadius: "2rem",
-            padding: "1rem 2rem",
-            marginBottom:"1rem"
-          }}
-        />
-         <InputBase
-          placeholder="write down ticket sold"
-          onChange={(e) => setTicketSold(e.target.value)}
-          value={ticketSold}
-          sx={{
-            width: "100%",
-            backgroundColor: "#080808",
-            borderRadius: "2rem",
-            padding: "1rem 2rem",
-            marginBottom:"1rem"
-
-          }}
-        />
         {marketingPlans.map((plan, index) => (
       <Box key={index}>
+        <Box  display="flex" alignItems="center" marginBottom="1rem">
+          <MonetizationOn color="primary" fontSize="large"></MonetizationOn>
         <InputBase
           placeholder="Budget"
           value={plan.budget}
           onChange={(e) => handleMarketingPlanChange(index, 'budget', e.target.value)}
           sx={{
-            width: "100%",
-            backgroundColor: "#080808",
-            borderRadius: "2rem",
-            padding: "1rem 2rem",
-            marginBottom:"1rem"
+            width: '100%',
+            backgroundColor: '#080808',
+            borderRadius: '2rem',
+            padding: '1rem 2rem',
+            marginLeft: '1rem', 
           }}
         />
-        <InputBase
+        </Box>
+       <Box  display="flex" alignItems="center" marginBottom="1rem">
+        <Storefront color="primary" fontSize="large"></Storefront>
+       <InputBase
           placeholder="Heading"
           value={plan.heading}
           onChange={(e) => handleMarketingPlanChange(index, 'heading', e.target.value)}
           sx={{
-            width: "100%",
-            backgroundColor: "#080808",
-            borderRadius: "2rem",
-            padding: "1rem 2rem",
-            marginBottom:"1rem"
+            width: '100%',
+            backgroundColor: '#080808',
+            borderRadius: '2rem',
+            padding: '1rem 2rem',
+            marginLeft: '1rem', 
           }}
         />
+       </Box>
+        
+        <Box  display="flex" alignItems="center" marginBottom="1rem">
+          <Description color="primary" fontSize="large"></Description>
         <InputBase
           placeholder="Description"
           value={plan.description}
           onChange={(e) => handleMarketingPlanChange(index, 'description', e.target.value)}
           sx={{
-            width: "100%",
-            backgroundColor:"#080808",
-            borderRadius: "2rem",
-            padding: "1rem 2rem",
-            marginBottom:"1rem"
+            width: '100%',
+            backgroundColor: '#080808',
+            borderRadius: '2rem',
+            padding: '1rem 2rem',
+            marginLeft: '1rem', 
           }}
         />
+        </Box>
+       
       </Box>
     ))}
 
     {/* Button to add more marketing plans */}
     <IconButton onClick={addMarketingPlan}>
       <AddOutlined /> <Typography>Add marketing Plan</Typography>
+    </IconButton>
+
+    <IconButton onClick={addHighlight}>
+      <AddOutlined /> <Typography>Add Highlights</Typography>
     </IconButton>
 
        
@@ -311,55 +389,8 @@ const MyEventWidget = ({picturePath}) => {
         </Box>
     )}
     
-                  {/* Logo Picture */}
-{islogoImage && (
-        <Box  
-        border={`1px solid ${medium}`}
-        borderRadius="5px"
-        mt='1rem'
-        p='1rem'
+                  
 
-        >
-            <Dropzone
-            acceptedFiles=".jpg,.jpeg,.png"
-            multiple={false}
-            onDrop={(acceptedFiles) => setLogoImage(acceptedFiles[0])}
-          >
-            {({ getRootProps, getInputProps }) => (
-              <FlexBetween>
-                <Box
-                  {...getRootProps()}
-                  border={`2px dashed ${palette.primary.main}`}
-                  p="1rem"
-                  width="100%"
-                  sx={{ "&:hover": { cursor: "pointer" } }}
-                >
-                  <input {...getInputProps()} />
-                  {!logoimage ? (
-                    <p>Add Event Logo Here</p>
-                  ) : (
-                    <FlexBetween>
-                      <Typography>{logoimage.name}</Typography>
-                      <EditOutlined />
-                    </FlexBetween>
-                  )}
-                </Box>
-                {logoimage && (
-                  <IconButton
-                    onClick={() => setLogoImage(null)}
-                    sx={{ width: "15%" }}
-                  >
-                    <DeleteOutlined />
-                  </IconButton>
-                )}
-              </FlexBetween>
-            )}
-          </Dropzone>
-        </Box>
-    )}
-
-
-      
     <Divider sx={{margin: "1.25rem 0"}}></Divider>
 
     <FlexBetween>
@@ -371,15 +402,7 @@ const MyEventWidget = ({picturePath}) => {
                          BannerImage
                     </Typography>
         </FlexBetween>
-        <FlexBetween gap={"0.25rem"} onClick={()=> setIsLogoImage(!islogoImage)}>
-                 <ImageOutlined sx={{color: mediumMain}}></ImageOutlined>   
-                    <Typography color={mediumMain}
-                    sx={{"&:hover":{cursor:"pointer", color: medium}}}
-                    >
-                         Add Event Logo 
-                    </Typography>
-        </FlexBetween>
-
+        
         
 
        

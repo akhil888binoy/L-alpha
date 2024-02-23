@@ -8,7 +8,6 @@ export const createEvent = async (req, res) => {
       userId,
       description,
       bannerpicturePath,
-      logopicturePath,
       eventName,
       eventLocation,
       date,
@@ -16,6 +15,7 @@ export const createEvent = async (req, res) => {
       ticketSold,
       eventPhoneNumber,
       theme,
+      highlights,
       marketingPlans, // Include marketingPlans in request body
     } = req.body;
     const user = await User.findById(userId);
@@ -34,7 +34,7 @@ export const createEvent = async (req, res) => {
       description,
       userPicturePath: user.picturePath,
       bannerpicturePath,
-      logopicturePath,
+      highlights,
       ticketSold,
       likes: {},
       marketingPlans, // Add marketingPlans to the new event
@@ -79,7 +79,6 @@ export const getFeedEvents = async (req, res) => {
 
     // Construct the filter object for MongoDB query
     let filter = {
-      eventName: { $regex: search, $options: "i" },
       theme: { $in: theme },
     };
 
@@ -128,8 +127,64 @@ export const getEventDetails = async (req, res) => {
 export const getUserEvents = async (req, res) => {
   try {
     const { userId } = req.params;
-    const event = await Event.find({ userId });
-    res.status(200).json(event);
+
+    // Fetch distinct themes from the database
+    const themeOptions = await Event.distinct("theme");
+
+    const page = parseInt(req.query.page) - 1 || 0;
+    const limit = parseInt(req.query.limit) || 5;
+    const search = req.query.search || "";
+    let sort = req.query.sort || "date";
+    let theme = req.query.theme || "All";
+    let location = req.query.location || "";
+
+    // If theme is "All", include all theme options, otherwise split the provided theme string
+    theme === "All"
+      ? (theme = [...themeOptions])
+      : (theme = req.query.theme.split(","));
+
+    // Split and parse the sort parameter
+    req.query.sort ? (sort = req.query.sort.split(",")) : (sort = [sort]);
+    let sortBy = {};
+    if (sort[1]) {
+      sortBy[sort[0]] = sort[1];
+    } else {
+      sortBy[sort[0]] = "asc";
+    }
+
+    // Construct the filter object for MongoDB query
+    let filter = {
+      eventName: { $regex: search, $options: "i" },
+      theme: { $in: theme },
+      userId: userId, // Filter events by userId
+    };
+
+    // Add location filter if location is provided
+    if (location) {
+      filter.eventLocation = { $regex: location, $options: "i" };
+    }
+
+    // Query events with search, theme filter, sorting, pagination
+    const events = await Event.find(filter)
+      .sort(sortBy)
+      .skip(page * limit)
+      .limit(limit);
+
+    // Count total matching documents for pagination
+    const total = await Event.countDocuments(filter);
+
+    // Prepare response object
+    const response = {
+      error: false,
+      total,
+      page: page + 1,
+      limit,
+      themes: themeOptions,
+      events,
+    };
+
+    // Send response
+    res.status(200).json(response);
   } catch (err) {
     res.status(404).json({ message: err.message });
   }

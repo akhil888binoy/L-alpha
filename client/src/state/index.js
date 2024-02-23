@@ -4,7 +4,7 @@ const initialState = {
   mode: "light",
   user: null,
   token: null,
-  events: null,
+  events: [],
 };
 
 export const authSlice = createSlice({
@@ -33,7 +33,7 @@ export const authSlice = createSlice({
       state.events = action.payload.events;
     },
     setEvent: (state, action) => {
-      const updatedEvents = state.events.map((event) => {
+      const updatedEvents = state.events.events.map((event) => {
         if (event._id === action.payload.event._id) return action.payload.event;
         return event;
       });

@@ -6,6 +6,7 @@ const Footer = () => {
   return (
     <Box
       component="footer"
+      height={"20rem"}
       sx={{
         backgroundColor: '#080808',
         color: '#FFFFFF',
@@ -16,7 +17,8 @@ const Footer = () => {
        
       }}
     >
-        <Box>
+      <Box mt={10} display={"flex"}>
+      <Box>
             <Typography color={"primary"} fontSize={"3rem"}  fontWeight={"bold"}>Loot</Typography>
         </Box>
         <Box ml={"15rem"} display={"flex"} gap={"10rem"} >
@@ -36,6 +38,8 @@ const Footer = () => {
       </Box>
         </Box>
       
+      </Box>
+        
     </Box>
   )
 }

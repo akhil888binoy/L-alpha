@@ -15,6 +15,11 @@ const marketingPlanSchema = mongoose.Schema({
   },
 });
 
+const highlightsSchema = mongoose.Schema({
+  highlight: {
+    type: String,
+  },
+});
 const eventSchema = mongoose.Schema(
   {
     userId: {
@@ -53,13 +58,13 @@ const eventSchema = mongoose.Schema(
     location: String,
     description: String,
     bannerpicturePath: String,
-    logopicturePath: String,
     userPicturePath: String,
     ticketSold: Number,
     likes: {
       type: Map,
       of: Boolean,
     },
+    highlights: [highlightsSchema],
     marketingPlans: [marketingPlanSchema], // Array of marketing plans
   },
   { timestamps: true }

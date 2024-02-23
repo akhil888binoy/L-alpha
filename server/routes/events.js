@@ -11,7 +11,7 @@ const router = express.Router();
 
 /*READ*/
 router.get("/", getFeedEvents);
-router.get("/:userId/events", verifyToken, getUserEvents);
+router.get("/:userId/events", getUserEvents);
 router.get("/:eventId/event", getEventDetails);
 
 /*UPDATE*/

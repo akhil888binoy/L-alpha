@@ -39,7 +39,6 @@ const NavbarA = () => {
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
 
-  const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
     <FlexBetween padding="1rem 6%"  sx={{
@@ -67,15 +66,15 @@ const NavbarA = () => {
       {isNonMobileScreens ? (
         <FlexBetween gap="2rem">
           
-          <Typography color={"white"} sx={{
+          <Typography  onClick={() => navigate("/")} color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
       }} >Home</Typography>
-            <Typography color={"white"} sx={{
+            <Typography  onClick={() => navigate("/login")} color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
       }}>Events</Typography>
-            <Typography color={"white"} sx={{
+            <Typography  onClick={() => navigate("/login")} color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
       }}>Sponsors</Typography>
