@@ -5,59 +5,23 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button } from '@mui/material';
-
+import {Link} from "@mui/material";
 import UserWidget from "./UserWidget";
 import {InputBase} from "@mui/material";
 import Event from "@mui/icons-material/Event";
 import UserImage from "components/UserImage";
 import {useMediaQuery} from "@mui/material";
-import { Category, LocalActivity, LocationOn, Star } from "@mui/icons-material";
+import YouTube from "react-youtube";
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import { Category, Language, LocalActivity, LocationOn, Star } from "@mui/icons-material";
 
 const EventdetailWidget = ({eventId, bannerpicturePath }) => {
    const isNonMobile = useMediaQuery("(min-width:600px)");
  const [event, setEvent] = useState(null);
  const navigate = useNavigate();
  const token = useSelector((state)=> state.token);
- const [formData, setFormData] = useState({
-   name: '',
-   email: '',
-   message: ''
- });
- const handleChange = (event) => {
-   const { name, value } = event.target;
-   setFormData({ ...formData, [name]: value });
- };
 
- const handleSubmit = async (event) => {
-   event.preventDefault();
- 
-   // Extract coordinator's email from the event object
-   const coordinatorEmail = email; // Replace this with the actual location of the coordinator's email in your event data
- 
-   // Add your logic to send the form data to the backend
-   try {
-     const response = await fetch(`http://localhost:3001/events/${eventId}/event/email`, {
-       method: 'POST',
-       headers: {
-         'Content-Type': 'application/json'
-       },
-       body: JSON.stringify({
-         to: coordinatorEmail,
-         from: formData.email,
-         subject: `Message from ${formData.name}`,
-         text: formData.message
-       })
-     });
-     if (response.ok) {
-       console.log('Email sent successfully');
-     } else {
-       console.error('Failed to send email');
-     }
-   } catch (error) {
-     console.error('Error sending email:', error);
-   }
- };
- 
+  
  const getEvent = async()=>{
     const response = await fetch(`http://localhost:3001/events/${eventId}/event`, {
         method : "GET",
@@ -76,11 +40,17 @@ const EventdetailWidget = ({eventId, bannerpicturePath }) => {
     return null;
  }
 
+ 
+
  const {
     firstName,
     lastName,
     eventName,
+    eventCoordinator,
+    userId,
     date,
+    youtubeLink,
+    websiteLink,
     eventLocation,
     email,
     highlights,
@@ -91,10 +61,14 @@ const EventdetailWidget = ({eventId, bannerpicturePath }) => {
     ticketSold,
     marketingPlans
  }=event;
+
+
+
+
  
     return (
     <Box bgcolor={"#080808"}>
-        <Box>
+    <Box>
         <Box style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
   <img
     width={isNonMobile ? "70%":"100%"}
@@ -105,9 +79,28 @@ const EventdetailWidget = ({eventId, bannerpicturePath }) => {
   />
 </Box>
       {/* Heading Event Name */}
-        <Box textAlign={"center"} mt={"1rem"}>
-        <Typography color={"white"} variant={ isNonMobile? "h1" : "h2"}>{eventName}</Typography>
-        </Box>
+      <Box textAlign="center" mt="1rem">
+      <Typography color="white" variant={isNonMobile ? "h1" : "h2"}>{eventName}</Typography>
+      <Box display="flex" alignItems="center" justifyContent="center" mt="1rem" gap={1}>
+        <Language color={"primary"} />
+        <Typography color="white" variant={isNonMobile ? "h4" : "h7"}>
+          <Link href={websiteLink} target="_blank" rel="noopener noreferrer" color="inherit" underline="hover">
+            Website
+          </Link>
+        </Typography>
+      </Box>
+      <Box display="flex" alignItems="center" justifyContent="center" mt="1rem" gap={1}>
+      <YouTubeIcon color={"primary"}></YouTubeIcon>
+        <Typography color="white" variant={isNonMobile ? "h4" : "h7"}>
+          <Link href={youtubeLink} target="_blank" rel="noopener noreferrer" color="inherit" underline="hover">
+            Youtube Video
+          </Link>
+        </Typography>
+      </Box>
+    </Box>
+        
+
+       
 
         {/* Description , ticketsold , date , theme, location and ticketsold  */}
         <Box style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -197,55 +190,17 @@ const EventdetailWidget = ({eventId, bannerpicturePath }) => {
         </WidgetWrapper>
         </Box>
         
-        <Box display={isNonMobile? "flex" : "block"} gap={2} style={{  justifyContent: "center", alignItems: "center" }} ml={isNonMobile? "": "3.7rem"}>
-         <WidgetWrapper mt={"1rem"}  width={ isNonMobile?  "40%" : "80%"}>
-         <Typography textAlign={"center"} variant="h3">Contact Form</Typography>
-         <Box>
-         <form onSubmit={handleSubmit}>
-        <TextField
-          fullWidth
-          margin="normal"
-          variant="outlined"
-          label="Your Name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <TextField
-          fullWidth
-          margin="normal"
-          variant="outlined"
-          label="Your Email"
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <TextField
-          fullWidth
-          margin="normal"
-          variant="outlined"
-          label="Message"
-          multiline
-          rows={4}
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          
-        />
-        <Button variant="contained" color="primary" type="submit" >Send</Button>
-      </form>
-         </Box>
-         </WidgetWrapper>
+       
+      
         <WidgetWrapper mt={"1rem"}  width={ isNonMobile?  "40%" : "80%"}>      
          <Typography textAlign={"center"} variant="h3">Contact Info</Typography>
         <Box mt={2}>
         <UserImage  image={userPicturePath}></UserImage>
 
         </Box>
-         <Box mt={2} gap={2}>
+         <Box mt={2} gap={2}  onClick={() => navigate(`/profile/${userId}`)}>
 
-         <Typography fontSize={ isNonMobile? "1rem" : ""}>Event Coordinator : {firstName} {lastName}</Typography>       
+         <FlexBetween fontSize={ isNonMobile? "1rem" : ""} >Event Coordinator : {eventCoordinator}</FlexBetween>       
         <Typography color={"white"} fontSize={ isNonMobile? "1rem" : ""}> Email Id : {email} </Typography>
            <Typography color={"white" } fontSize={ isNonMobile? "1rem" : ""}> Phone Number : {eventPhoneNumber}</Typography>
             </Box>
@@ -318,12 +273,17 @@ const EventdetailWidget = ({eventId, bannerpicturePath }) => {
          </Box>
          
          </WidgetWrapper>
+         
          </Box>
+        
+         
+        
         </Box>
+       
        
         
         
-    </Box>
+   
   )
 }
 

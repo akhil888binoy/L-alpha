@@ -8,6 +8,7 @@ import EventsWidget from "scenes/widgets/EventsWidget";
 import UserWidget from "scenes/widgets/UserWidget";
 import { Link } from "react-router-dom";
 import {Button} from "@mui/material";
+import {Typography} from "@mui/material";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -29,6 +30,10 @@ const ProfilePage = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) return null;
+
+  const { firstName,
+    lastName} = user;
+ 
 
   return (
     <Box>
@@ -59,6 +64,10 @@ const ProfilePage = () => {
       </Button>
     </Link>
           <Box m="2rem 0" />
+          <Box display={"flex"} gap={1.5}>
+          <Typography fontSize={"3rem"} >{firstName} {lastName}'s</Typography> 
+          <Typography fontSize={"3rem"} color={"primary"} >  Events</Typography>
+          </Box>
           <EventsWidget userId={userId} isProfile />
         </Box>
       </Box>

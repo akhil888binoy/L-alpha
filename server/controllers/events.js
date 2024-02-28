@@ -16,6 +16,9 @@ export const createEvent = async (req, res) => {
       eventPhoneNumber,
       theme,
       highlights,
+      websiteLink,
+      eventCoordinator,
+      youtubeLink,
       marketingPlans, // Include marketingPlans in request body
     } = req.body;
     const user = await User.findById(userId);
@@ -35,7 +38,10 @@ export const createEvent = async (req, res) => {
       userPicturePath: user.picturePath,
       bannerpicturePath,
       highlights,
+      websiteLink,
+      youtubeLink,
       ticketSold,
+      eventCoordinator,
       likes: {},
       marketingPlans, // Add marketingPlans to the new event
     });
@@ -212,5 +218,69 @@ export const likeEvent = async (req, res) => {
     res.status(200).json(updatedEvent);
   } catch (err) {
     res.status(404).json({ message: err.message });
+  }
+};
+/*DELETE*/
+export const deleteEvent = async (req, res) => {
+  try {
+    const { eventId, userId } = req.params; // Assuming userId is passed as a parameter
+    // Alternatively, you can use req.query or req.body depending on how userId is passed
+
+    // Find the event by ID
+    const event = await Event.findById(eventId);
+
+    // Check if the event exists
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    // Check if the user is the owner of the event
+    if (event.userId !== userId) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to delete this event" });
+    }
+
+    // Delete the event
+    await Event.findByIdAndDelete(eventId);
+
+    res.status(200).json({ message: "Event deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+/* UPDATE */
+export const updateEvent = async (req, res) => {
+  try {
+    const { eventId } = req.params; // Extract event ID from request parameters
+    const updates = req.body; // Extract updated event details from request body
+
+    // Find the event by ID
+    const event = await Event.findById(eventId);
+
+    // Check if the event exists
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    // Check if the logged-in user is the owner of the event
+    if (event.userId !== req.user._id) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to update this event" });
+    }
+
+    // Update event details with the provided updates
+    Object.assign(event, updates);
+
+    // Save the updated event
+    await event.save();
+
+    res
+      .status(200)
+      .json({ message: "Event details updated successfully", event });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };

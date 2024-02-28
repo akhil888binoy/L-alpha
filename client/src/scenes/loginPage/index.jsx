@@ -12,21 +12,15 @@ const LoginPage = () => {
         { isNonMobileScreens
         && (
           <Box flex={1} textAlign={"center"} mt={"1rem"} >
-      <Typography fontWeight="bold" fontSize="10rem"  sx={{
-        background: "linear-gradient(90deg, #8A3192 41.94%, #37C2D9 60.03%)",
-        WebkitBackgroundClip: "text",
-        backgroundClip: "text",
-        color: "transparent",
-      }}>
-          L O
+            <Box display={"flex"} gap={3} alignItems={"center"} justifyContent={"center"}>
+            <Typography  fontSize="8rem" color={"primary"} >
+         Welcome 
         </Typography>
-        <Typography fontWeight="bold" fontSize="10rem" sx={{
-        background: "linear-gradient(90deg, #8A3192 41.94%, #37C2D9 60.03%)",
-        WebkitBackgroundClip: "text",
-        backgroundClip: "text",
-        color: "transparent",
-      }}>
-          O T
+        <Typography fontSize="8rem" >to</Typography>
+            </Box>
+     
+        <Typography  color={"primary"} fontSize="10rem" >
+         L o o t
         </Typography>
 
       </Box>

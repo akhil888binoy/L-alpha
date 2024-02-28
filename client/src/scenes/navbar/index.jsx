@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
+import {Button} from "@mui/material";
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -31,7 +32,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-
   const theme = useTheme();
   const neutralLight = theme.palette.neutral.light;
   const dark = theme.palette.neutral.dark;
@@ -67,26 +67,37 @@ const Navbar = () => {
       {isNonMobileScreens ? (
         <FlexBetween gap="2rem">
           
+          <Button onClick={() => navigate(`/home`)} >
           <Typography color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
       }} >Home</Typography>
-            <Typography color={"white"} sx={{
+          </Button>
+         
+         <Button onClick={() => navigate(`/home`)}>
+         <Typography color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
       }}>Events</Typography>
-            <Typography color={"white"} sx={{
+         </Button>
+           
+           <Button><Typography color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
-      }}>Sponsors</Typography>
+      }}>Sponsors</Typography></Button>
+            
+            <Button>
             <Typography color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
       }}>About Us</Typography>
-            <Typography color={"white"} sx={{
+            </Button>
+           
+           <Button> <Typography color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
-      }}>Terms & Conditions</Typography>
+      }}>Terms & Conditions</Typography></Button>
+           
           <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}

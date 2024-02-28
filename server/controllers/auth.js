@@ -13,6 +13,9 @@ export const register = async (req, res) => {
       picturePath,
       friends,
       location,
+      twitterLink,
+      linkedinLink,
+      phoneNumber,
     } = req.body;
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
@@ -24,6 +27,9 @@ export const register = async (req, res) => {
       picturePath,
       friends,
       location,
+      twitterLink,
+      linkedinLink,
+      phoneNumber,
       viewdProfile: Math.floor(Math.random() * 1000),
       impressions: Math.floor(Math.random() * 1000),
     });

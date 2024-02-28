@@ -23,6 +23,9 @@ const registerSchema = yup.object().shape({
   password: yup.string().required("required"),
   location: yup.string().required("required"),
   picture: yup.string().required("required"),
+  twitterLink: yup.string().required("required"),
+  linkedinLink:yup.string().required("required"),
+  phoneNumber: yup.string().required("required"),
 });
 
 const loginSchema = yup.object().shape({
@@ -36,7 +39,9 @@ const initialValuesRegister = {
   email: "",
   password: "",
   location: "",
- 
+  phoneNumber:"",
+  twitterLink:"",
+  linkedinLink:"",
   picture: "",
 };
 
@@ -197,6 +202,89 @@ const Form = () => {
                   name="location"
                   error={Boolean(touched.location) && Boolean(errors.location)}
                   helperText={touched.location && errors.location}
+                  sx={{ gridColumn: "span 4" ,
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: 'primary.main', // Set the border color to white
+                    },
+                    '&:hover fieldset': {
+                      borderColor: 'primary.main', // Set the border color to white on hover
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: 'primary.main', // Set the border color to white when focused
+                    },
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: 'primary.main', // Set the label text color to white
+                  },
+                  '& input': {
+                    color: 'white', // Set the text color inside the TextField to white
+                  },}}
+                />
+                
+
+                <TextField
+                  label="Phone Number"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.phoneNumber}
+                  name="phoneNumber"
+                  error={Boolean(touched.phoneNumber) && Boolean(errors.phoneNumber)}
+                  helperText={touched.phoneNumber && errors.phoneNumber}
+                  sx={{ gridColumn: "span 4" ,
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: 'primary.main', // Set the border color to white
+                    },
+                    '&:hover fieldset': {
+                      borderColor: 'primary.main', // Set the border color to white on hover
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: 'primary.main', // Set the border color to white when focused
+                    },
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: 'primary.main', // Set the label text color to white
+                  },
+                  '& input': {
+                    color: 'white', // Set the text color inside the TextField to white
+                  },}}
+                />
+                 <TextField
+                  label="Twitter Link"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.twitterLink}
+                  name="twitterLink"
+                  error={Boolean(touched.twitterLink) && Boolean(errors.twitterLink)}
+                  helperText={touched.twitterLink && errors.twitterLink}
+                  sx={{ gridColumn: "span 4" ,
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: 'primary.main', // Set the border color to white
+                    },
+                    '&:hover fieldset': {
+                      borderColor: 'primary.main', // Set the border color to white on hover
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: 'primary.main', // Set the border color to white when focused
+                    },
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: 'primary.main', // Set the label text color to white
+                  },
+                  '& input': {
+                    color: 'white', // Set the text color inside the TextField to white
+                  },}}
+                />
+                 <TextField
+                  label="Linkedin Link"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.linkedinLink}
+                  name="linkedinLink"
+                  error={Boolean(touched.linkedinLink) && Boolean(errors.linkedinLink)}
+                  helperText={touched.linkedinLink && errors.linkedinLink}
                   sx={{ gridColumn: "span 4" ,
                   '& .MuiOutlinedInput-root': {
                     '& fieldset': {

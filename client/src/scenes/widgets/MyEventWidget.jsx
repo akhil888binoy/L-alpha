@@ -6,7 +6,10 @@ import {
     GifBoxOutlined,
     ImageOutlined,
     MicOutlined,
-    MoreHorizOutlined
+    MoreHorizOutlined,
+    YouTube,
+    Language,
+    AccountCircle
 } from "@mui/icons-material";
 import { Box, Divider, Typography, InputBase, useTheme, Button , IconButton , useMediaQuery } from "@mui/material";
 import Dropzone from "react-dropzone";
@@ -28,10 +31,13 @@ import { Celebration } from "@mui/icons-material";
 import { MonetizationOn } from "@mui/icons-material";
 import { Storefront } from "@mui/icons-material";
 import { Description } from "@mui/icons-material";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 
 const MyEventWidget = ({picturePath}) => {
     const dispatch = useDispatch();
+    const [openSnackbar, setOpenSnackbar] = useState(false);
     const [isImage, setIsImage] = useState(false);
     const [image, setImage] = useState(null);
     const [description, setDescription] = useState("");    
@@ -42,6 +48,9 @@ const MyEventWidget = ({picturePath}) => {
     const [eventPhoneNumber, setEventPhoneNumber]= useState("");  
     const[eventTheme, setEventTheme] = useState("");
     const[eventEmail, setEventEmail] = useState("");
+    const [websiteLink, setWebsiteLink] = useState("");
+    const [ youtubeLink, setYoutubeLink] = useState("");
+    const [eventCoordinator, setEventCoordinator] = useState("");
     const {palette} = useTheme();
     const {_id} = useSelector((state)=> state.user);
     const token = useSelector((state)=> state.token);
@@ -71,7 +80,28 @@ const addHighlight=()=>{
       setHighlights(updatedHighlights);
     }
 
+    const handleSnackbarOpen = () => {
+      setOpenSnackbar(true);
+    };
+    const removeHighlight = (index) => {
+      const updatedHighlights = [...highlights];
+      updatedHighlights.splice(index, 1); // Remove the highlight at the specified index
+      setHighlights(updatedHighlights);
+  };
+  const removeMarketingPlan = (index) => {
+    const updatedPlans = [...marketingPlans];
+    updatedPlans.splice(index, 1); // Remove the marketing plan at the specified index
+    setMarketingPlans(updatedPlans);
+};
 
+    const handleSnackbarClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+    
+      setOpenSnackbar(false);
+    };
+    
     const handleEvent = async() =>{
       
         const formData = new FormData();
@@ -84,6 +114,9 @@ const addHighlight=()=>{
         formData.append("theme", eventTheme);
         formData.append("email", eventEmail);
         formData.append("ticketSold", ticketSold);
+        formData.append("youtubeLink", youtubeLink);
+        formData.append("websiteLink", websiteLink);
+        formData.append("eventCoordinator", eventCoordinator);
            // Append marketing plans to formData
            marketingPlans.forEach((plan, index) => {
             formData.append(`marketingPlans[${index}][budget]`, plan.budget);
@@ -119,18 +152,21 @@ const addHighlight=()=>{
         setEventEmail("");
         setEventTheme("");
         setTicketSold("");
+        setWebsiteLink("");
+        setYoutubeLink("");
+        setEventCoordinator("");
         setMarketingPlans([]); // Reset marketing plans after submission
         setHighlights([]);
-       
+        handleSnackbarOpen();
 
     }
 
    
   return (
-    <WidgetWrapper >
+    <WidgetWrapper width={isNonMobileScreens? "50%" : "100%"}>
     <Box display={"flex"} justifyContent="center" alignItems="center" gap={5}  >
         <UserImage image={picturePath}></UserImage>
-        <Typography  fontSize={"4rem"}>Event Form</Typography>
+        <Typography  fontSize={"3rem"}>Event Form</Typography>
     </Box>
    
     <Box mt={2} display="flex" alignItems="center"  marginBottom="1rem" >
@@ -139,6 +175,23 @@ const addHighlight=()=>{
         placeholder="write down event Name"
         onChange={(e) => setEventName(e.target.value)}
         value={eventName}
+        sx={{
+          width: '100%',
+          backgroundColor: '#080808',
+          borderRadius: '2rem',
+          padding: '1rem 2rem',
+          marginLeft: '1rem', // Add margin to create space between the icon and the input
+
+        }}
+      />
+    </Box>
+
+    <Box mt={2} display="flex" alignItems="center"  marginBottom="1rem" >
+      <AccountCircle color="primary" fontSize="large" />
+      <InputBase
+        placeholder="write down event coordinator's name"
+        onChange={(e) => setEventCoordinator(e.target.value)}
+        value={eventCoordinator}
         sx={{
           width: '100%',
           backgroundColor: '#080808',
@@ -261,13 +314,45 @@ const addHighlight=()=>{
         }}
       />
     </Box>
+
+    <Box display="flex" alignItems="center" marginBottom="1rem">
+      <YouTube color="primary" fontSize="large"/>
+      <InputBase
+        placeholder="Youtube Link"
+        onChange={(e) => setYoutubeLink(e.target.value)}
+        value={youtubeLink}
+        sx={{
+          width: '100%',
+          backgroundColor: '#080808',
+          borderRadius: '2rem',
+          padding: '1rem 2rem',
+          marginLeft: '1rem', // Add margin to create space between the icon and the input
+        }}
+      />
+    </Box>
+
+    <Box display="flex" alignItems="center" marginBottom="1rem">
+      <Language color="primary" fontSize="large"/>
+      <InputBase
+        placeholder="Website Link"
+        onChange={(e) => setWebsiteLink(e.target.value)}
+        value={websiteLink}
+        sx={{
+          width: '100%',
+          backgroundColor: '#080808',
+          borderRadius: '2rem',
+          padding: '1rem 2rem',
+          marginLeft: '1rem', // Add margin to create space between the icon and the input
+        }}
+      />
+    </Box>
         
         {/* Highlights input */}
         {highlights.map((highlight, index) => (
         <Box key={index} display="flex" alignItems="center" marginBottom="1rem">
           <Star color="primary" fontSize="large" />
           <InputBase
-            placeholder="highlight"
+            placeholder={`Event highlight ${index + 1}`}
             value={highlight.highlight}
             onChange={(e) => handleHighlightChange(index, 'highlight', e.target.value)}
             sx={{
@@ -278,15 +363,24 @@ const addHighlight=()=>{
               marginLeft: '1rem', // Add margin to create space between the icon and the input
             }}
           />
+           <IconButton onClick={() => removeHighlight(index)}>
+                    <DeleteOutlined />
+                </IconButton>
         </Box>
       ))}
 
         {marketingPlans.map((plan, index) => (
       <Box key={index}>
-        <Box  display="flex" alignItems="center" marginBottom="1rem">
+        <Box display={"flex"} textAlign={"center"} gap={1}>
+          <Typography fontSize={"1.5rem"} >Marketing Plan {index+1}</Typography>
+        <IconButton onClick={() => removeMarketingPlan(index)}>
+                        <DeleteOutlined />
+                    </IconButton>
+        </Box>
+        <Box  display="flex" alignItems="center" marginBottom="1rem" mt={2}>
           <MonetizationOn color="primary" fontSize="large"></MonetizationOn>
         <InputBase
-          placeholder="Budget"
+          placeholder={`Budget of Marketing Plan ${index + 1}`}
           value={plan.budget}
           onChange={(e) => handleMarketingPlanChange(index, 'budget', e.target.value)}
           sx={{
@@ -301,7 +395,7 @@ const addHighlight=()=>{
        <Box  display="flex" alignItems="center" marginBottom="1rem">
         <Storefront color="primary" fontSize="large"></Storefront>
        <InputBase
-          placeholder="Heading"
+           placeholder={`Heading of Marketing Plan ${index + 1}`}
           value={plan.heading}
           onChange={(e) => handleMarketingPlanChange(index, 'heading', e.target.value)}
           sx={{
@@ -317,7 +411,7 @@ const addHighlight=()=>{
         <Box  display="flex" alignItems="center" marginBottom="1rem">
           <Description color="primary" fontSize="large"></Description>
         <InputBase
-          placeholder="Description"
+           placeholder={`Description of Marketing Plan ${index + 1}`}
           value={plan.description}
           onChange={(e) => handleMarketingPlanChange(index, 'description', e.target.value)}
           sx={{
@@ -329,18 +423,19 @@ const addHighlight=()=>{
           }}
         />
         </Box>
+        
        
       </Box>
     ))}
 
     {/* Button to add more marketing plans */}
-    <IconButton onClick={addMarketingPlan}>
-      <AddOutlined /> <Typography>Add marketing Plan</Typography>
-    </IconButton>
+    <Button onClick={addMarketingPlan} >
+      <AddOutlined /><Typography>Add event marketing Plan</Typography>
+    </Button>
 
-    <IconButton onClick={addHighlight}>
-      <AddOutlined /> <Typography>Add Highlights</Typography>
-    </IconButton>
+    <Button onClick={addHighlight}   >
+      <AddOutlined /> <Typography >Add Event Highlights</Typography>
+    </Button>
 
        
     {isImage && (
@@ -420,6 +515,21 @@ const addHighlight=()=>{
           POST
         </Button>
     </FlexBetween>
+    <Snackbar
+  open={openSnackbar}
+  autoHideDuration={6000}
+  onClose={handleSnackbarClose}
+>
+  <MuiAlert
+    elevation={6}
+    variant="filled"
+    onClose={handleSnackbarClose}
+    severity="success"
+  >
+    Event created successfully go to home page
+  </MuiAlert>
+</Snackbar>
+
     </WidgetWrapper>
   )
 }

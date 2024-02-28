@@ -8,7 +8,7 @@ import {
   MenuItem,
   FormControl,
   useTheme,
-  useMediaQuery,
+  useMediaQuery, Button
 } from "@mui/material";
 import {
   Search,
@@ -66,27 +66,37 @@ const NavbarA = () => {
       {isNonMobileScreens ? (
         <FlexBetween gap="2rem">
           
-          <Typography  onClick={() => navigate("/")} color={"white"} sx={{
+          <Button onClick={() => navigate(`/login`)} >
+          <Typography color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
-      }} >Home</Typography>
-            <Typography  onClick={() => navigate("/login")} color={"white"} sx={{
+      }} >Login</Typography>
+          </Button>
+          <Button  onClick={() => navigate("/login")}>
+          <Typography  color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
       }}>Events</Typography>
+          </Button>
+            
             <Typography  onClick={() => navigate("/login")} color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
       }}>Sponsors</Typography>
-            <Typography color={"white"} sx={{
+      <Button>
+      <Typography color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
       }}>About Us</Typography>
-            <Typography color={"white"} sx={{
+      </Button>
+           <Button>
+           <Typography color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
       }}>Terms & Conditions</Typography>
          
+           </Button>
+           
              
         </FlexBetween>
       ) : (

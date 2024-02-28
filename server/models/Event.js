@@ -59,7 +59,10 @@ const eventSchema = mongoose.Schema(
     description: String,
     bannerpicturePath: String,
     userPicturePath: String,
+    websiteLink: String,
+    youtubeLink: String,
     ticketSold: Number,
+    eventCoordinator: String,
     likes: {
       type: Map,
       of: Boolean,

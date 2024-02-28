@@ -79,24 +79,6 @@ const LandingPageM = () => {
        Sponsor an Event
       </Typography>
     </Box>
-    <Box
-      height={"10rem"}
-      width={"20rem"}
-      
-      mb={2}
-      borderRadius={6}
-      mt={"1rem"}
-      display="flex"
-      bgcolor={"#111111"}
-      border="0.1rem solid #1E1E1E"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <EmojiEvents color="primary" sx={{ fontSize: "3rem" }} />
-      <Typography ml={"0.5rem"} fontSize={"2rem"}>
-        Sponsor a Talent 
-      </Typography>
-    </Box>
       </Box>
     </Box>
         </Box>

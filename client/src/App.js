@@ -12,6 +12,7 @@ import EventDetailsPage from "scenes/eventdetailsPage";
 import MainLandingPage from "scenes/MainLandingPage";
 import MainFooter from "scenes/MainFooter";
 import EventForm from "scenes/eventForm";
+import DeletePage from "scenes/deletePage";
 function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -42,6 +43,10 @@ function App() {
             <Route
               path="/profile/:userId"
               element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/deletePage"
+              element={isAuth ? <DeletePage /> : <Navigate to="/" />}
             />
           </Routes>
           <MainFooter></MainFooter>

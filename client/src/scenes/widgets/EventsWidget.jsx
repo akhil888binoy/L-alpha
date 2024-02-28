@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setEvents } from "state";
 import EventWidget from "./EventWidget";
-import {Typography} from "@mui/material";
+import {Typography, Button} from "@mui/material";
 import Search from "components/Search";
 import Sort from "components/Sort";
 import Theme from "components/Theme";
 import {useMediaQuery} from "@mui/material";
 import { Box } from "@mui/material";
 import CustomPagination from "components/CustomPagination";
+
 
 const EventsWidget = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
@@ -17,15 +18,26 @@ const EventsWidget = ({ userId, isProfile = false }) => {
   const [sort, setSort] = useState(JSON.parse(localStorage.getItem("eventSort")) || { sort: "date", order: "desc" });
   const [filterTheme, setFilterTheme] = useState(JSON.parse(localStorage.getItem("eventFilterTheme")) || []);
   const [filterLocation, setFilterLocation] = useState(JSON.parse(localStorage.getItem("eventFilterLocation")) || "");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(parseInt(localStorage.getItem("eventPage")) || 1);
   const [search, setSearch] = useState("");
   const isNonMobile = useMediaQuery("(min-width:600px)");
+
+ 
+  
+  
+  const clearFilters = () => {
+    setFilterTheme([]); // Clear filterTheme state
+    setFilterLocation(""); // Optionally clear location filter as well
+    setPage(1); // Reset page to 1 when filters are cleared
+    localStorage.removeItem("eventFilterTheme"); // Remove stored filterTheme from localStorage
+    localStorage.removeItem("eventFilterLocation"); // Optionally remove stored filterLocation as well
+  };
 
   useEffect(() => {
     const getEvents = async () => {
       try {
         const filterThemeString = filterTheme.join(",");
-
+  
         const response = await fetch(
           `http://localhost:3001/events?page=${page}&sort=${sort.sort},${sort.order}&theme=${filterThemeString}&search=${search}&location=${filterLocation}`, // Include location in the API request
           {
@@ -33,15 +45,15 @@ const EventsWidget = ({ userId, isProfile = false }) => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-
+  
         const data = await response.json();
-
+  
         dispatch(setEvents({ events: data }));
       } catch (error) {
         console.error("Error fetching events:", error);
       }
     };
-
+  
     const getUserEvents = async () => {
       const filterThemeString = filterTheme.join(",");
       const response = await fetch(
@@ -54,13 +66,14 @@ const EventsWidget = ({ userId, isProfile = false }) => {
       const data = await response.json();
       dispatch(setEvents({ events: data }));
     };
-
+  
     if (isProfile) {
       getUserEvents();
     } else {
       getEvents();
     }
   }, [sort, filterTheme, filterLocation, page, search, userId, isProfile, token]);
+  
 
   const handleSortChange = (newSort) => {
     setSort(newSort);
@@ -82,6 +95,8 @@ const EventsWidget = ({ userId, isProfile = false }) => {
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
+    localStorage.setItem("eventPage", newPage);
+   
   };
 
   return (
@@ -93,8 +108,22 @@ const EventsWidget = ({ userId, isProfile = false }) => {
           <Sort sort={sort} setSort={handleSortChange} />
           </Box>
           <Box textAlign={"center"}>
-            <Typography fontSize={"5rem"} color={"primary"}> Filters </Typography>
+            <Typography fontSize={isNonMobile? "5rem" : "3rem"} color={"primary"} fontWeight={"bold"}> Loot </Typography>
           </Box>
+          <Button variant="outlined" onClick={clearFilters}>
+            <Box>
+            <Box>
+            <Typography fontSize={"1.5rem"}>  Clear </Typography>
+            </Box>
+            <Box>
+            <Typography>Filters</Typography>
+            </Box>
+            </Box>
+           
+         
+          
+          </Button>
+
         </Box>
         <Box mt={2}>
         <Search
