@@ -13,6 +13,7 @@ import MainLandingPage from "scenes/MainLandingPage";
 import MainFooter from "scenes/MainFooter";
 import EventForm from "scenes/eventForm";
 import DeletePage from "scenes/deletePage";
+import EditForm from "scenes/editForm";
 function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -47,6 +48,10 @@ function App() {
             <Route
               path="/deletePage"
               element={isAuth ? <DeletePage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/events/:eventId/edit"
+              element={isAuth ? <EditForm /> : <Navigate to="/" />}
             />
           </Routes>
           <MainFooter></MainFooter>

@@ -20,7 +20,13 @@ const EventdetailWidget = ({eventId, bannerpicturePath }) => {
  const [event, setEvent] = useState(null);
  const navigate = useNavigate();
  const token = useSelector((state)=> state.token);
+ const loggedInUserId = useSelector((state) => state.user._id);
 
+  // Function to handle edit button click
+  const handleEditEvent = () => {
+    // Redirect to edit form with event ID as URL parameter
+    navigate(`/events/${eventId}/edit`);
+  };
   
  const getEvent = async()=>{
     const response = await fetch(`http://localhost:3001/events/${eventId}/event`, {
@@ -98,6 +104,23 @@ const EventdetailWidget = ({eventId, bannerpicturePath }) => {
         </Typography>
       </Box>
     </Box>
+    {userId === loggedInUserId && (
+                    <Button 
+                    size="small"
+                        variant="outlined" 
+                        style={{
+                            borderRadius: 6,
+                            padding: "0.5rem 1rem",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }} 
+                        onClick={handleEditEvent}
+                    >
+                        <Typography color="primary" fontSize={ "1rem" } >
+                           Edit
+                        </Typography>
+                    </Button>
+                )}
         
 
        

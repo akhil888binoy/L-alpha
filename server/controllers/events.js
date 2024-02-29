@@ -265,11 +265,6 @@ export const updateEvent = async (req, res) => {
     }
 
     // Check if the logged-in user is the owner of the event
-    if (event.userId !== req.user._id) {
-      return res
-        .status(403)
-        .json({ message: "You are not authorized to update this event" });
-    }
 
     // Update event details with the provided updates
     Object.assign(event, updates);
