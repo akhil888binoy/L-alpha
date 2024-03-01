@@ -65,7 +65,7 @@ const ProfilePage = () => {
     </Link>
           <Box m="2rem 0" />
           <Box display={"flex"} gap={1.5}>
-          <Typography fontSize={"3rem"} >{firstName} {lastName}'s</Typography> 
+          <Typography fontSize={"3rem"} >{firstName}'s</Typography> 
           <Typography fontSize={"3rem"} color={"primary"} >  Events</Typography>
           </Box>
           <EventsWidget userId={userId} isProfile />

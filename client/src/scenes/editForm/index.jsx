@@ -15,7 +15,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import {Grid} from "@mui/material";
 import { UseMediaQuery } from "@mui/material";
 import Navbar from "scenes/navbar";
-import { Category, Celebration, Language, LocalActivity, LocationOn, Star } from "@mui/icons-material";
+import { AccountCircle, BorderColor, Category, Celebration, Description, Email, InsertInvitation, Language, LocalActivity, LocalPhone, LocationOn, MonetizationOn, Star, Storefront } from "@mui/icons-material";
 
 const EditForm = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -101,6 +101,18 @@ const EditForm = () => {
         });
     };
 
+    const handleDeleteMarketingPlan = (index) => {
+        const updatedMarketingPlans = [...event.marketingPlans];
+        updatedMarketingPlans.splice(index, 1);
+        setEvent({ ...event, marketingPlans: updatedMarketingPlans });
+    };
+
+    const handleDeleteHighlight = (index) => {
+        const updatedHighlights = [...event.highlights];
+        updatedHighlights.splice(index, 1);
+        setEvent({ ...event, highlights: updatedHighlights });
+    };
+
     const {
         firstName,
         lastName,
@@ -132,7 +144,7 @@ const EditForm = () => {
       justifyContent={"space-between"}
       bgcolor={"#080808"}
       >
- <WidgetWrapper width={"40%"}>
+ <WidgetWrapper width={isNonMobile? "50%" : "100%"}>
             <Box gap="1rem">
                 <Box>
                 <Typography  fontSize={"3rem"}>Edit Event</Typography>
@@ -140,15 +152,14 @@ const EditForm = () => {
                         <>
                             {/* Display editable fields only if not in edit mode */}
                              {/* Display editable fields only if not in edit mode */}
-                             <Box className="main" sx={{display: "flex",
+                             <Box mt={3} className="main" sx={{display: "flex",
                              flexDirection: "column",
                              gap: "1rem" }}>
                              <Box sx={{
                         borderRadius: "2rem",
                         bgcolor: "#080808",
-                        padding: "0.5rem 1rem",
+                        padding: "1rem 2rem",
                         display: "inline-flex",
-                       
                         overflow: "hidden",
                         whiteSpace: "nowrap",
                         border:"0.1rem solid  #1E1E1E",
@@ -156,14 +167,14 @@ const EditForm = () => {
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2} >
                              <Celebration color="primary"  />
-                             <Typography variant="h5" color="grey" fontWeight="500">  Event Name : </Typography>
-                             <Typography variant="h4"  fontWeight="500">  {eventName}</Typography>
+                             <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">  Event Name : </Typography>
+                             <Typography variant={isNonMobile? "h5": ""}  fontWeight="500">  {eventName}</Typography>
                              </Box>
 
                              <Box sx={{
                         borderRadius: "2rem",
                         bgcolor: "#080808",
-                        padding: "0.5rem 1rem",
+                        padding: "1rem 2rem",
                         display: "inline-flex",
                        
                         overflow: "hidden",
@@ -172,14 +183,14 @@ const EditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <Celebration color="primary"  />
-                             <Typography variant="h5" color="grey" fontWeight="500"> Event Coordinator: </Typography>
-                             <Typography variant="h4"  fontWeight="500"> {eventCoordinator}</Typography>
+                            <AccountCircle color="primary"  />
+                             <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500"> Event Coordinator : </Typography>
+                             <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {eventCoordinator}</Typography>
                              </Box>
                              <Box sx={{
                         borderRadius: "2rem",
                         bgcolor: "#080808",
-                        padding: "0.5rem 1rem",
+                        padding: "1rem 2rem",
                         display: "inline-flex",
                        
                         overflow: "hidden",
@@ -188,15 +199,15 @@ const EditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <Celebration color="primary"  />
-                             <Typography variant="h5" color="grey" fontWeight="500">Date: </Typography>
-                             <Typography variant="h4"  fontWeight="500"> {date}</Typography>
+                            <InsertInvitation color="primary"  />
+                             <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Date : </Typography>
+                             <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {date}</Typography>
                              </Box>
 
                              <Box sx={{
                         borderRadius: "2rem",
                         bgcolor: "#080808",
-                        padding: "0.5rem 1rem",
+                        padding: "1rem 2rem",
                         display: "inline-flex",
                        
                         overflow: "hidden",
@@ -205,15 +216,15 @@ const EditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <Celebration color="primary"  />
-                             <Typography variant="h5" color="grey" fontWeight="500">Youtube Link: </Typography>
-                             <Typography variant="h4"  fontWeight="500"> {youtubeLink}</Typography>
+                            <YouTubeIcon color="primary"  />
+                             <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Youtube Link : </Typography>
+                             <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {youtubeLink}</Typography>
                              </Box>
 
                              <Box sx={{
                         borderRadius: "2rem",
                         bgcolor: "#080808",
-                        padding: "0.5rem 1rem",
+                        padding: "1rem 2rem",
                         display: "inline-flex",
                         
                         overflow: "hidden",
@@ -222,15 +233,15 @@ const EditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <Celebration color="primary"  />
-                             <Typography variant="h5" color="grey" fontWeight="500">Website Link: </Typography>
-                             <Typography variant="h4"  fontWeight="500"> {websiteLink}</Typography>
+                            <Language color="primary"  />
+                             <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Website Link : </Typography>
+                             <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {websiteLink}</Typography>
                              </Box>
 
                              <Box sx={{
                         borderRadius: "2rem",
                         bgcolor: "#080808",
-                        padding: "0.5rem 1rem",
+                        padding: "1rem 2rem",
                         display: "inline-flex",
                        
                         overflow: "hidden",
@@ -239,15 +250,15 @@ const EditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <Celebration color="primary"  />
-                             <Typography variant="h5" color="grey" fontWeight="500">Event Location: </Typography>
-                             <Typography variant="h4"  fontWeight="500"> {eventLocation}</Typography>
+                            <LocationOn color="primary"  />
+                             <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Event Location : </Typography>
+                             <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {eventLocation}</Typography>
                              </Box>
 
                              <Box sx={{
                         borderRadius: "2rem",
                         bgcolor: "#080808",
-                        padding: "0.5rem 1rem",
+                        padding: "1rem 2rem",
                         display: "inline-flex",
                        
                         overflow: "hidden",
@@ -256,15 +267,15 @@ const EditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <Celebration color="primary"  />
-                             <Typography variant="h5" color="grey" fontWeight="500">Phone Number: </Typography>
-                             <Typography variant="h4"  fontWeight="500"> {eventPhoneNumber}</Typography>
+                            <LocalPhone color="primary"  />
+                             <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Phone Number : </Typography>
+                             <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {eventPhoneNumber}</Typography>
                              </Box>
 
                              <Box sx={{
                         borderRadius: "2rem",
                         bgcolor: "#080808",
-                        padding: "0.5rem 1rem",
+                        padding: "1rem 2rem",
                         display: "inline-flex",
                        
                         overflow: "hidden",
@@ -273,14 +284,14 @@ const EditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <Celebration color="primary"  />
-                             <Typography variant="h5" color="grey" fontWeight="500">Description: </Typography>
-                             <Typography variant="h4"  fontWeight="500"> {description}</Typography>
+                            <BorderColor color="primary"  />
+                             <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Description : </Typography>
+                             <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {description}</Typography>
                              </Box>
                              <Box sx={{
                         borderRadius: "2rem",
                         bgcolor: "#080808",
-                        padding: "0.5rem 1rem",
+                        padding: "1rem 2rem",
                         display: "inline-flex",
                       
                         overflow: "hidden",
@@ -289,14 +300,14 @@ const EditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <Celebration color="primary"  />
-                             <Typography variant="h5" color="grey" fontWeight="500">Ticket Sold </Typography>
-                             <Typography variant="h4"  fontWeight="500"> {ticketSold}</Typography>
+                            <LocalActivity color="primary"  />
+                             <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Ticket Sold : </Typography>
+                             <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {ticketSold}</Typography>
                              </Box>
                              <Box sx={{
                         borderRadius: "2rem",
                         bgcolor: "#080808",
-                        padding: "0.5rem 1rem",
+                        padding: "1rem 2rem",
                         display: "inline-flex",
                        
                         overflow: "hidden",
@@ -305,14 +316,14 @@ const EditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <Celebration color="primary"  />
-                             <Typography variant="h5" color="grey" fontWeight="500">Theme: </Typography>
-                             <Typography variant="h4"  fontWeight="500"> {theme}</Typography>
+                            <Category color="primary"  />
+                             <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Theme : </Typography>
+                             <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {theme}</Typography>
                              </Box>
                              <Box sx={{
                         borderRadius: "2rem",
                         bgcolor: "#080808",
-                        padding: "0.5rem 1rem",
+                        padding: "1rem 2rem",
                         display: "inline-flex",
                        
                         overflow: "hidden",
@@ -321,17 +332,17 @@ const EditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <Celebration color="primary"  />
-                             <Typography variant="h5" color="grey" fontWeight="500">Email: </Typography>
-                             <Typography variant="h4"  fontWeight="500"> {email}</Typography>
+                            <Email color="primary"  />
+                             <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Email : </Typography>
+                             <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {email}</Typography>
                              </Box>
                              
-                            <Typography variant="h4" color={dark} fontWeight="500">Highlights:</Typography>
+                            <Typography variant={isNonMobile? "h4": "h5"} color={dark} fontWeight="500">Highlights :</Typography>
                             {highlights.map((highlight, index) => (
                                    <Box sx={{
                                     borderRadius: "2rem",
                                     bgcolor: "#080808",
-                                    padding: "0.5rem 1rem",
+                                    padding: "1rem 2rem",
                                     display: "inline-flex",
                                    
                                     overflow: "hidden",
@@ -340,35 +351,46 @@ const EditForm = () => {
                                     textOverflow: "ellipsis",
                                     boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                                 }} gap={2}>
-                                        <Celebration color="primary"  />
-                                         <Typography variant="h4"  fontWeight="500"> {highlight.highlight}</Typography>
+                                        <Star color="primary"  />
+                                         <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {highlight.highlight}</Typography>
                                          </Box>
                 
                             ))}
-                            <Typography variant="h4" color={dark} fontWeight="500">Marketing Plans:</Typography>
+                            <Typography variant={isNonMobile? "h4": "h5"} color={dark} fontWeight="500">Marketing Plans :</Typography>
                             {marketingPlans.map((plan, index) => (
 
 <Box sx={{
-    borderRadius: "2rem",
+    borderRadius: "1rem",
     bgcolor: "#080808",
-    padding: "0.5rem 1rem",
-   
+    padding: "1rem 2rem",
     overflow: "hidden",
     whiteSpace: "nowrap",
     border:"0.1rem solid  #1E1E1E",
     textOverflow: "ellipsis",
     boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
-}} gap={2} >
-        <Celebration color="primary"  />
-        <Typography key={index} variant="h4" color={dark} fontWeight="500">
-            Budget: {plan.budget}
+}} >
+    <Box display={"flex"} gap={1}  alignItems="center">
+    <MonetizationOn color="primary"  />
+    <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500"> Budget : </Typography>
+        <Typography key={index} variant={isNonMobile? "h4": ""} color={dark} fontWeight="500">
+            {plan.budget}
         </Typography>
-        <Typography key={index} variant="h4" color={dark} fontWeight="500">
-            Heading: {plan.heading}
+    </Box>
+        <Box display={"flex"} gap={1} mt={1}  alignItems="center">
+            <Storefront color="primary"></Storefront>
+            <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Heading :  </Typography>
+        <Typography key={index} variant={isNonMobile? "h5": ""} color={dark} fontWeight="500"> {plan.heading}</Typography>
+        </Box>
+
+        <Box display={"flex"} gap={1} mt={1}  alignItems="center">
+            <Description color="primary"></Description>
+            <Typography variant="h5" color="grey" fontWeight="500">Description : </Typography>
+        <Typography key={index}  color={dark} fontWeight="500">
+            {plan.description}
         </Typography>
-        <Typography key={index} variant="h4" color={dark} fontWeight="500">
-            Description: {plan.description}
-        </Typography>
+        </Box>
+        
+      
 
          </Box>
          
@@ -381,54 +403,141 @@ const EditForm = () => {
                         <>
                             <Box>
                                 {/* Input fields for editing */}
-                                <TextField name="eventName" label="First Name" value={eventName} onChange={handleChange} />
-                                <TextField name="eventCoordinator" label="Event Coordinator" value={eventCoordinator} onChange={handleChange} />
-                                <TextField name="date" label="Date" value={date} onChange={handleChange} />
-                                <TextField name="yotubeLink" label="Yotube Link" value={youtubeLink} onChange={handleChange} />
-                                <TextField name="websiteLink" label="Website Link" value={websiteLink} onChange={handleChange} />
-                                <TextField name="eventLocation" label=" Event Location" value={eventLocation} onChange={handleChange} />
-                                <TextField name="eventPhoneNumber" label=" Event Contact Number" value={eventPhoneNumber} onChange={handleChange} />
-                                <TextField name="description" label=" Event Description" value={description} onChange={handleChange} />
-                                <TextField name="ticketSold" label="Ticket Sold" value={ticketSold} onChange={handleChange} />
-                                <TextField name="theme" label="Theme of the Event" value={theme} onChange={handleChange} />
-                                <TextField name="email" label="Email" value={email} onChange={handleChange} />
+
+                                <Box mt={3} className="main" sx={{display: "flex",
+                             flexDirection: "column",
+                             gap: "1rem" }}> 
+                             <Box alignItems={"center"} display={"flex"} gap={1}>
+                             <Celebration color="primary"  />
+                             <TextField  name="eventName" fullWidth label="Event Name" value={eventName} onChange={handleChange} />
+                             </Box>
+                             <Box alignItems={"center"} display={"flex"} gap={1}>
+                                <AccountCircle color="primary"></AccountCircle>
+                             <TextField name="eventCoordinator" fullWidth label="Event Coordinator" value={eventCoordinator} onChange={handleChange} />
+                             </Box>
+                             <Box alignItems={"center"} display={"flex"} gap={1}>
+                             <InsertInvitation color="primary"></InsertInvitation>
+                             <TextField name="date" fullWidth label="Date" value={date} onChange={handleChange} />
+                             </Box>
+                             <Box alignItems={"center"} display={"flex"} gap={1}>
+                                <YouTubeIcon color="primary"></YouTubeIcon>
+                             <TextField name="yotubeLink" fullWidth label="Youtube Link" value={youtubeLink} onChange={handleChange} />
+
+                             </Box>
+                             <Box alignItems={"center"} display={"flex"} gap={1}>
+                                <Language color="primary"></Language>
+                             <TextField name="websiteLink" fullWidth label="Website Link" value={websiteLink} onChange={handleChange} />
+
+                             </Box>
+
+                             <Box  alignItems={"center"} display={"flex"} gap={1}>
+                                <LocationOn color="primary"></LocationOn>
+                             <TextField name="eventLocation" fullWidth label=" Event Location" value={eventLocation} onChange={handleChange} />
+
+                             </Box>
+                             <Box alignItems={"center"} display={"flex"} gap={1}>
+                            <LocalPhone color="primary"></LocalPhone>
+                             <TextField  fullWidth name="eventPhoneNumber" label=" Event Contact Number" value={eventPhoneNumber} onChange={handleChange} />
+
+                             </Box>
+
+                             <Box alignItems={"center"} display={"flex"} gap={1}>
+                             <BorderColor color="primary"  />
+
+                             <TextField fullWidth name="description" label=" Event Description" value={description} onChange={handleChange} />
+
+                             </Box>
+                             <Box alignItems={"center"} display={"flex"} gap={1}>
+                             <LocalActivity color="primary" />
+
+                             <TextField fullWidth name="ticketSold" label="Ticket Sold" value={ticketSold} onChange={handleChange} />
+
+                             </Box>
+
+                             <Box alignItems={"center"} display={"flex"} gap={1}>
+                             <Category color="primary" />
+
+                             <TextField fullWidth name="theme" label="Theme of the Event" value={theme} onChange={handleChange} />
+
+                             </Box>
+
+                             <Box alignItems={"center"} display={"flex"} gap={1}>
+                             <Email color="primary"  />   
+                             <TextField  fullWidth name="email" label="Email" value={email} onChange={handleChange} />
+
+                             </Box>
 
                                 <Typography variant="h4" color={dark} fontWeight="500">Highlights:</Typography>
                                 {highlights.map((highlight, index) => (
-                                    <TextField
+                                    <Box alignItems={"center"} display={"flex"} gap={1}>
+                                    <Star color="primary"></Star>
+                                    <TextField fullWidth
+                                    label={`Event Highlight ${index + 1}`}
                                         key={index}
                                         value={highlight.highlight}
                                         onChange={(e) => handleHighlightChange(index, e.target.value)}
                                     />
+                                    <Button onClick={() => handleDeleteHighlight(index)}>Delete</Button>
+
+                                    </Box>
+                                   
                                 ))}
-                                <Button onClick={handleAddHighlight}>Add Highlight</Button>
+                                <Button  onClick={handleAddHighlight}> + Add Highlight</Button>
 
                                 <Typography variant="h4" color={dark} fontWeight="500">Marketing Plans:</Typography>
                                 {marketingPlans.map((plan, index) => (
                                     <div key={index}>
-                                        <TextField
+                                        <Box sx={{display: "flex",
+                             flexDirection: "column",
+                             gap: "1rem" }} mt={2}>
+                                <Typography variant="h5"  fontWeight="500">Marketing Plan {index+1}</Typography>
+                                <Box alignItems={"center"} display={"flex"} gap={1} mt={1}>
+                                    <MonetizationOn color="primary"></MonetizationOn>
+                                <TextField fullWidth
+                                 label={`Budget of Marketing Plan ${index + 1}`}
                                             value={plan.budget}
                                             onChange={(e) => handleMarketingPlanChange(index, e.target.value, 'budget')}
                                         />
-                                        <TextField
+                                </Box>
+                                       <Box alignItems={"center"} display={"flex"} gap={1}>
+                                        <Storefront color="primary"></Storefront>
+                                       <TextField
+                                       fullWidth
+                                       label={`Heading of Marketing Plan ${index + 1}`}
                                             value={plan.heading}
                                             onChange={(e) => handleMarketingPlanChange(index, e.target.value, 'heading')}
                                         />
+                                       </Box>
+                                        <Box alignItems={"center"} display={"flex"} gap={1}>
+                                        <Description color="primary"></Description>
                                         <TextField
+                                            fullWidth
+                                            label={`Description of Marketing Plan ${index + 1}`}
                                             value={plan.description}
                                             onChange={(e) => handleMarketingPlanChange(index, e.target.value, 'description')}
                                         />
+                                        </Box>
+                                       
+                                        </Box>
+                                        <Box mt={2} ml={4}>
+                                        <Button onClick={() => handleDeleteMarketingPlan(index)}  variant="outlined">Delete</Button>
+                                        </Box>
+
                                     </div>
                                 ))}
-                                <Button onClick={handleAddMarketingPlan}>Add Marketing Plan</Button>
+                                <Button  onClick={handleAddMarketingPlan}>+ Add Marketing Plan</Button>
+                             </Box>
+                               
                             </Box>
                         </>
                     )}
                 </Box>
             </Box>
 
-            {!editMode && <Button onClick={handleEdit}>Edit</Button>}
-            {editMode && <Button onClick={handleSave}>Save</Button>}
+            {!editMode && <Box mt={3}>
+                <Button onClick={handleEdit} variant="contained" >Edit</Button>
+            </Box> }
+            {editMode && <Button onClick={handleSave} variant="contained">Save</Button>}
         </WidgetWrapper>
       </Box>
         </Box>
