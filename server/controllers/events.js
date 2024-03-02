@@ -65,6 +65,7 @@ export const getFeedEvents = async (req, res) => {
     let sort = req.query.sort || "date";
     let theme = req.query.theme || "All";
     let location = req.query.location || ""; // Get location from query
+    let eventName = req.query.eventName || "";
 
     // Fetch distinct themes from the database
     const themeOptions = await Event.distinct("theme");
@@ -91,6 +92,10 @@ export const getFeedEvents = async (req, res) => {
     // Add location filter if location is provided
     if (location) {
       filter.eventLocation = { $regex: location, $options: "i" };
+    }
+
+    if (eventName) {
+      filter.eventName = { $regex: eventName, $options: "i" };
     }
 
     // Query events with search, theme filter, sorting, pagination
@@ -143,6 +148,7 @@ export const getUserEvents = async (req, res) => {
     let sort = req.query.sort || "date";
     let theme = req.query.theme || "All";
     let location = req.query.location || "";
+    let eventName = req.query.eventName || "";
 
     // If theme is "All", include all theme options, otherwise split the provided theme string
     theme === "All"
@@ -160,7 +166,6 @@ export const getUserEvents = async (req, res) => {
 
     // Construct the filter object for MongoDB query
     let filter = {
-      eventName: { $regex: search, $options: "i" },
       theme: { $in: theme },
       userId: userId, // Filter events by userId
     };
@@ -169,7 +174,9 @@ export const getUserEvents = async (req, res) => {
     if (location) {
       filter.eventLocation = { $regex: location, $options: "i" };
     }
-
+    if (eventName) {
+      filter.eventName = { $regex: eventName, $options: "i" };
+    }
     // Query events with search, theme filter, sorting, pagination
     const events = await Event.find(filter)
       .sort(sortBy)

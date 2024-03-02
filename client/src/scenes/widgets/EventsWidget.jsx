@@ -9,6 +9,7 @@ import Theme from "components/Theme";
 import {useMediaQuery} from "@mui/material";
 import { Box } from "@mui/material";
 import CustomPagination from "components/CustomPagination";
+import SearchEventName from "components/SearchEventName";
 
 
 const EventsWidget = ({ userId, isProfile = false }) => {
@@ -18,7 +19,8 @@ const EventsWidget = ({ userId, isProfile = false }) => {
   const [sort, setSort] = useState(JSON.parse(localStorage.getItem("eventSort")) || { sort: "date", order: "desc" });
   const [filterTheme, setFilterTheme] = useState(JSON.parse(localStorage.getItem("eventFilterTheme")) || []);
   const [filterLocation, setFilterLocation] = useState(JSON.parse(localStorage.getItem("eventFilterLocation")) || "");
-  const [page, setPage] = useState(parseInt(localStorage.getItem("eventPage")) || 1);
+  const [filterEventName , setFilterEventName] = useState(JSON.parse(localStorage.getItem("eventFilterEventName")) || "")
+  const [page, setPage] = useState(isProfile ? 1 : parseInt(localStorage.getItem("eventPage")) || 1);
   const [search, setSearch] = useState("");
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
@@ -28,9 +30,12 @@ const EventsWidget = ({ userId, isProfile = false }) => {
   const clearFilters = () => {
     setFilterTheme([]); // Clear filterTheme state
     setFilterLocation(""); // Optionally clear location filter as well
+    setFilterEventName(""); // Clear Event Name
     setPage(1); // Reset page to 1 when filters are cleared
     localStorage.removeItem("eventFilterTheme"); // Remove stored filterTheme from localStorage
     localStorage.removeItem("eventFilterLocation"); // Optionally remove stored filterLocation as well
+    localStorage.removeItem("eventFilterEventName");
+    
   };
 
   useEffect(() => {
@@ -39,7 +44,7 @@ const EventsWidget = ({ userId, isProfile = false }) => {
         const filterThemeString = filterTheme.join(",");
   
         const response = await fetch(
-          `http://localhost:3001/events?page=${page}&sort=${sort.sort},${sort.order}&theme=${filterThemeString}&search=${search}&location=${filterLocation}`, // Include location in the API request
+          `http://localhost:3001/events?page=${page}&sort=${sort.sort},${sort.order}&theme=${filterThemeString}&search=${search}&location=${filterLocation}&eventName=${filterEventName}`, // Include location in the API request
           {
             method: "GET",
             headers: { Authorization: `Bearer ${token}` },
@@ -57,7 +62,7 @@ const EventsWidget = ({ userId, isProfile = false }) => {
     const getUserEvents = async () => {
       const filterThemeString = filterTheme.join(",");
       const response = await fetch(
-        `http://localhost:3001/events/${userId}/events?page=${page}&sort=${sort.sort},${sort.order}&theme=${filterThemeString}&search=${search}&location=${filterLocation}`,
+        `http://localhost:3001/events/${userId}/events?page=${page}&sort=${sort.sort},${sort.order}&theme=${filterThemeString}&search=${search}&location=${filterLocation}&eventName=${filterEventName}`,
         {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
@@ -69,10 +74,11 @@ const EventsWidget = ({ userId, isProfile = false }) => {
   
     if (isProfile) {
       getUserEvents();
+      
     } else {
       getEvents();
     }
-  }, [sort, filterTheme, filterLocation, page, search, userId, isProfile, token]);
+  }, [sort, filterTheme, filterLocation, filterEventName, page, search, userId, isProfile, token]);
   
 
   const handleSortChange = (newSort) => {
@@ -92,6 +98,12 @@ const EventsWidget = ({ userId, isProfile = false }) => {
     setPage(1); // Reset page to 1 when location filter changes
     localStorage.setItem("eventFilterLocation", JSON.stringify(newLocation));
   };
+
+  const handleFilterEventNameChange = (newEventName)=>{
+    setFilterEventName(newEventName);
+    setPage(1);
+    localStorage.setItem("eventFilterEventName", JSON.stringify(newEventName) );
+  }
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
@@ -131,7 +143,16 @@ const EventsWidget = ({ userId, isProfile = false }) => {
           onChange={handleFilterLocationChange}
           placeholder="Search by Location"
         />
+       
         </Box>
+        <Box mt={2}>
+        <SearchEventName
+          value={filterEventName}
+          onChange={handleFilterEventNameChange}
+          placeholder="Search by Event Name"
+        />
+        </Box>
+        
         <Box mt={2}>
         <Theme
           filterTheme={filterTheme}

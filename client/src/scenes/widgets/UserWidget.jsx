@@ -7,8 +7,9 @@ import {
   PhoneOutlined,
   Twitter,
   LinkedIn,
+  EmailOutlined,
 } from "@mui/icons-material";
-import { Box, Typography, Divider, useTheme, TextField, Button } from "@mui/material";
+import { Box, Typography, Divider, useTheme, TextField, Button, Link } from "@mui/material";
 import UserImage from "components/UserImage";
 import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
@@ -133,7 +134,7 @@ const UserWidget = ({ userId, picturePath }) => {
         {userId === loggedInUserId && !editMode && ( // Display edit button only if the logged-in user is viewing their own profile and if not in edit mode
           <ManageAccountsOutlined onClick={handleEdit} />
         )}
-        {editMode && <Button onClick={handleSave}>Save</Button>} 
+        {editMode && <Button onClick={handleSave} variant="outlined">Save</Button>} 
       </FlexBetween>
 
       <Divider />
@@ -166,6 +167,19 @@ const UserWidget = ({ userId, picturePath }) => {
             />
           )}
         </Box>
+        <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
+          <EmailOutlined fontSize="large" sx={{ color: main }} />
+          {!editMode ? (
+            <Typography color={medium}>{email}</Typography>
+          ) : (
+            <TextField
+              name="email"
+              label="Email"
+              value={email}
+              onChange={handleChange}
+            />
+          )}
+        </Box>
         
       </Box>
       <Divider />
@@ -181,8 +195,11 @@ const UserWidget = ({ userId, picturePath }) => {
             <Twitter />
             <Box>
               {!editMode ? (
+                
                 <Typography color={main} fontWeight="500">
-                  {twitterLink}
+                  <Link href={twitterLink} target="_blank" rel="noopener noreferrer" underline="hover">
+                  Twitter
+                  </Link>
                 </Typography>
               ) : (
                 <TextField
@@ -206,7 +223,9 @@ const UserWidget = ({ userId, picturePath }) => {
             <Box>
               {!editMode ? (
                 <Typography color={main} fontWeight="500">
-                  {linkedinLink}
+                   <Link href={linkedinLink} target="_blank" rel="noopener noreferrer" underline="hover">
+                  Linked in 
+                  </Link>
                 </Typography>
               ) : (
                 <TextField

@@ -25,115 +25,44 @@ const LandingPage = () => {
   const theme = useTheme();
   
   return (
-    <Box  bgcolor={"white"}>
-         <Box bgcolor={"#18001A"} height={"5rem"}width={isNonMobileScreens ? "100%": "19rem"}>
+    <Box bgcolor={"#080808"} >
         <NavbarA></NavbarA>
-        </Box>
-        <Box height={"50rem"} width={"100%"} bgcolor={"#080808"} display={isNonMobileScreens ? "flex" : "block"} position="relative">
+        <Box height={"30rem"} width={"100%"} bgcolor={""} position="relative">
       <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
         <img src={Image} alt="Your Alt Text" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
       </div>
-      <Box flex={1} width={"20%"} >
-        <Box mt={"10rem"} ml={"5rem"}>
-          <Typography fontSize={isNonMobileScreens ? 64 : 32} sx={{
-            color: '#FFF',
-            fontStyle: 'medium',
-            fontWeight: 800,
-            lineHeight: 'normal',
-            mb: "1rem"
-          }}>
-            <Typewriter
-              options={{
-                strings: [
-                  'Sponsor an Event',
-                  'Get your jackpot Sponsor',
-                  'Sponsor a Talent'
-                ],
-                autoStart: true,
-                loop: true,
-                cursor: '' // Optional cursor customization
-              }}
-            />
-          </Typography>
-          <Typography sx={{
-            color: '#FFF',
-            fontSize: 16,
-            fontStyle: 'normal',
-            fontWeight: 300,
-            lineHeight: 'normal',
-            mb: "1rem"
-          }}> Testing version of loot</Typography>
-          <Button sx={{
-            width: "118px",
-            height: "30px",
-            flexShrink: 0,
-            borderRadius: 57,
-            backgroundColor: "primary.main",
-            color: '#FFF',
-            textTransform: 'none',
-          }}> Learn More </Button>
-        </Box>
-        <Box bgcolor={"#080808"} mt={"1rem"} ml={"3rem"}>
-          <Grid container spacing={3} display={isNonMobileScreens ? "flex" : "block"}>
-            <Grid item xs={4}>
-              <Box sx={{
-                width: 192,
-                height: 99,
-                margin: '1rem',
-                backgroundColor: greyColor,
-                display: 'flex',
-                borderRadius: '8px',
-                border: `0.1rem solid ${borderColor}`,
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-                <Typography variant={isNonMobileScreens ? "h3" : "h6"} sx={{ fontWeight: 'bold' }} >200+</Typography>
-                <Typography align="center">Happy Customers</Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Box sx={{
-                width: 192,
-                height: 99,
-                margin: '1rem',
-                backgroundColor: greyColor,
-                display: 'flex',
-                borderRadius: '8px',
-                border: `0.1rem solid ${borderColor}`,
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-                <Typography variant={isNonMobileScreens ? "h3" : "h6"} sx={{ fontWeight: 'bold' }} >200+</Typography>
-                <Typography align="center">Happy Customers</Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Box sx={{
-                width: 192,
-                height: 99,
-                margin: '1rem',
-                backgroundColor: greyColor,
-                display: 'flex',
-                borderRadius: '8px',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                border: `0.1rem solid ${borderColor}`,
-                alignItems: 'center',
-              }}>
-                <Typography variant={isNonMobileScreens ? "h3" : "h6"} sx={{ fontWeight: 'bold' }} >200+</Typography>
-                <Typography align="center">Happy Customers</Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
+      <Typography
+        fontSize={100}
+        sx={{
+          color: "white",
+          fontStyle: "medium",
+          fontWeight: 800,
+          lineHeight: "normal",
+          mb: "1rem",
+          position: "absolute",
+          top: "40%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          textAlign: "center",
+          width: "100%"
+        }}
+      >
+        <Typewriter
+          options={{
+            strings: ["Sponsor an Event", "Get your jackpot Sponsor"],
+            autoStart: true,
+            loop: true,
+            cursor: ""
+          }}
+        />
+      </Typography>
     </Box>
 
+
+
     
-    <Box width={"100%"} height={"20rem"}  bgcolor={"#080808"}>
-  <Box display={isNonMobileScreens? "flex" : "block"}  ml={isNonMobileScreens? "3rem" : ""} >
+    <Box width={"100%"} height={"20rem"} mt={10}  bgcolor={"#080808"}>
+  <Box display={isNonMobileScreens? "flex" : "block"}   alignItems={"center"} justifyContent={"center"} gap={6} >
     <Box
       width={isNonMobileScreens? 400 : 200}
       height={isNonMobileScreens? 212 : 105}

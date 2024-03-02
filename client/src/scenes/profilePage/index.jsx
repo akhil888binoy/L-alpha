@@ -31,8 +31,7 @@ const ProfilePage = () => {
 
   if (!user) return null;
 
-  const { firstName,
-    lastName} = user;
+  const { firstName} = user;
  
 
   return (
@@ -66,7 +65,7 @@ const ProfilePage = () => {
           <Box m="2rem 0" />
           <Box display={"flex"} gap={1.5}>
           <Typography fontSize={"3rem"} >{firstName}'s</Typography> 
-          <Typography fontSize={"3rem"} color={"primary"} >  Events</Typography>
+          <Typography fontSize={"3rem"} color={"primary"} >  events</Typography>
           </Box>
           <EventsWidget userId={userId} isProfile />
         </Box>

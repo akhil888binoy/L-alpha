@@ -1,12 +1,13 @@
 import { Box, Typography, useTheme, useMediaQuery, withTheme } from "@mui/material";
 import Form from "./Form";
+import NavbarA from "scenes/navbarA";
 
 const LoginPage = () => {
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   return (
     <Box height={"1000px"} backgroundColor={"#080808"} >
-      
+      <NavbarA></NavbarA>
 
       <Box display="flex">
         { isNonMobileScreens
@@ -20,7 +21,7 @@ const LoginPage = () => {
             </Box>
      
         <Typography  color={"primary"} fontSize="10rem" >
-         L o o t
+         Loot
         </Typography>
 
       </Box>
@@ -36,9 +37,9 @@ const LoginPage = () => {
     
      borderRadius="1.5rem"
      backgroundColor="#111111" // Set a suitable color for the dark background
-     border="0.2rem solid #1E1E1E">
+     border="0.1rem solid #1E1E1E">
         <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem" }} color={"white"}>
-          Welcome to Loot!
+          Welcome to Loot !
         </Typography>
         <Form />
       </Box>

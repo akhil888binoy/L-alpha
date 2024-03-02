@@ -98,7 +98,7 @@ const EventWidget =({
                         src={`http://localhost:3001/assets/${bannerpicturePath}`}
                     />
                 )}
-                <FlexBetween display="flex" justifyContent="space-between" alignItems="center" width="100%" mt={"1rem"} gap={1}>
+                <Box display={isNonMobileScreens? "flex":"block"} justifyContent="space-between" alignItems="center" width="100%" mt={"1rem"} gap={  1 }>
                     <Box sx={{
                         borderRadius: "2rem",
                         bgcolor: "#080808",
@@ -139,7 +139,7 @@ const EventWidget =({
                             {eventLocation}
                         </Typography>
                     </Box>
-                </FlexBetween>
+                </Box>
                 <Typography mt={"1rem"} color={"grey"}>
                     {truncatedDescription}
                     {words.length > 50 && " ..."} {/* Display ellipsis if the description has more than 50 words */}

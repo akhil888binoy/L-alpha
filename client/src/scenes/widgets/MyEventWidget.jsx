@@ -206,7 +206,7 @@ const addHighlight=()=>{
         <Box display="flex" alignItems="center" marginBottom="1rem">
       <InsertInvitation color="primary" fontSize="large" />
       <InputBase
-        placeholder="write down event date"
+        placeholder="write down event date in DD/MM/YY"
         onChange={(e) => setEventDate(e.target.value)}
         value={eventDate}
         sx={{
