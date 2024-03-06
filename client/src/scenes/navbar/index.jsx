@@ -81,7 +81,7 @@ const Navbar = () => {
       }}>Events</Typography>
          </Button>
            
-           <Button><Typography color={"white"} sx={{
+           <Button onClick={() => navigate(`/sponsorhome`)}><Typography color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
       }}>Sponsors</Typography></Button>

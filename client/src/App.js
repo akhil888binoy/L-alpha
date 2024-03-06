@@ -14,6 +14,13 @@ import MainFooter from "scenes/MainFooter";
 import EventForm from "scenes/eventForm";
 import DeletePage from "scenes/deletePage";
 import EditForm from "scenes/editForm";
+import SponsorHomePage from "scenes/sponsorhomePage";
+import LikedPage from "scenes/likedPage";
+import SponsorProfilePage from "scenes/sponsorprofilePage";
+import SponsorForm from "scenes/sponsorForm";
+import SponsorDeletePage from "scenes/sponsordeletePage";
+import SponsorDetailPage from "scenes/sponsordetailPage";
+import SponsorEditForm from "scenes/sponsoreditForm";
 function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -34,24 +41,52 @@ function App() {
               element={isAuth ? <HomePage /> : <Navigate to="/" />}
             />
             <Route
+              path="/sponsorhome"
+              element={isAuth ? <SponsorHomePage /> : <Navigate to="/" />}
+            />
+            <Route
               path="/eventForm"
               element={isAuth ? <EventForm /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/sponsorForm"
+              element={isAuth ? <SponsorForm /> : <Navigate to="/" />}
             />
             <Route
               path="/events/:eventId/event"
               element={isAuth ? <EventDetailsPage /> : <Navigate to="/" />}
             />
             <Route
+              path="/sponsors/:sponsorId/sponsor"
+              element={isAuth ? <SponsorDetailPage /> : <Navigate to="/" />}
+            />
+            <Route
               path="/profile/:userId"
               element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/profile/:userId/sponsor"
+              element={isAuth ? <SponsorProfilePage /> : <Navigate to="/" />}
             />
             <Route
               path="/deletePage"
               element={isAuth ? <DeletePage /> : <Navigate to="/" />}
             />
             <Route
+              path="/sponsordeletePage"
+              element={isAuth ? <SponsorDeletePage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/likedPage"
+              element={isAuth ? <LikedPage /> : <Navigate to="/" />}
+            />
+            <Route
               path="/events/:eventId/edit"
               element={isAuth ? <EditForm /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/sponsors/:sponsorId/edit"
+              element={isAuth ? <SponsorEditForm /> : <Navigate to="/" />}
             />
           </Routes>
           <MainFooter></MainFooter>

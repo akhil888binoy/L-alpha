@@ -12,11 +12,14 @@ import { fileURLToPath } from "url";
 import { register } from "./controllers/auth.js";
 import authRoutes from "./routes/auth.js";
 import eventRoutes from "./routes/events.js";
+import sponsorRoutes from "./routes/sponsors.js";
 import { verifyToken } from "./middleware/auth.js";
 import { createEvent } from "./controllers/events.js";
+import { createSponsor } from "./controllers/sponsors.js";
 import User from "./models/User.js";
 import Event from "./models/Event.js";
-import { users, events } from "./data/index.js";
+import Sponsor from "./models/Sponsor.js";
+import { users, events, sponsors } from "./data/index.js";
 import { verify } from "crypto";
 /*CONFIGURATION*/
 const __filename = fileURLToPath(import.meta.url);
@@ -45,11 +48,12 @@ const upload = multer({ storage });
 /*ROUTES WITH FILES*/
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/events", verifyToken, upload.single("picture"), createEvent);
-
+app.post("/sponsors", upload.single("picture"), createSponsor);
 /*ROUTES*/
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/events", eventRoutes);
+app.use("/sponsors", sponsorRoutes);
 
 /* MONGOOSE SETUP*/
 const PORT = process.env.PORT || 6001;
@@ -66,5 +70,6 @@ mongoose
     /* ADD DATA ONE TIME*/
     // User.insertMany(users);
     // Event.insertMany(events);
+    // Sponsor.insertMany(sponsors);
   })
   .catch((error) => console.log(`${error} did not connect`));

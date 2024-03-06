@@ -4,8 +4,9 @@ import { useSelector } from 'react-redux'
 import Navbar from 'scenes/navbar'
 import { Box , useMediaQuery} from '@mui/material'
 import {Typography} from '@mui/material'
+import MySponsorWidget from 'scenes/widgets/MySponsorWidget'
 
-const EventForm = () => {
+const SponsorForm = () => {
     const isNonMobileScreens = useMediaQuery("(min-width:1000px)")
     const {_id, picturePath} = useSelector((state)=> state.user);
 
@@ -20,10 +21,10 @@ const EventForm = () => {
       justifyContent={"space-between"}
       bgcolor={"#080808"}
       >
-        <MyEventWidget picturePath={picturePath}></MyEventWidget>
+        <MySponsorWidget picturePath={picturePath}></MySponsorWidget>
       </Box>
     </Box>
   )
 }
 
-export default EventForm
+export default SponsorForm

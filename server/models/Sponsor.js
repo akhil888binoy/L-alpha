@@ -1,51 +1,53 @@
 import mongoose from "mongoose";
 
+const sponsorphoneNumberSchema = new mongoose.Schema({
+  phoneNumber: {
+    type: Number,
+  },
+});
+
+const interestedThemesSchema = new mongoose.Schema({
+  interestedTheme: {
+    type: String,
+  },
+});
 const SponsorSchema = new mongoose.Schema(
   {
+    userId: {
+      type: String,
+      required: true,
+    },
     sponsorName: {
       type: String,
       required: true,
       min: 2,
       max: 50,
     },
-    email: {
+    sponsorEmail: {
       type: String,
       required: true,
       max: 50,
-      unique: true,
     },
-    picturePath: {
+    sponsorpicturePath: {
       type: String,
       default: " ",
     },
-    friends: {
-      type: Array,
-      default: [],
-    },
-    sponsorNumber: {
-      type: Array,
-      default: [],
-    },
-    reviews: {
-      type: Array,
-      default: [],
-    },
-    sponsoredEvent: {
-      type: Array,
-      default: [],
-    },
-    interestedTheme: {
-      type: Array,
-      default: [],
-    },
+    sponsorphoneNumber: [sponsorphoneNumberSchema],
+    interestedtheme: String,
     sponsorInfo: String,
     location: String,
     budget: Number,
-    viewedProfile: Number,
-    impressions: Number,
+    industry: String,
+    sponsortwitterLink: String,
+    sponsorlinkedinLink: String,
+    sponsorCoordinator: String,
+    likes: {
+      type: Map,
+      of: Boolean,
+    },
   },
   { timestamps: true }
 );
 
-const Sponsor = mongoose.model("Sponsor ", SponsorSchema);
+const Sponsor = mongoose.model("Sponsor", SponsorSchema);
 export default Sponsor;
