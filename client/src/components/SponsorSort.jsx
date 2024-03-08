@@ -11,7 +11,7 @@ const SponsorSort = ({ sort, setSort }) => {
   
     return (
       <FormControl variant="outlined">
-        <InputLabel id="sort-label">Sort By</InputLabel>
+        <InputLabel id="sort-label" color="secondary">Sort By</InputLabel>
         <Select
           labelId="sort-label"
           id="sort-select"
@@ -19,6 +19,7 @@ const SponsorSort = ({ sort, setSort }) => {
           onChange={handleSortChange}
           label="Sort By"
           name="sort"
+          color="secondary"
         >
           <MenuItem value="budget">Budget</MenuItem> 
           <MenuItem value="likes">Likes</MenuItem>
@@ -32,8 +33,9 @@ const SponsorSort = ({ sort, setSort }) => {
           onChange={handleSortChange}
           label="Order"
           name="order"
+          color="secondary"
         >
-          <MenuItem value="asc">Ascending</MenuItem>
+          <MenuItem value="asc" >Ascending</MenuItem>
           <MenuItem value="desc">Descending</MenuItem>
         </Select>
       </FormControl>

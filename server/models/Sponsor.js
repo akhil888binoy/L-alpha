@@ -6,8 +6,8 @@ const sponsorphoneNumberSchema = new mongoose.Schema({
   },
 });
 
-const interestedThemesSchema = new mongoose.Schema({
-  interestedTheme: {
+const interestedthemesSchema = new mongoose.Schema({
+  theme: {
     type: String,
   },
 });
@@ -33,7 +33,7 @@ const SponsorSchema = new mongoose.Schema(
       default: " ",
     },
     sponsorphoneNumber: [sponsorphoneNumberSchema],
-    interestedtheme: String,
+    interestedtheme: [interestedthemesSchema],
     sponsorInfo: String,
     location: String,
     budget: Number,

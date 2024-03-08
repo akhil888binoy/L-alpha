@@ -48,20 +48,29 @@ const SponsorProfilePage = () => {
             flexBasis={isNonMobileScreens ? "42%" : undefined}
             mt={isNonMobileScreens ? undefined : "2rem"}
           >
-             <Link to="/sponsorForm" >
-        <Button 
-          variant="outlined"
-          color="primary"
-          size="large"
-          sx={{ fontSize: '1.25rem', padding: '12px 24px' }} // Adjust size here
-        >
-          Add your Sponsor
-        </Button>
-      </Link>
+              <Link to="/sponsorForm">
+      <Button 
+        variant="outlined"
+        size="large"
+        sx={{ 
+          fontSize: '1.25rem', // Change font size here
+          padding: '12px 24px',
+          color:"#834bff",
+          borderColor:"#834bff"  ,
+          '&:hover': {
+            color: '#fff', // Change text color on hover
+            backgroundColor: '#834bff', // Change background color on hover
+            borderColor: '#834bff', // Change border color on hover
+          },       
+        }}
+      >
+        Add your Sponsor
+      </Button>
+    </Link>
             <Box m="2rem 0" />
             <Box display={"flex"} gap={1.5}>
             <Typography fontSize={"3rem"} >{firstName}'s</Typography> 
-            <Typography fontSize={"3rem"} color={"primary"} >  sponsorships</Typography>
+            <Typography fontSize={"3rem"} sx={{color:"#834bff"}}>  sponsorships</Typography>
             </Box>
             <SponsorsWidget userId={userId} isProfile />
           </Box>

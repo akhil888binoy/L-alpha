@@ -79,19 +79,34 @@ const SponsorEditForm = () => {
         updatedSponsorPhoneNumber[index] = { phoneNumber: newValue };
         setSponsor({ ...sponsor, sponsorphoneNumber: updatedSponsorPhoneNumber });
     };
-
+    const handleInterestedThemeChange=(index, newValue)=>{
+        const updatedInterestedTheme=[...sponsor.interestedtheme];
+        updatedInterestedTheme[index]={theme:newValue};
+        setSponsor({...sponsor, interestedtheme: updatedInterestedTheme});
+    }
     const handleAddSponsorPhoneNumber = () => {
         setSponsor({
             ...sponsor,
             sponsorphoneNumber: [...sponsor.sponsorphoneNumber, { phoneNumber: '' }]
         });
     };
+   const handleAddInterestedTheme=()=>{
+    setSponsor({
+        ...sponsor,
+        interestedtheme:[...sponsor.interestedtheme, {theme:''}]
+    })
+   } 
 
     const handleDeleteSponsorPhoneNumber = (index) => {
         const updatedSponsorPhoneNumber = [...sponsor.sponsorphoneNumber];
         updatedSponsorPhoneNumber.splice(index, 1);
         setSponsor({ ...sponsor, sponsorphoneNumber: updatedSponsorPhoneNumber });
     };
+    const handleDeleteInterestedTheme=(index)=>{
+        const updatedInterestedTheme=[...sponsor.interestedtheme];
+        updatedInterestedTheme.splice(index,1);
+        setSponsor({...sponsor, interestedtheme:updatedInterestedTheme});
+    }
 
     const{
         userId,
@@ -140,7 +155,9 @@ const SponsorEditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2} >
-                             <CardTravel color="primary"  />
+                             <CardTravel  sx={{
+        color: '#834bff',
+      }}  />
                              <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">  Sponsor Name : </Typography>
                              <Typography variant={isNonMobile? "h5": ""}  fontWeight="500">  {sponsorName}</Typography>
                              </Box>
@@ -157,7 +174,9 @@ const SponsorEditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <AccountCircle color="primary"  />
+                            <AccountCircle  sx={{
+        color: '#834bff',
+      }}  />
                              <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500"> Sponsor Coordinator : </Typography>
                              <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {sponsorCoordinator}</Typography>
                              </Box>
@@ -175,7 +194,9 @@ const SponsorEditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <Twitter color="primary"  />
+                            <Twitter  sx={{
+        color: '#834bff',
+      }}  />
                              <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Twitter Link : </Typography>
                              <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {sponsortwitterLink}</Typography>
                              </Box>
@@ -192,7 +213,9 @@ const SponsorEditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <LinkedIn color="primary"  />
+                            <LinkedIn  sx={{
+        color: '#834bff',
+      }}  />
                              <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Linkedin Link : </Typography>
                              <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {sponsorlinkedinLink}</Typography>
                              </Box>
@@ -209,7 +232,9 @@ const SponsorEditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <LocationOn color="primary"  />
+                            <LocationOn  sx={{
+        color: '#834bff',
+      }}  />
                              <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Sponsor Location : </Typography>
                              <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {location}</Typography>
                              </Box>
@@ -228,7 +253,9 @@ const SponsorEditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <BorderColor color="primary"  />
+                            <BorderColor  sx={{
+        color: '#834bff',
+      }}  />
                              <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Description : </Typography>
                              <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {sponsorInfo}</Typography>
                              </Box>
@@ -244,10 +271,13 @@ const SponsorEditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <MonetizationOn color="primary"  />
+                            <MonetizationOn  sx={{
+        color: '#834bff',
+      }}  />
                              <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Budget : </Typography>
                              <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {budget}</Typography>
                              </Box>
+                            
                              <Box sx={{
                         borderRadius: "2rem",
                         bgcolor: "#080808",
@@ -260,23 +290,9 @@ const SponsorEditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <Category color="primary"  />
-                             <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Interested Theme : </Typography>
-                             <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {interestedtheme}</Typography>
-                             </Box>
-                             <Box sx={{
-                        borderRadius: "2rem",
-                        bgcolor: "#080808",
-                        padding: "1rem 2rem",
-                        display: "inline-flex",
-                       
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        border:"0.1rem solid  #1E1E1E",
-                        textOverflow: "ellipsis",
-                        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
-                    }} gap={2}>
-                            <Email color="primary"  />
+                            <Email  sx={{
+        color: '#834bff',
+      }}  />
                              <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Email : </Typography>
                              <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {sponsorEmail}</Typography>
                              </Box>
@@ -293,10 +309,37 @@ const SponsorEditForm = () => {
                         textOverflow: "ellipsis",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }} gap={2}>
-                            <Construction color="primary"  />
+                            <Construction  sx={{
+        color: '#834bff',
+      }}  />
                              <Typography variant={isNonMobile? "h5": ""} color="grey" fontWeight="500">Industry : </Typography>
                              <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {industry}</Typography>
                              </Box>
+
+                             <Typography variant={isNonMobile? "h4": "h5"} color={dark} fontWeight="500">Interested Themes :</Typography>
+                            {interestedtheme.map((theme, index) => (
+                                   <Box sx={{
+                                    borderRadius: "2rem",
+                                    bgcolor: "#080808",
+                                    padding: "1rem 2rem",
+                                    display: "inline-flex",
+                                   
+                                    overflow: "hidden",
+                                    whiteSpace: "nowrap",
+                                    border:"0.1rem solid  #1E1E1E",
+                                    textOverflow: "ellipsis",
+                                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+                                }} gap={2}>
+                                        <Category  sx={{
+        color: '#834bff',
+      }}  />
+                                         <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {theme.theme}</Typography>
+                                         </Box>
+                
+                            ))}
+
+
+
                              
                             <Typography variant={isNonMobile? "h4": "h5"} color={dark} fontWeight="500">Phone Numbers :</Typography>
                             {sponsorphoneNumber.map((phoneNumber, index) => (
@@ -312,7 +355,9 @@ const SponsorEditForm = () => {
                                     textOverflow: "ellipsis",
                                     boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                                 }} gap={2}>
-                                        <Phone color="primary"  />
+                                        <Phone  sx={{
+        color: '#834bff',
+      }}  />
                                          <Typography variant={isNonMobile? "h5": ""}  fontWeight="500"> {phoneNumber.phoneNumber}</Typography>
                                          </Box>
                 
@@ -330,79 +375,115 @@ const SponsorEditForm = () => {
                              flexDirection: "column",
                              gap: "1rem" }}> 
                              <Box alignItems={"center"} display={"flex"} gap={1}>
-                             <CardTravel color="primary"  />
+                             <CardTravel  sx={{
+        color: '#834bff',
+      }}  />
                              <TextField  name="sponsorName" fullWidth label="Sponsor Name" value={sponsorName} onChange={handleChange} />
                              </Box>
                              <Box alignItems={"center"} display={"flex"} gap={1}>
-                                <AccountCircle color="primary"></AccountCircle>
+                                <AccountCircle  sx={{
+        color: '#834bff',
+      }}></AccountCircle>
                              <TextField name="sponsorCoordinator" fullWidth label="Sponsor Coordinator" value={sponsorCoordinator} onChange={handleChange} />
                              </Box>
                              
                              <Box alignItems={"center"} display={"flex"} gap={1}>
-                                <Twitter color="primary"></Twitter>
+                                <Twitter  sx={{
+        color: '#834bff',
+      }}></Twitter>
                              <TextField name="sponsortwitterLink" fullWidth label="Twitter Link" value={sponsortwitterLink} onChange={handleChange} />
 
                              </Box>
                              <Box alignItems={"center"} display={"flex"} gap={1}>
-                                <LinkedIn color="primary"></LinkedIn>
+                                <LinkedIn  sx={{
+        color: '#834bff',
+      }}></LinkedIn>
                              <TextField name="sponsorlinkedinLink" fullWidth label="Linkedin Link" value={sponsorlinkedinLink} onChange={handleChange} />
 
                              </Box>
 
                              <Box  alignItems={"center"} display={"flex"} gap={1}>
-                                <LocationOn color="primary"></LocationOn>
+                                <LocationOn  sx={{
+        color: '#834bff',
+      }}></LocationOn>
                              <TextField name="location" fullWidth label=" Sponsor Location" value={location} onChange={handleChange} />
 
                              </Box>
                             
 
                              <Box alignItems={"center"} display={"flex"} gap={1}>
-                             <BorderColor color="primary"  />
+                             <BorderColor  sx={{
+        color: '#834bff',
+      }}  />
 
                              <TextField fullWidth name="sponsorInfo" label=" Sponsor Description" value={sponsorInfo} onChange={handleChange} />
 
                              </Box>
                              <Box alignItems={"center"} display={"flex"} gap={1}>
-                             <MonetizationOn color="primary" />
+                             <MonetizationOn  sx={{
+        color: '#834bff',
+      }} />
 
                              <TextField fullWidth name="budget" label=" Budget" value={budget} onChange={handleChange} />
 
                              </Box>
 
-                             <Box alignItems={"center"} display={"flex"} gap={1}>
-                             <Category color="primary" />
-
-                             <TextField fullWidth name="interestedtheme" label="Interested Theme" value={interestedtheme} onChange={handleChange} />
-
-                             </Box>
+                            
 
                              <Box alignItems={"center"} display={"flex"} gap={1}>
-                             <Email color="primary"  />   
+                             <Email  sx={{
+        color: '#834bff',
+      }}  />   
                              <TextField  fullWidth name="sponsorEmail" label="Email" value={sponsorEmail} onChange={handleChange} />
 
                              </Box>
                              <Box alignItems={"center"} display={"flex"} gap={1}>
-                             <Construction color="primary"  />   
+                             <Construction  sx={{
+        color: '#834bff',
+      }}  />   
                              <TextField  fullWidth name="industry" label="Industry" value={industry} onChange={handleChange} />
 
                              </Box>
 
+                             <Typography variant="h4" color={dark} fontWeight="500">Interested theme</Typography>
+                                {interestedtheme.map((theme, index) => (
+                                    <Box alignItems={"center"} display={"flex"} gap={1}>
+                                    <Category  sx={{
+        color: '#834bff',
+      }}></Category>
+                                    <TextField fullWidth
+                                    label={`Interested Theme ${index + 1}`}
+                                        key={index}
+                                        value={theme.theme}
+                                        onChange={(e) => handleInterestedThemeChange(index, e.target.value)}
+                                    />
+                                    <Button sx={{color:"#834bff"}} onClick={() => handleDeleteInterestedTheme(index)}>Delete</Button>
+
+                                    </Box>
+                                   
+                                ))}
+                                <Button  onClick={handleAddInterestedTheme} sx={{color:"#834bff"}}> + Add Interested Theme</Button>
+
+
+
                                 <Typography variant="h4" color={dark} fontWeight="500">Phone Numbers:</Typography>
                                 {sponsorphoneNumber.map((phoneNumber, index) => (
                                     <Box alignItems={"center"} display={"flex"} gap={1}>
-                                    <Phone color="primary"></Phone>
+                                    <Phone  sx={{
+        color: '#834bff',
+      }}></Phone>
                                     <TextField fullWidth
                                     label={`Phone Number ${index + 1}`}
                                         key={index}
                                         value={phoneNumber.phoneNumber}
                                         onChange={(e) => handleSponsorPhoneNumberChange(index, e.target.value)}
                                     />
-                                    <Button onClick={() => handleDeleteSponsorPhoneNumber(index)}>Delete</Button>
+                                    <Button sx={{color:"#834bff"}} onClick={() => handleDeleteSponsorPhoneNumber(index)}>Delete</Button>
 
                                     </Box>
                                    
                                 ))}
-                                <Button  onClick={handleAddSponsorPhoneNumber}> + Add Phone Number</Button>
+                                <Button sx={{color:"#834bff"}} onClick={handleAddSponsorPhoneNumber}> + Add Phone Number</Button>
 
                              
                              </Box>
@@ -414,9 +495,11 @@ const SponsorEditForm = () => {
             </Box>
 
             {!editMode && <Box mt={3}>
-                <Button onClick={handleEdit} variant="contained" >Edit</Button>
+                <Button onClick={handleEdit} variant="contained"  sx={{backgroundColor: '#834bff'}}  ><Typography color={"white"}>Edit</Typography></Button>
             </Box> }
-            {editMode && <Button onClick={handleSave} variant="contained">Save</Button>}
+            {editMode && <Button onClick={handleSave} variant="contained"  sx={{ backgroundColor: '#834bff' }}>
+            <Typography color={"white"}>Save</Typography>
+                </Button>}
 
         </WidgetWrapper>
 

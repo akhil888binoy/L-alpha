@@ -73,7 +73,9 @@ const SponsordetailWidget = ({sponsorId,sponsorpicturePath}) => {
             <Box textAlign="center" mt="1rem">
             <Typography color="white" variant={isNonMobile ? "h1" : "h2"}>{sponsorName}</Typography>
       <Box display="flex" alignItems="center" justifyContent="center" mt="1rem" gap={1}>
-        <LinkedIn color={"primary"} />
+        <LinkedIn sx={{
+          color:"#834bff"
+        }} />
         <Typography color="white" variant={isNonMobile ? "h4" : "h7"}>
           <Link href={sponsorlinkedinLink} target="_blank" rel="noopener noreferrer" color="inherit" underline="hover">
             Linkedin
@@ -81,7 +83,9 @@ const SponsordetailWidget = ({sponsorId,sponsorpicturePath}) => {
         </Typography>
       </Box>
       <Box display="flex" alignItems="center" justifyContent="center" mt="1rem" gap={1}>
-      <Twitter color={"primary"}></Twitter>
+      <Twitter sx={{
+        color:"#834bff"
+      }}></Twitter>
         <Typography color="white" variant={isNonMobile ? "h4" : "h7"}>
           <Link href={sponsortwitterLink} target="_blank" rel="noopener noreferrer" color="inherit" underline="hover">
             Twitter
@@ -93,15 +97,18 @@ const SponsordetailWidget = ({sponsorId,sponsorpicturePath}) => {
                     <Button 
                     size="small"
                         variant="outlined" 
-                        style={{
-                            borderRadius: 6,
+                        sx={{
+                            borderRadius: 2,
                             padding: "0.5rem 1rem",
                             alignItems: "center",
                             justifyContent: "center",
+                            borderColor:"#834bff"
                         }} 
                         onClick={handleEditSponsor}
                     >
-                        <Typography color="primary" fontSize={ "1rem" } >
+                        <Typography sx={{
+                          color:"#834bff"
+                        }} fontSize={ "1rem" } >
                            Edit
                         </Typography>
                     </Button>
@@ -126,13 +133,15 @@ const SponsordetailWidget = ({sponsorId,sponsorpicturePath}) => {
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
 }}>
      <Box display={"flex"} gap={0.5}>
-   <MonetizationOn color="primary" sx={{ fontSize: 32 }} /> 
+   <MonetizationOn  sx={{ fontSize: 32, color:"#834bff" }} /> 
   <Typography mt={"0.3rem"} color={"grey"}>Budget</Typography> 
    </Box>
  {/* Increase icon size */}
   <Typography textAlign={"center"} mt={"0.5rem"} color="white" sx={{ fontSize: "1.2rem" }}>{budget}</Typography> {/* Increase text size */}
 </Box>
-<Box  gap={isNonMobile? "": 2} sx={{
+
+{interestedtheme.map((theme, index) => ( 
+  <Box  gap={isNonMobile? "": 2} sx={{
   bgcolor: "#080808",
   padding: "0.5rem 1rem",
   borderRadius: "1rem",
@@ -145,12 +154,17 @@ const SponsordetailWidget = ({sponsorId,sponsorpicturePath}) => {
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
 }}>
    <Box display={"flex"} gap={0.5}>
-   <Category color="primary" sx={{ fontSize: 32 }} /> 
+   <Category  sx={{ fontSize: 32 , color:"#834bff"}} /> 
   <Typography mt={"0.3rem"} color={"grey"}>Interested Theme</Typography> 
    </Box>
  {/* Increase icon size */}
-  <Typography textAlign={"center"} mt={"0.5rem"} color="white" sx={{ fontSize: "1.2rem" }}>{interestedtheme}</Typography> {/* Increase text size */}
+  <Typography textAlign={"center"} mt={"0.5rem"} color="white" sx={{ fontSize: "1.2rem" }}>{theme.theme}</Typography> {/* Increase text size */}
 </Box>
+
+))}
+
+
+
 <Box  gap={isNonMobile? "": 2} sx={{
   bgcolor: "#080808",
   padding: "0.5rem 1rem",
@@ -164,7 +178,7 @@ const SponsordetailWidget = ({sponsorId,sponsorpicturePath}) => {
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
 }}>
    <Box display={"flex"} gap={0.5}>
-   <LocationOn color="primary" sx={{ fontSize: 32 }} /> 
+   <LocationOn  sx={{ fontSize: 32, color:"#834bff" }} /> 
   <Typography mt={"0.3rem"} color={"grey"}>Location</Typography> 
    </Box>
  {/* Increase icon size */}
@@ -183,7 +197,7 @@ const SponsordetailWidget = ({sponsorId,sponsorpicturePath}) => {
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
 }}>
    <Box display={"flex"} gap={0.5}>
-   <Construction color="primary" sx={{ fontSize: 32 }} /> 
+   <Construction  sx={{ fontSize: 32 , color:"#834bff"}} /> 
   <Typography mt={"0.3rem"} color={"grey"}>Industry</Typography> 
    </Box>
  {/* Increase icon size */}

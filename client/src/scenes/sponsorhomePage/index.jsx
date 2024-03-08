@@ -31,17 +31,25 @@ const SponsorHomePage = () => {
         mt={isNonMobileScreens ? undefined : "2rem"}
         
         >
-           <Link to="/sponsorForm" >
-    <Button 
-    
-      variant="outlined"
-      color="primary"
-      size="large"
-      sx={{ fontSize: '1.25rem', padding: '12px 24px' }} // Adjust size here
-    >
-      Add your Sponsor
-    </Button>
-  </Link>
+         <Link to="/sponsorForm">
+      <Button 
+        variant="outlined"
+        size="large"
+        sx={{ 
+          fontSize: '1.25rem', // Change font size here
+          padding: '12px 24px',
+          color:"#834bff",
+          borderColor:"#834bff"  ,
+          '&:hover': {
+            color: '#fff', // Change text color on hover
+            backgroundColor: '#834bff', // Change background color on hover
+            borderColor: '#834bff', // Change border color on hover
+          },       
+        }}
+      >
+        Add your Sponsor
+      </Button>
+    </Link>
           <SponsorsWidget userId={_id} ></SponsorsWidget>
         </Box>
         {isNonMobileScreens &&(

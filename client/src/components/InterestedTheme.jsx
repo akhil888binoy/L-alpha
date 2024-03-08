@@ -8,14 +8,14 @@ const InterestedTheme = ({ filterInterestedTheme, interestedthemes, setFilterInt
 
   return (
     <FormControl variant="outlined" fullWidth={"100%"}>
-      <InputLabel id="theme-label">Filter by Theme</InputLabel>
+      <InputLabel id="theme-label">Filter by Interested Theme of Sponsors</InputLabel>
       <Select
         labelId="theme-label"
         id="theme-select"
         multiple
         value={filterInterestedTheme}
         onChange={handleThemeChange}
-        label="Filter by Theme"
+        label="Filter by Interested Theme of Sponsors"
         renderValue={(selected) => selected.join(", ")}
       >
         {interestedthemes.map((interestedtheme) => (

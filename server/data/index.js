@@ -143,7 +143,7 @@ export const sponsors = [
     sponsorEmail: "abc@example.com",
     sponsorpicturePath: "/images/abc_logo.png",
     sponsorphoneNumber: [{ phoneNumber: 1234567890 }],
-    interestedtheme: "Technology",
+    interestedtheme: [{ theme: "Healthcare" }, { theme: "Environment" }],
     sponsorInfo:
       "ABC Company is a leading tech firm specializing in software development.",
     location: "New York",
@@ -167,7 +167,7 @@ export const sponsors = [
     sponsorEmail: "xyz@example.com",
     sponsorpicturePath: "/images/xyz_logo.png",
     sponsorphoneNumber: [{ phoneNumber: 9876543210 }],
-    interestedtheme: "Finance",
+    interestedtheme: [{ theme: "Healthcare" }, { theme: "Environment" }],
     sponsorInfo:
       "XYZ Corporation is a financial services provider offering investment solutions.",
     location: "London",
@@ -191,7 +191,7 @@ export const sponsors = [
     sponsorEmail: "tech@example.com",
     sponsorpicturePath: "/images/tech_logo.png",
     sponsorphoneNumber: [{ phoneNumber: 5551234567 }],
-    interestedtheme: "Innovation",
+    interestedtheme: [{ theme: "Healthcare" }, { theme: "Environment" }],
     sponsorInfo:
       "Tech Innovations Ltd pioneers cutting-edge technologies for various industries.",
     location: "San Francisco",
@@ -215,7 +215,7 @@ export const sponsors = [
     sponsorEmail: "global@example.com",
     sponsorpicturePath: "/images/global_logo.png",
     sponsorphoneNumber: [{ phoneNumber: 9998765432 }],
-    interestedtheme: "AI",
+    interestedtheme: [{ theme: "AI" }, { theme: "Technology" }],
     sponsorInfo:
       "Global Tech Solutions offers advanced AI and machine learning solutions for businesses worldwide.",
     location: "Tokyo",
@@ -239,7 +239,7 @@ export const sponsors = [
     sponsorEmail: "financetech@example.com",
     sponsorpicturePath: "/images/financetech_logo.png",
     sponsorphoneNumber: [{ phoneNumber: 1112223333 }],
-    interestedtheme: "Financial",
+    interestedtheme: [{ theme: "AI" }, { theme: "Technology" }],
     sponsorInfo:
       "FinanceTech Innovations specializes in developing cutting-edge fintech solutions for banks and financial institutions.",
     location: "Singapore",
@@ -263,7 +263,7 @@ export const sponsors = [
     sponsorEmail: "healthcare@example.com",
     sponsorpicturePath: "/images/healthcare_logo.png",
     sponsorphoneNumber: [{ phoneNumber: 7778889999 }],
-    interestedtheme: "Healthcare",
+    interestedtheme: [{ theme: "AI" }, { theme: "Technology" }],
     sponsorInfo:
       "Healthcare Solutions Group provides innovative technology solutions for the healthcare industry, improving patient care and efficiency.",
     location: "Berlin",

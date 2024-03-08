@@ -72,18 +72,8 @@ const NavbarA = () => {
         fontWeight: 'medium',
       }} >Login</Typography>
           </Button>
-          <Button  onClick={() => navigate("/login")}>
-          <Typography  color={"white"} sx={{
-        fontSize: "14px",
-        fontWeight: 'medium',
-      }}>Events</Typography>
-          </Button>
-            
-            <Typography  onClick={() => navigate("/login")} color={"white"} sx={{
-        fontSize: "14px",
-        fontWeight: 'medium',
-      }}>Sponsors</Typography>
-      <Button>
+         
+      <Button onClick={() => navigate(`/aboutus`)}>
       <Typography color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',

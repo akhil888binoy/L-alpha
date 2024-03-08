@@ -112,9 +112,18 @@ const SponsorsWidget = ({userId, isProfile=false}) => {
         <SponsorSort sort={sort} setSort={handleSortChange} />
         </Box>
         <Box textAlign={"center"}>
-          <Typography fontSize={isNonMobile? "5rem" : "3rem"} color={"#ffea00"} fontWeight={"bold"}> Loot </Typography>
+          <Typography fontSize={isNonMobile? "5rem" : "3rem"} color={"#834bff"} fontWeight={"bold"}> Loot </Typography>
         </Box>
-        <Button  variant="outlined" onClick={clearFilters}>
+        <Button sx={{
+          color:"#834bff",
+          borderColor:"#834bff"  ,
+          '&:hover': {
+            color: '#fff', // Change text color on hover
+            backgroundColor: '#834bff', // Change background color on hover
+            borderColor: '#834bff',
+          }
+        }}
+         variant="outlined" onClick={clearFilters}>
           <Box>
           <Box>
           <Typography fontSize={"1.5rem"}>  Clear </Typography>
@@ -183,7 +192,8 @@ const SponsorsWidget = ({userId, isProfile=false}) => {
               sponsorEmail={sponsorEmail}
               sponsorphoneNumber={sponsorphoneNumber}
               sponsorInfo={sponsorInfo}
-              interestedtheme={interestedtheme}
+              interestedtheme={interestedtheme.map(item => item.theme).join(' , ')}
+
               sponsorpicturePath={sponsorpicturePath}
               budget={budget}
              industry={industry}

@@ -11,6 +11,7 @@ const SponsorLocationSearch = ({ value, onChange, placeholder }) => {
       variant="outlined"
       value={value}
       onChange={handleInputChange}
+      color="secondary"
       fullWidth
     />
   );

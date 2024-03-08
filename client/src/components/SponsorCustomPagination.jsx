@@ -13,12 +13,12 @@ const SponsorCustomPagination = ({ page, limit, total, setPage }) => {
 
     <Pagination
    size={isNonMobileScreens? "large" : "small"}
-    color="primary"
       count={pageCount}
       page={page}
       onChange={handleChange}
       variant="outlined"
       shape="rounded"
+      color="primary"
     />
   );
 };

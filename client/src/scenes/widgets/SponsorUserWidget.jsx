@@ -193,8 +193,8 @@ import {
               <Box>
                 {!editMode ? (
                   
-                  <Typography color={main} fontWeight="500">
-                    <Link href={twitterLink} target="_blank" rel="noopener noreferrer" underline="hover">
+                  <Typography sx={{color:"#834bff"}} fontWeight="500">
+                    <Link sx={{color:"#834bff"}} href={twitterLink} target="_blank" rel="noopener noreferrer" underline="hover">
                     Twitter
                     </Link>
                   </Typography>
@@ -220,7 +220,7 @@ import {
               <Box>
                 {!editMode ? (
                   <Typography color={main} fontWeight="500">
-                     <Link href={linkedinLink} target="_blank" rel="noopener noreferrer" underline="hover">
+                     <Link sx={{color:"#834bff"}} href={linkedinLink} target="_blank" rel="noopener noreferrer" underline="hover">
                     Linked in 
                     </Link>
                   </Typography>

@@ -21,6 +21,7 @@ import SponsorForm from "scenes/sponsorForm";
 import SponsorDeletePage from "scenes/sponsordeletePage";
 import SponsorDetailPage from "scenes/sponsordetailPage";
 import SponsorEditForm from "scenes/sponsoreditForm";
+import AboutUsPage from "scenes/aboutusPage";
 function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -36,6 +37,7 @@ function App() {
               element={<MainLandingPage></MainLandingPage>}
             ></Route>
             <Route path="/login" element={<LoginPage></LoginPage>}></Route>
+            <Route path="/aboutus" element={<AboutUsPage />} />
             <Route
               path="/home"
               element={isAuth ? <HomePage /> : <Navigate to="/" />}

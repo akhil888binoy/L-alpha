@@ -9,12 +9,16 @@ const SearchSponsorName = ({ value, onChange, placeholder }) => {
 
   return (
     <TextField
-      label={placeholder}
-      variant="outlined"
-      value={value}
-      onChange={handleInputChange}
-      fullWidth
-    />
+    label={placeholder}
+    variant="outlined"
+    value={value}
+    onChange={handleInputChange}
+    fullWidth
+    sx={{
+      color: '#834bff',
+      
+    }}
+  />
   );
 };
 

@@ -48,8 +48,8 @@ const MySponsorWidget = ({picturePath}) => {
     const [sponsorName , setSponsorName] = useState("");  
     const[sponsorLocation, setSponsorLocation] = useState("");
     const [budget, setBudget] = useState("");
-    const[interestedtheme, setInterestedTheme] = useState("");
     const [sponsorphoneNumber, setSponsorPhoneNumber] = useState([])
+    const[interestedtheme, setInterestedTheme] = useState([]);
     const[sponsorEmail, setSponsorEmail] = useState("");
     const [sponsorlinkedinLink, setSponsorLinkedinLink] = useState("");
     const [ sponsortwitterLink, setSponsorTwitterLink] = useState("");
@@ -65,11 +65,19 @@ const MySponsorWidget = ({picturePath}) => {
     const addSponsorPhoneNumber=()=>{
         setSponsorPhoneNumber([...sponsorphoneNumber , {phoneNumber:""}]);
       }
+      const addSponsorInterestedTheme=()=>{
+        setInterestedTheme([...interestedtheme, {theme:""}]);
+      }
 
       const handleSponsorPhoneNumberChange=(index, field, value)=>{
         const updatedSponsorPhoneNumber=[...sponsorphoneNumber];
         updatedSponsorPhoneNumber[index][field] = value;
         setSponsorPhoneNumber(updatedSponsorPhoneNumber);
+      }
+      const handleInterestedTheme =(index, field, value)=>{
+        const updatedInterestedTheme = [...interestedtheme];
+        updatedInterestedTheme[index][field]=value;
+        setInterestedTheme(updatedInterestedTheme);
       }
       const handleSnackbarOpen = () => {
         setOpenSnackbar(true);
@@ -79,6 +87,11 @@ const MySponsorWidget = ({picturePath}) => {
         updatedSponsorPhoneNumber.splice(index, 1); // Remove the highlight at the specified index
         setSponsorPhoneNumber(updatedSponsorPhoneNumber);
     };
+    const removeInterestedTheme =(index)=>{
+      const updatedInterestedTheme = [...interestedtheme];
+      updatedInterestedTheme.splice(index,1);
+      setInterestedTheme(updatedInterestedTheme);
+    }
     const handleSnackbarClose = (sponsor, reason) => {
         if (reason === 'clickaway') {
           return;
@@ -94,7 +107,6 @@ const MySponsorWidget = ({picturePath}) => {
       formData.append("sponsorInfo", sponsorInfo);
       formData.append("location", sponsorLocation);
       formData.append("sponsorEmail", sponsorEmail);
-      formData.append("interestedtheme", interestedtheme);
       formData.append("industry", industry);
       formData.append("budget", budget);
       formData.append("sponsorlinkedinLink", sponsorlinkedinLink);
@@ -102,6 +114,9 @@ const MySponsorWidget = ({picturePath}) => {
       formData.append("sponsorCoordinator", sponsorCoordinator);
       sponsorphoneNumber.forEach((phoneNumber,index)=>{
         formData.append(`sponsorphoneNumber[${index}][phoneNumber]`, phoneNumber.phoneNumber);
+      })
+      interestedtheme.forEach((theme,index)=>{
+        formData.append(`interestedtheme[${index}][theme]`, theme.theme);
       })
       if(image){
         formData.append("picture", image);
@@ -117,7 +132,7 @@ const MySponsorWidget = ({picturePath}) => {
         setImage(null);
         setBudget("");
         setIndustry("");
-        setInterestedTheme("");
+        setInterestedTheme([]);
         setSponsorLinkedinLink("");
         setSponsorTwitterLink("");
         setSponsorEmail("");
@@ -136,7 +151,9 @@ const MySponsorWidget = ({picturePath}) => {
         <Typography  fontSize={"3rem"}>Sponsor Form</Typography>
     </Box>
     <Box mt={2} display="flex" alignItems="center"  marginBottom="1rem" >
-      <CardTravel color="primary" fontSize="large" />
+      <CardTravel  sx={{
+        color: '#834bff',
+      }} fontSize="large" />
       <InputBase
         placeholder="write down Sponsor Name"
         onChange={(e) => setSponsorName(e.target.value)}
@@ -152,7 +169,9 @@ const MySponsorWidget = ({picturePath}) => {
       />
     </Box>
      <Box mt={2} display="flex" alignItems="center"  marginBottom="1rem" >
-      <AccountCircle color="primary" fontSize="large" />
+      <AccountCircle  sx={{
+        color: '#834bff',
+      }} fontSize="large" />
       <InputBase
         placeholder="write down sponsor coordinator's name"
         onChange={(e) => setSponsorCoordinator(e.target.value)}
@@ -168,7 +187,9 @@ const MySponsorWidget = ({picturePath}) => {
       />
     </Box>
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <LocationOn color="primary" fontSize="large" />
+      <LocationOn  sx={{
+        color: '#834bff',
+      }} fontSize="large" />
       <InputBase
         placeholder="write down sponsor location"
         onChange={(e) => setSponsorLocation(e.target.value)}
@@ -184,7 +205,9 @@ const MySponsorWidget = ({picturePath}) => {
     </Box>
 
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <BorderColor color="primary" fontSize="large" />
+      <BorderColor  sx={{
+        color: '#834bff',
+      }} fontSize="large" />
       <InputBase
         placeholder="write down sponsor information"
         onChange={(e) => setSponsorInfo(e.target.value)}
@@ -199,7 +222,9 @@ const MySponsorWidget = ({picturePath}) => {
       />
     </Box>
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <Email color="primary" fontSize="large" />
+      <Email  sx={{
+        color: '#834bff',
+      }} fontSize="large" />
       <InputBase
         placeholder="write down sponsor email"
         onChange={(e) => setSponsorEmail(e.target.value)}
@@ -213,23 +238,11 @@ const MySponsorWidget = ({picturePath}) => {
         }}
       />
     </Box>
+    
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <Category color="primary" fontSize="large" />
-      <InputBase
-        placeholder="write down interested theme"
-        onChange={(e) => setInterestedTheme(e.target.value)}
-        value={interestedtheme}
-        sx={{
-          width: '100%',
-          backgroundColor: '#080808',
-          borderRadius: '2rem',
-          padding: '1rem 2rem',
-          marginLeft: '1rem', // Add margin to create space between the icon and the input
-        }}
-      />
-    </Box>
-    <Box display="flex" alignItems="center" marginBottom="1rem">
-      <MonetizationOn color="primary" fontSize="large"/>
+      <MonetizationOn  sx={{
+        color: '#834bff',
+      }} fontSize="large"/>
       <InputBase
         placeholder="write down  budget"
         onChange={(e) => setBudget(e.target.value)}
@@ -244,7 +257,9 @@ const MySponsorWidget = ({picturePath}) => {
       />
     </Box>
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <Construction color="primary" fontSize="large"/>
+      <Construction  sx={{
+        color: '#834bff',
+      }} fontSize="large"/>
       <InputBase
         placeholder="write down  industry"
         onChange={(e) => setIndustry(e.target.value)}
@@ -259,7 +274,9 @@ const MySponsorWidget = ({picturePath}) => {
       />
     </Box>
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <LinkedIn color="primary" fontSize="large"/>
+      <LinkedIn  sx={{
+        color: '#834bff',
+      }} fontSize="large"/>
       <InputBase
         placeholder="Linkedin Link"
         onChange={(e) => setSponsorLinkedinLink(e.target.value)}
@@ -274,7 +291,9 @@ const MySponsorWidget = ({picturePath}) => {
       />
     </Box>
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <Twitter color="primary" fontSize="large"/>
+      <Twitter  sx={{
+        color: '#834bff',
+      }} fontSize="large"/>
       <InputBase
         placeholder="Twitter Link"
         onChange={(e) => setSponsorTwitterLink(e.target.value)}
@@ -288,10 +307,39 @@ const MySponsorWidget = ({picturePath}) => {
         }}
       />
     </Box>
+    
+    {interestedtheme.map((theme, index) => (
+        <Box key={index} display="flex" alignItems="center" marginBottom="1rem">
+          <Category  sx={{
+        color: '#834bff',
+      }} fontSize="large" />
+          <InputBase
+            placeholder={`Sponsor Interested theme ${index + 1}`}
+            value={theme.theme}
+            onChange={(e) => handleInterestedTheme(index, 'theme', e.target.value)}
+            sx={{
+              width: '100%',
+              backgroundColor: '#080808',
+              borderRadius: '2rem',
+              padding: '1rem 2rem',
+              marginLeft: '1rem', // Add margin to create space between the icon and the input
+            }}
+          />
+           <IconButton onClick={() => removeInterestedTheme(index)}>
+                    <DeleteOutlined />
+                </IconButton>
+        </Box>
+      ))}
+   <Button onClick={addSponsorInterestedTheme} sx={{color:"#834bff"}}  >
+      <AddOutlined /> <Typography >Add Sponsor Interested theme</Typography>
+    </Button>
+
       {/* Highlights input */}
       {sponsorphoneNumber.map((phoneNumber, index) => (
         <Box key={index} display="flex" alignItems="center" marginBottom="1rem">
-          <Phone color="primary" fontSize="large" />
+          <Phone  sx={{
+        color: '#834bff',
+      }} fontSize="large" />
           <InputBase
             placeholder={`Sponsor Phone Number ${index + 1}`}
             value={phoneNumber.phoneNumber}
@@ -309,7 +357,7 @@ const MySponsorWidget = ({picturePath}) => {
                 </IconButton>
         </Box>
       ))}
-   <Button onClick={addSponsorPhoneNumber}   >
+   <Button onClick={addSponsorPhoneNumber} sx={{color:"#834bff"}}  >
       <AddOutlined /> <Typography >Add Sponsor Phone Number</Typography>
     </Button>
     {isImage && (
@@ -381,8 +429,8 @@ const MySponsorWidget = ({picturePath}) => {
           disabled={!sponsorInfo}
           onClick={handleSponsor}
           sx={{
-            color: palette.background.alt,
-            backgroundColor: palette.primary.main,
+            
+            backgroundColor: "#834bff",
             borderRadius: "3rem",
           }}
         >

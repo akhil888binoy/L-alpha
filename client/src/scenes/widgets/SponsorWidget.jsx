@@ -98,23 +98,7 @@ import PlaceIcon from '@mui/icons-material/Place';
               />
           )}
           <Box display={isNonMobileScreens? "flex":"block"} justifyContent="space-between" alignItems="center" width="100%" mt={"1rem"} gap={  1 }>
-              <Box sx={{
-                  borderRadius: "2rem",
-                  bgcolor: "#080808",
-                  padding: "0.5rem 1rem",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  overflow: "hidden",
-                  border:"0.1rem solid  #1E1E1E",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
-              }}>
-                  <Typography color="white" variant="subtitle1">
-                      {interestedtheme}
-                  </Typography>
-              </Box>
+             
               <Box >
                   <Typography color={"white"} variant="h6" fontSize={isNonMobileScreens? "2rem" : "1.2rem"} textAlign={"center"} fontWeight={"bold"}>
                       {sponsorName}
@@ -133,7 +117,9 @@ import PlaceIcon from '@mui/icons-material/Place';
                   textOverflow: "ellipsis",
                   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
               }}>
-                  <PlaceIcon color="primary"></PlaceIcon>
+                  <PlaceIcon  sx={{
+        color: '#834bff',
+      }} ></PlaceIcon>
                   <Typography color="white" variant="subtitle1" ml={"0.2rem"}>
                       {location}
                   </Typography>
@@ -152,11 +138,27 @@ import PlaceIcon from '@mui/icons-material/Place';
       <Box display="flex" justifyContent="space-between" mt="1rem" gap={2}>
           <Box display="flex" alignItems="center" >
               <IconButton onClick={patchLike}>
-                  {isLiked ? <FavoriteOutlined sx={{ color: primary }} /> : <FavoriteBorderOutlined />}
+                  {isLiked ? <FavoriteOutlined sx={{ color: "#834bff" }} /> : <FavoriteBorderOutlined />}
               </IconButton>
               <Typography>{likeCount}</Typography>
           </Box>
-          
+          <Box sx={{
+                  borderRadius: "2rem",
+                  bgcolor: "#080808",
+                  padding: "0.5rem 1rem",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  overflow: "hidden",
+                  border:"0.1rem solid  #1E1E1E",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+              }}>
+                  <Typography color="white" variant="subtitle1">
+                      {interestedtheme}
+                  </Typography>
+              </Box>
           <Box style={{
               borderRadius: "2rem",
               padding: "0.5rem 1rem",
@@ -167,7 +169,9 @@ import PlaceIcon from '@mui/icons-material/Place';
               whiteSpace: "nowrap",
               textOverflow: "ellipsis",
           }} >
-              <MonetizationOn color={"primary"}></MonetizationOn>
+              <MonetizationOn sx={{
+        color: '#834bff',
+      }} ></MonetizationOn>
               <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
                   {budget}
               </Typography>
@@ -181,10 +185,13 @@ import PlaceIcon from '@mui/icons-material/Place';
                       padding: "0.5rem 1rem",
                       alignItems: "center",
                       justifyContent: "center",
+                      borderColor:"#834bff"
                   }} 
                   onClick={deleteSponsor}
               >
-                  <Typography color="primary" fontSize={isNonMobileScreens ? "1rem" : "0.8rem"} >
+                  <Typography sx={{
+                    color:"#834bff"
+                  }} fontSize={isNonMobileScreens ? "1rem" : "0.8rem"} >
                      <DeleteIcon></DeleteIcon>
                   </Typography>
               </Button>
@@ -201,6 +208,8 @@ import PlaceIcon from '@mui/icons-material/Place';
                   justifyContent: "center",
                   width: "100%",
                   size:"small",
+                  backgroundColor: "#834bff", // Change background color here
+                  
               }} 
               onClick={() => navigate(`/sponsors/${sponsorId}/sponsor`)}
           >

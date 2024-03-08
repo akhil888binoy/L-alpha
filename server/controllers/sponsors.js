@@ -56,7 +56,9 @@ export const getFeedSponsors = async (req, res) => {
     let location = req.query.location || ""; // Get location from query
     let sponsorName = req.query.sponsorName || "";
 
-    const interestedthemeOptions = await Sponsor.distinct("interestedtheme");
+    const interestedthemeOptions = await Sponsor.distinct(
+      "interestedtheme.theme"
+    );
     interestedtheme === "All"
       ? (interestedtheme = [...interestedthemeOptions])
       : (interestedtheme = req.query.interestedtheme.split(","));
@@ -69,7 +71,7 @@ export const getFeedSponsors = async (req, res) => {
       sortBy[sort[0]] = "asc";
     }
     let filter = {
-      interestedtheme: { $in: interestedtheme },
+      "interestedtheme.theme": { $in: interestedtheme }, // Update to match the schema structure
     };
     if (location) {
       filter.location = { $regex: location, $options: "i" };
@@ -115,7 +117,9 @@ export const getUserSponsors = async (req, res) => {
   try {
     const { userId } = req.params;
     // Fetch distinct themes from the database
-    const interestedthemeOptions = await Sponsor.distinct("interestedtheme");
+    const interestedthemeOptions = await Sponsor.distinct(
+      "interestedtheme.theme"
+    );
     const page = parseInt(req.query.page) - 1 || 0;
     const limit = parseInt(req.query.limit) || 5;
     const search = req.query.search || "";
@@ -137,13 +141,13 @@ export const getUserSponsors = async (req, res) => {
       sortBy[sort[0]] = "asc";
     }
     let filter = {
-      interestedtheme: { $in: interestedtheme },
+      "interestedtheme.theme": { $in: interestedtheme },
       userId: userId,
     };
 
     // Add location filter if location is provided
     if (location) {
-      filter.sponsorLocation = { $regex: location, $options: "i" };
+      filter.location = { $regex: location, $options: "i" };
     }
     if (sponsorName) {
       filter.sponsorName = { $regex: sponsorName, $options: "i" };
