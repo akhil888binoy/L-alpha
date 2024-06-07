@@ -16,7 +16,7 @@ import {
       Twitter,
       Phone
   } from "@mui/icons-material";
-  import { Box, Divider, Typography, InputBase, useTheme, Button , IconButton , useMediaQuery } from "@mui/material";
+  import { Box, Divider, Typography, InputBase, useTheme, Button , IconButton , useMediaQuery, TextField, Select, MenuItem } from "@mui/material";
 import Dropzone from "react-dropzone";
 import { LocalPhone } from "@mui/icons-material";
 import { BorderColor } from "@mui/icons-material";
@@ -143,6 +143,51 @@ const MySponsorWidget = ({picturePath}) => {
         setSponsorPhoneNumber([]);
         handleSnackbarOpen();
     }
+    const isValidSponsorName =(name)=>{
+      const words=name.trim().split(/\s+/);
+      return words.length <=10;
+    }
+    const isValidSponsorCoordinatorName=(name)=>{
+      const words=name.trim().split(/\s+/);
+      return words.length<=10;
+    }
+    const isValidSponsorInfo=(info)=>{
+      const words=info.trim().split(/\s+/);
+      return words.length<=50;
+    }
+    const isValidEmail=(email)=>{
+      const emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+    
+    const isValidTwitterLink = (link) => {
+      const twitterRegex = /^https:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_]{1,15}$/;
+      return twitterRegex.test(link);
+    };
+    const isValidLinkedInLink = (link) => {
+      const linkedinRegex = /^https:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-]{3,100}$/;
+      return linkedinRegex.test(link);
+    };
+    const isValidPhoneNum = (number) => {
+      const phoneNumRegex = /^(\+?\d{1,3}[-.\s]?)?(\d{3}[-.\s]?\d{3}[-.\s]?\d{4})$/;
+      return phoneNumRegex.test(number);
+    };
+    const sponIntThemes=[
+      'Birthday',
+      'Wedding',
+      'Corporate',
+      'Charity',
+      'Festival',
+      'Other',
+    ]
+    const sponIndustry=[
+      'Birthday',
+      'Wedding',
+      'Corporate',
+      'Charity',
+      'Festival',
+      'Other',
+    ]
 
   return (
     <WidgetWrapper width={isNonMobileScreens? "50%" : "100%"}>
@@ -154,7 +199,7 @@ const MySponsorWidget = ({picturePath}) => {
       <CardTravel  sx={{
         color: '#834bff',
       }} fontSize="large" />
-      <InputBase
+      <TextField
         placeholder="write down Sponsor Name"
         onChange={(e) => setSponsorName(e.target.value)}
         value={sponsorName}
@@ -164,15 +209,16 @@ const MySponsorWidget = ({picturePath}) => {
           borderRadius: '2rem',
           padding: '1rem 2rem',
           marginLeft: '1rem', // Add margin to create space between the icon and the input
-
         }}
+        helperText={sponsorName && !isValidSponsorName(sponsorName) ? 'max 10 words':''}
+        error={sponsorName && !isValidSponsorName(sponsorName)}
       />
     </Box>
      <Box mt={2} display="flex" alignItems="center"  marginBottom="1rem" >
       <AccountCircle  sx={{
         color: '#834bff',
       }} fontSize="large" />
-      <InputBase
+      <TextField
         placeholder="write down sponsor coordinator's name"
         onChange={(e) => setSponsorCoordinator(e.target.value)}
         value={sponsorCoordinator}
@@ -184,13 +230,15 @@ const MySponsorWidget = ({picturePath}) => {
           marginLeft: '1rem', // Add margin to create space between the icon and the input
 
         }}
+        helperText={sponsorCoordinator && !isValidSponsorCoordinatorName(sponsorCoordinator)? 'max words 10':''}
+        error={sponsorCoordinator && !isValidSponsorCoordinatorName(sponsorCoordinator)}
       />
     </Box>
     <Box display="flex" alignItems="center" marginBottom="1rem">
       <LocationOn  sx={{
         color: '#834bff',
       }} fontSize="large" />
-      <InputBase
+      <TextField
         placeholder="write down sponsor location"
         onChange={(e) => setSponsorLocation(e.target.value)}
         value={sponsorLocation}
@@ -208,7 +256,7 @@ const MySponsorWidget = ({picturePath}) => {
       <BorderColor  sx={{
         color: '#834bff',
       }} fontSize="large" />
-      <InputBase
+      <TextField
         placeholder="write down sponsor information"
         onChange={(e) => setSponsorInfo(e.target.value)}
         value={sponsorInfo}
@@ -219,13 +267,19 @@ const MySponsorWidget = ({picturePath}) => {
           padding: '1rem 2rem',
           marginLeft: '1rem', // Add margin to create space between the icon and the input
         }}
+        helperText={
+          sponsorInfo && !isValidSponsorInfo(sponsorInfo)
+            ? 'Description must be 100 words or less'
+            : ''
+        }
+        error={sponsorInfo && !isValidSponsorInfo(sponsorInfo)}
       />
     </Box>
     <Box display="flex" alignItems="center" marginBottom="1rem">
       <Email  sx={{
         color: '#834bff',
       }} fontSize="large" />
-      <InputBase
+      <TextField
         placeholder="write down sponsor email"
         onChange={(e) => setSponsorEmail(e.target.value)}
         value={sponsorEmail}
@@ -236,6 +290,8 @@ const MySponsorWidget = ({picturePath}) => {
           padding: '1rem 2rem',
           marginLeft: '1rem', // Add margin to create space between the icon and the input
         }}
+        helperText={sponsorEmail && !isValidEmail(sponsorEmail) ? 'Add Valid Email':''}
+        error={sponsorEmail && !isValidEmail(sponsorEmail)}
       />
     </Box>
     
@@ -243,7 +299,7 @@ const MySponsorWidget = ({picturePath}) => {
       <MonetizationOn  sx={{
         color: '#834bff',
       }} fontSize="large"/>
-      <InputBase
+      <TextField
         placeholder="write down  budget"
         onChange={(e) => setBudget(e.target.value)}
         value={budget}
@@ -260,7 +316,7 @@ const MySponsorWidget = ({picturePath}) => {
       <Construction  sx={{
         color: '#834bff',
       }} fontSize="large"/>
-      <InputBase
+      <Select
         placeholder="write down  industry"
         onChange={(e) => setIndustry(e.target.value)}
         value={industry}
@@ -268,16 +324,24 @@ const MySponsorWidget = ({picturePath}) => {
           width: '100%',
           backgroundColor: '#080808',
           borderRadius: '2rem',
-          padding: '1rem 2rem',
           marginLeft: '1rem', // Add margin to create space between the icon and the input
         }}
-      />
+      >
+        <MenuItem value="" disabled>
+            Select Industry
+          </MenuItem>
+          {sponIndustry.map((industry) => (
+            <MenuItem key={industry} value={industry}>
+              {industry}
+            </MenuItem>
+          ))}
+        </Select>
     </Box>
     <Box display="flex" alignItems="center" marginBottom="1rem">
       <LinkedIn  sx={{
         color: '#834bff',
       }} fontSize="large"/>
-      <InputBase
+      <TextField
         placeholder="Linkedin Link"
         onChange={(e) => setSponsorLinkedinLink(e.target.value)}
         value={sponsorlinkedinLink}
@@ -288,13 +352,19 @@ const MySponsorWidget = ({picturePath}) => {
           padding: '1rem 2rem',
           marginLeft: '1rem', // Add margin to create space between the icon and the input
         }}
+        helperText={
+          sponsorlinkedinLink && !isValidLinkedInLink(sponsorlinkedinLink)
+            ? 'Add a Valid LinkedIn Profile Link'
+            : ''
+        }
+        error={sponsorlinkedinLink && !isValidLinkedInLink(sponsorlinkedinLink)}
       />
     </Box>
     <Box display="flex" alignItems="center" marginBottom="1rem">
       <Twitter  sx={{
         color: '#834bff',
       }} fontSize="large"/>
-      <InputBase
+      <TextField
         placeholder="Twitter Link"
         onChange={(e) => setSponsorTwitterLink(e.target.value)}
         value={sponsortwitterLink}
@@ -305,6 +375,12 @@ const MySponsorWidget = ({picturePath}) => {
           padding: '1rem 2rem',
           marginLeft: '1rem', // Add margin to create space between the icon and the input
         }}
+        helperText={
+          sponsortwitterLink && !isValidTwitterLink(sponsortwitterLink)
+            ? 'Add a Valid Twitter profile Link'
+            : ''
+        }
+        error={sponsortwitterLink && !isValidTwitterLink(sponsortwitterLink)}
       />
     </Box>
     
@@ -313,7 +389,7 @@ const MySponsorWidget = ({picturePath}) => {
           <Category  sx={{
         color: '#834bff',
       }} fontSize="large" />
-          <InputBase
+          <Select
             placeholder={`Sponsor Interested theme ${index + 1}`}
             value={theme.theme}
             onChange={(e) => handleInterestedTheme(index, 'theme', e.target.value)}
@@ -321,10 +397,20 @@ const MySponsorWidget = ({picturePath}) => {
               width: '100%',
               backgroundColor: '#080808',
               borderRadius: '2rem',
-              padding: '1rem 2rem',
+              
               marginLeft: '1rem', // Add margin to create space between the icon and the input
             }}
-          />
+          >
+            <MenuItem value="" disabled>
+            Select event theme
+          </MenuItem>
+          {sponIntThemes.map((theme) => (
+            <MenuItem key={theme} value={theme}>
+              {theme}
+            </MenuItem>
+          ))}
+          </Select>
+
            <IconButton onClick={() => removeInterestedTheme(index)}>
                     <DeleteOutlined />
                 </IconButton>
@@ -340,7 +426,7 @@ const MySponsorWidget = ({picturePath}) => {
           <Phone  sx={{
         color: '#834bff',
       }} fontSize="large" />
-          <InputBase
+          <TextField
             placeholder={`Sponsor Phone Number ${index + 1}`}
             value={phoneNumber.phoneNumber}
             onChange={(e) => handleSponsorPhoneNumberChange(index, 'phoneNumber', e.target.value)}
@@ -351,6 +437,12 @@ const MySponsorWidget = ({picturePath}) => {
               padding: '1rem 2rem',
               marginLeft: '1rem', // Add margin to create space between the icon and the input
             }}
+            helperText={
+              phoneNumber.phoneNumber && !isValidPhoneNum(phoneNumber.phoneNumber)
+                ? 'Add a Valid Phone Number'
+                : ''
+            }
+            error={phoneNumber.phoneNumber && !isValidPhoneNum(phoneNumber.phoneNumber)}
           />
            <IconButton onClick={() => removeSponsorPhoneNumber(index)}>
                     <DeleteOutlined />

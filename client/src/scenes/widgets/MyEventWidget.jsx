@@ -11,7 +11,7 @@ import {
     Language,
     AccountCircle
 } from "@mui/icons-material";
-import { Box, Divider, Typography, InputBase, useTheme, Button , IconButton , useMediaQuery } from "@mui/material";
+import { Box, Divider, Typography, InputBase, useTheme, Button , IconButton , useMediaQuery, TextField } from "@mui/material";
 import Dropzone from "react-dropzone";
 import { LocalPhone } from "@mui/icons-material";
 import { BorderColor } from "@mui/icons-material";
@@ -33,6 +33,13 @@ import { Storefront } from "@mui/icons-material";
 import { Description } from "@mui/icons-material";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import {loadStripe} from '@stripe/stripe-js';
+import { DatePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
+import {  InputLabel, MenuItem, Select } from '@mui/material';
+import { format } from "date-fns";
+
 
 
 const MyEventWidget = ({picturePath}) => {
@@ -59,7 +66,7 @@ const MyEventWidget = ({picturePath}) => {
     const medium = palette.neutral.medium;
     const [highlights, setHighlights] = useState([])
     const [marketingPlans, setMarketingPlans] = useState([]); // State to store marketing plans
-
+    const [paymentSuccess, setPaymentSuccess]=useState(false);
     // Function to add a marketing plan
     const addMarketingPlan = () => {
       setMarketingPlans([...marketingPlans, { budget: "", heading: "", description: "" }]);
@@ -101,14 +108,40 @@ const addHighlight=()=>{
     
       setOpenSnackbar(false);
     };
+    const handlePayment = async () => {
+      const stripe = await loadStripe('pk_test_51P50btSFd3O36VLznvz1ET1Ix0nrqmcdVr7n5Chn9bC3DvtyTluicCAwWomMOSy4L8csxV8mejvpVmRCGXACfDq900JTIwZm4H');
     
+      const paymentResponse = await fetch(`http://localhost:3001/payment/create-checkout-session`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    
+      const { id: sessionId } = await paymentResponse.json();
+    
+      const result = await stripe.redirectToCheckout({
+        lineItems: [
+          { price: 'price_1P9lCkSFd3O36VLzJyraEsTY', quantity: 1 },
+        ],
+        mode: 'payment',
+        sessionId,
+        successUrl: 'http://localhost:3000/success',
+        cancelUrl: 'http://localhost:3000/cancel',
+      });
+    if(!result.error){
+      setPaymentSuccess(true);
+    }
+      if (result.error) {
+        console.log(result.error);
+        setPaymentSuccess(false);
+      }
+    };
     const handleEvent = async() =>{
       
         const formData = new FormData();
         formData.append("userId", _id);
         formData.append("description", description);
         formData.append("eventName", eventName);
-        formData.append('date', eventDate);
+        formData.append('date', format(eventDate, 'iiii, MMMM dd, yyyy'));
         formData.append("eventLocation", eventLocation);
         formData.append("eventPhoneNumber", eventPhoneNumber);
         formData.append("theme", eventTheme);
@@ -134,8 +167,7 @@ const addHighlight=()=>{
         }
         
        
-        
-      
+       
         const response = await fetch(`http://localhost:3001/events`,{
             method: "POST",
             headers: {Authorization: `Bearer ${token}`},
@@ -160,8 +192,61 @@ const addHighlight=()=>{
         handleSnackbarOpen();
 
     }
-
-   
+    // Validation for Input
+    const isValidYoutubeLink = (link) => {
+      const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})$/;
+      return youtubeRegex.test(link);
+    };
+    const isValidPhoneNum = (number) => {
+      const phoneNumRegex = /^(\+?\d{1,3}[-.\s]?)?(\d{3}[-.\s]?\d{3}[-.\s]?\d{4})$/;
+      return phoneNumRegex.test(number);
+    };
+  const isValidEmail=(email)=>{
+    const emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+  const isValidDesc=(description)=>{
+    const words = description.trim().split(/\s+/);
+    return words.length <= 100;
+  }
+  const isValidWebsiteLink=(link)=>{
+    const websiteRegex=/^(ftp|http|https):\/\/[^ "]+$/;
+    return websiteRegex.test(link);
+  }
+  const isValidMarkDesc=(description)=>{
+    const words=description.trim().split(/\s+/);
+    return words.length <=50;
+  }
+  const isValidMarkHead=(heading)=>{
+    const words=heading.trim().split(/\s+/);
+    return words.length<=10;
+  }
+  const isValidEventHigh=(highlight)=>{
+    const words=highlight.trim().split(/\s+/);
+    return words.length<=50;
+  }
+  const isValidEventName=(name)=>{
+    const words= name.trim().split(/\s+/);
+    return words.length<=10;
+  }
+  const isValidEventCoord=(name)=>{
+    const words= name.trim().split(/\s+/);
+    return words.length <=10;
+  }
+  const isValidEventLoc=(location)=>{
+    const words = location.trim().split(/\s+/)
+    return words.length<=10;
+  }
+  // Theme List
+    const eventThemes = [
+      'Birthday',
+      'Wedding',
+      'Corporate',
+      'Charity',
+      'Festival',
+      'Other',
+    ];
+  
   return (
     <WidgetWrapper width={isNonMobileScreens? "50%" : "100%"}>
     <Box display={"flex"} justifyContent="center" alignItems="center" gap={5}  >
@@ -172,6 +257,7 @@ const addHighlight=()=>{
     <Box mt={2} display="flex" alignItems="center"  marginBottom="1rem" >
       <Celebration color="primary" fontSize="large" />
       <InputBase
+      multiline
         placeholder="write down event Name"
         onChange={(e) => setEventName(e.target.value)}
         value={eventName}
@@ -183,12 +269,15 @@ const addHighlight=()=>{
           marginLeft: '1rem', // Add margin to create space between the icon and the input
 
         }}
+        helperText={eventName && !isValidEventName(eventName) ? 'max 10 words':''}
+        error={eventName && !isValidEventName(eventName)}
       />
     </Box>
 
     <Box mt={2} display="flex" alignItems="center"  marginBottom="1rem" >
       <AccountCircle color="primary" fontSize="large" />
       <InputBase
+      multiline
         placeholder="write down event coordinator's name"
         onChange={(e) => setEventCoordinator(e.target.value)}
         value={eventCoordinator}
@@ -200,28 +289,42 @@ const addHighlight=()=>{
           marginLeft: '1rem', // Add margin to create space between the icon and the input
 
         }}
+        helperText={eventCoordinator && !isValidEventCoord(eventCoordinator)? 'max words 10':''}
+        error={eventCoordinator && !isValidEventCoord(eventCoordinator)}
       />
     </Box>
     
-        <Box display="flex" alignItems="center" marginBottom="1rem">
-      <InsertInvitation color="primary" fontSize="large" />
-      <InputBase
-        placeholder="write down event date in DD/MM/YY"
-        onChange={(e) => setEventDate(e.target.value)}
+    <Box mt={2} display="flex" alignItems="center" marginBottom="1rem">
+  <InsertInvitation  fontSize="large" />
+  <Box ml={4}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <DatePicker
+        type="date"
         value={eventDate}
-        sx={{
-          width: '100%',
-          backgroundColor: '#080808',
-          borderRadius: '2rem',
-          padding: '1rem 2rem',
-          marginLeft: '1rem', // Add margin to create space between the icon and the input
-        }}
+        onChange={(newDate) => setEventDate(newDate)}
+        renderInput={(params) => (
+          <InputBase
+            {...params}
+            placeholder="Select event date"
+            sx={{
+              width: '100%',
+              backgroundColor: '#080808',
+              borderRadius: '2rem',
+              padding: '1rem 2rem',
+              marginLeft: '1rem',
+            }}
+          />
+        )}
       />
-    </Box>
+    </LocalizationProvider>
+  </Box>
+</Box>
+
          
        <Box display="flex" alignItems="center" marginBottom="1rem">
       <LocationOn color="primary" fontSize="large" />
       <InputBase
+      multiline
         placeholder="write down event location"
         onChange={(e) => setEventLocation(e.target.value)}
         value={eventLocation}
@@ -232,72 +335,92 @@ const addHighlight=()=>{
           padding: '1rem 2rem',
           marginLeft: '1rem', // Add margin to create space between the icon and the input
         }}
+        helperText={eventLocation && !isValidEventLoc(eventLocation)? 'max 10 words': ''}
       />
     </Box>
        
         <Box display="flex" alignItems="center" marginBottom="1rem">
       <BorderColor color="primary" fontSize="large" />
-      <InputBase
+      <TextField
+      multiline
+      fullWidth
         placeholder="write down event description"
         onChange={(e) => setDescription(e.target.value)}
         value={description}
-        sx={{
-          width: '100%',
-          backgroundColor: '#080808',
-          borderRadius: '2rem',
-          padding: '1rem 2rem',
-          marginLeft: '1rem', // Add margin to create space between the icon and the input
-        }}
+        sx={{ marginLeft: '1rem' }}
+        helperText={
+          description && !isValidDesc(description)
+            ? 'Description must be 100 words or less'
+            : ''
+        }
+        error={description && !isValidDesc(description)}
+
+
       />
     </Box>
     
-         <Box display="flex" alignItems="center" marginBottom="1rem">
+    <Box display="flex" alignItems="center" marginBottom="1rem">
       <Email color="primary" fontSize="large" />
-      <InputBase
+      <TextField
+      multiline
+      fullWidth
         placeholder="write down event email"
         onChange={(e) => setEventEmail(e.target.value)}
         value={eventEmail}
-        sx={{
-          width: '100%',
-          backgroundColor: '#080808',
-          borderRadius: '2rem',
-          padding: '1rem 2rem',
-          marginLeft: '1rem', // Add margin to create space between the icon and the input
-        }}
+        sx={{ marginLeft: '1rem' }}
+     helperText={eventEmail && !isValidEmail(eventEmail) ? 'Add Valid Email':''}
+     error={eventEmail && !isValidEmail(eventEmail)}
       />
     </Box>
          
-       <Box display="flex" alignItems="center" marginBottom="1rem">
-      <LocalPhone color="primary" fontSize="large" />
-      <InputBase
-        placeholder="write down event phone number"
-        onChange={(e) => setEventPhoneNumber(e.target.value)}
-        value={eventPhoneNumber}
-        sx={{
-          width: '100%',
-          backgroundColor: '#080808',
-          borderRadius: '2rem',
-          padding: '1rem 2rem',
-          marginLeft: '1rem', // Add margin to create space between the icon and the input
-        }}
-      />
-    </Box>
+    <Box display="flex" alignItems="center" marginBottom="1rem">
+  <LocalPhone color="primary" fontSize="large" />
+  <TextField
+    fullWidth
+    multiline
+    label="Event Phone Number"
+    placeholder="Don't forget to add country code darling"
+    value={eventPhoneNumber}
+    onChange={(e) => setEventPhoneNumber(e.target.value)}
+    sx={{ marginLeft: '1rem' }}
+    variant="outlined"
+    helperText={
+      eventPhoneNumber && !isValidPhoneNum(eventPhoneNumber)
+        ? 'Add a Valid Phone Number'
+        : ''
+    }
+    error={eventPhoneNumber && !isValidPhoneNum(eventPhoneNumber)}
+  />
+</Box>
+
+
         
-        <Box display="flex" alignItems="center" marginBottom="1rem">
-      <Category color="primary" fontSize="large" />
-      <InputBase
-        placeholder="write down event theme"
-        onChange={(e) => setEventTheme(e.target.value)}
-        value={eventTheme}
-        sx={{
-          width: '100%',
-          backgroundColor: '#080808',
-          borderRadius: '2rem',
-          padding: '1rem 2rem',
-          marginLeft: '1rem', // Add margin to create space between the icon and the input
-        }}
-      />
-    </Box>
+    <Box display="flex" alignItems="center" marginBottom="1rem">
+        <Category color="primary" fontSize="large" />
+        <Select
+          value={eventTheme}
+          onChange={(e) => setEventTheme(e.target.value)}
+          displayEmpty
+          inputProps={{ 'aria-label': 'Without label' }}
+          sx={{
+            width: '100%',
+            backgroundColor: '#080808',
+            borderRadius: '2rem',
+            padding: '0.2rem ',
+            marginLeft: '1rem',
+            color: 'white',
+          }}
+        >
+          <MenuItem value="" disabled>
+            Select event theme
+          </MenuItem>
+          {eventThemes.map((theme) => (
+            <MenuItem key={theme} value={theme}>
+              {theme}
+            </MenuItem>
+          ))}
+        </Select>
+      </Box>
         
         <Box display="flex" alignItems="center" marginBottom="1rem">
       <LocalActivity color="primary" fontSize="large"/>
@@ -317,7 +440,8 @@ const addHighlight=()=>{
 
     <Box display="flex" alignItems="center" marginBottom="1rem">
       <YouTube color="primary" fontSize="large"/>
-      <InputBase
+      <TextField
+      multiline
         placeholder="Youtube Link"
         onChange={(e) => setYoutubeLink(e.target.value)}
         value={youtubeLink}
@@ -328,12 +452,19 @@ const addHighlight=()=>{
           padding: '1rem 2rem',
           marginLeft: '1rem', // Add margin to create space between the icon and the input
         }}
+        helperText={
+          youtubeLink && !isValidYoutubeLink(youtubeLink)
+            ? 'Add a Valid YouTube Link'
+            : ''
+        }
+        error={youtubeLink && !isValidYoutubeLink(youtubeLink)}
       />
     </Box>
 
     <Box display="flex" alignItems="center" marginBottom="1rem">
       <Language color="primary" fontSize="large"/>
-      <InputBase
+      <TextField
+      multiline
         placeholder="Website Link"
         onChange={(e) => setWebsiteLink(e.target.value)}
         value={websiteLink}
@@ -344,6 +475,8 @@ const addHighlight=()=>{
           padding: '1rem 2rem',
           marginLeft: '1rem', // Add margin to create space between the icon and the input
         }}
+        helperText={websiteLink && !isValidWebsiteLink(websiteLink) ? 'Add a valid Website Link':''}
+        error={websiteLink && !isValidWebsiteLink(websiteLink)}
       />
     </Box>
         
@@ -351,7 +484,8 @@ const addHighlight=()=>{
         {highlights.map((highlight, index) => (
         <Box key={index} display="flex" alignItems="center" marginBottom="1rem">
           <Star color="primary" fontSize="large" />
-          <InputBase
+          <TextField
+          multiline
             placeholder={`Event highlight ${index + 1}`}
             value={highlight.highlight}
             onChange={(e) => handleHighlightChange(index, 'highlight', e.target.value)}
@@ -362,6 +496,8 @@ const addHighlight=()=>{
               padding: '1rem 2rem',
               marginLeft: '1rem', // Add margin to create space between the icon and the input
             }}
+            helperText={highlight.highlight && !isValidEventHigh(highlight.highlight) ? 'Max 20 words':''}
+            error={highlight.highlight && !isValidEventHigh(highlight.highlight)}
           />
            <IconButton onClick={() => removeHighlight(index)}>
                     <DeleteOutlined />
@@ -394,7 +530,7 @@ const addHighlight=()=>{
         </Box>
        <Box  display="flex" alignItems="center" marginBottom="1rem">
         <Storefront color="primary" fontSize="large"></Storefront>
-       <InputBase
+       <TextField
            placeholder={`Heading of Marketing Plan ${index + 1}`}
           value={plan.heading}
           onChange={(e) => handleMarketingPlanChange(index, 'heading', e.target.value)}
@@ -405,12 +541,16 @@ const addHighlight=()=>{
             padding: '1rem 2rem',
             marginLeft: '1rem', 
           }}
+          multiline
+          helperText={plan.heading && !isValidMarkHead(plan.heading) ? 'Max Words 20':''}
+          error={plan.heading && !isValidMarkHead(plan.heading)}
         />
        </Box>
         
         <Box  display="flex" alignItems="center" marginBottom="1rem">
           <Description color="primary" fontSize="large"></Description>
-        <InputBase
+        <TextField
+        multiline
            placeholder={`Description of Marketing Plan ${index + 1}`}
           value={plan.description}
           onChange={(e) => handleMarketingPlanChange(index, 'description', e.target.value)}
@@ -421,6 +561,8 @@ const addHighlight=()=>{
             padding: '1rem 2rem',
             marginLeft: '1rem', 
           }}
+          helperText={plan.description && !isValidMarkDesc(plan.description)? 'max 50 words':''}
+          error={plan.description && !isValidMarkDesc(plan.description)}
         />
         </Box>
         
@@ -504,7 +646,7 @@ const addHighlight=()=>{
 
        
         <Button
-          disabled={!description}
+          
           onClick={handleEvent}
           sx={{
             color: palette.background.alt,
@@ -514,6 +656,18 @@ const addHighlight=()=>{
         >
           POST
         </Button>
+        <Button
+          
+          onClick={handlePayment}
+          sx={{
+            color: palette.background.alt,
+            backgroundColor: palette.primary.main,
+            borderRadius: "3rem",
+          }}
+        >
+          Pay
+        </Button>
+        
     </FlexBetween>
     <Snackbar
   open={openSnackbar}

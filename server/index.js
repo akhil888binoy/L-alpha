@@ -13,6 +13,7 @@ import { register } from "./controllers/auth.js";
 import authRoutes from "./routes/auth.js";
 import eventRoutes from "./routes/events.js";
 import sponsorRoutes from "./routes/sponsors.js";
+import paymentRoutes from "./routes/payment.js";
 import { verifyToken } from "./middleware/auth.js";
 import { createEvent } from "./controllers/events.js";
 import { createSponsor } from "./controllers/sponsors.js";
@@ -54,6 +55,7 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/events", eventRoutes);
 app.use("/sponsors", sponsorRoutes);
+app.use("/payment", paymentRoutes);
 
 /* MONGOOSE SETUP*/
 const PORT = process.env.PORT || 6001;

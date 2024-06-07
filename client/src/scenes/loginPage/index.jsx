@@ -2,6 +2,7 @@ import { Box, Typography, useTheme, useMediaQuery, withTheme } from "@mui/materi
 import Form from "./Form";
 import NavbarA from "scenes/navbarA";
 
+
 const LoginPage = () => {
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
