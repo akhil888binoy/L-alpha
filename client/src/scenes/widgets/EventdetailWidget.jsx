@@ -15,11 +15,27 @@ import YouTube from "react-youtube";
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { Category, Language, LocalActivity, LocationOn, Star } from "@mui/icons-material";
 
-const EventdetailWidget = ({eventId, bannerpicturePath }) => {
+const EventdetailWidget = ({
+  eventId, 
+  bannerpicturePath ,
+  eventName ,
+  eventCoordinator,
+  userId,
+  date,
+  youtubeLink,
+  websiteLink,
+  eventLocation,
+  email,
+  highlights,
+  eventPhoneNumber,
+  theme,
+  userPicturePath,
+  description,
+  ticketSold,
+  marketingPlans
+ }) => {
    const isNonMobile = useMediaQuery("(min-width:600px)");
- const [event, setEvent] = useState(null);
  const navigate = useNavigate();
- const token = useSelector((state)=> state.token);
  const loggedInUserId = useSelector((state) => state.user._id);
 
   // Function to handle edit button click
@@ -28,47 +44,6 @@ const EventdetailWidget = ({eventId, bannerpicturePath }) => {
     navigate(`/events/${eventId}/edit`);
   };
   
- const getEvent = async()=>{
-    const response = await fetch(`http://localhost:3001/events/${eventId}/event`, {
-        method : "GET",
-        headers: {Authorization : `Bearer ${token}`},
-    });
-    const data = await response.json();
-    setEvent(data);
-
- };
-
- useEffect(()=>{
-    getEvent();
- }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
- if(!event){
-    return null;
- }
-
- 
-
- const {
-    firstName,
-    lastName,
-    eventName,
-    eventCoordinator,
-    userId,
-    date,
-    youtubeLink,
-    websiteLink,
-    eventLocation,
-    email,
-    highlights,
-    eventPhoneNumber,
-    theme,
-    userPicturePath,
-    description,
-    ticketSold,
-    marketingPlans
- }=event;
-
-
 
 
  
@@ -221,7 +196,7 @@ const EventdetailWidget = ({eventId, bannerpicturePath }) => {
         <UserImage  image={userPicturePath}></UserImage>
 
         </Box>
-         <Box mt={2} gap={2}  onClick={() => navigate(`/profile/${userId}`)}>
+         <Box mt={2} gap={2}  onClick={() => navigate(`/profile/${userId}/event`)}>
 
          <FlexBetween fontSize={ isNonMobile? "1rem" : ""} >Event Coordinator : {eventCoordinator}</FlexBetween>       
         <Typography color={"white"} fontSize={ isNonMobile? "1rem" : ""}> Email Id : {email} </Typography>

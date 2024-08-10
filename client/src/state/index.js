@@ -42,14 +42,15 @@ export const authSlice = createSlice({
           return action.payload.sponsor;
         return sponsor;
       });
-      state.sponsors = updatedSponsors;
+      state.sponsors.sponsors = updatedSponsors;
     },
     setEvent: (state, action) => {
       const updatedEvents = state.events.events.map((event) => {
         if (event._id === action.payload.event._id) return action.payload.event;
         return event;
       });
-      state.events = updatedEvents;
+      state.events.events = updatedEvents;
+      console.log(updatedEvents);
     },
   },
 });

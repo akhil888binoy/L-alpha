@@ -16,6 +16,7 @@ const EventsWidget = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.events);
   const token = useSelector((state) => state.token);
+  const Role= useSelector((state)=> state.user.role);
   const [sort, setSort] = useState(JSON.parse(localStorage.getItem("eventSort")) || { sort: "date", order: "desc" });
   const [filterTheme, setFilterTheme] = useState(JSON.parse(localStorage.getItem("eventFilterTheme")) || []);
   const [filterLocation, setFilterLocation] = useState(JSON.parse(localStorage.getItem("eventFilterLocation")) || "");
@@ -120,9 +121,33 @@ const EventsWidget = ({ userId, isProfile = false }) => {
           <Sort sort={sort} setSort={handleSortChange} />
           </Box>
           <Box textAlign={"center"}>
-            <Typography fontSize={isNonMobile? "5rem" : "3rem"} color={"primary"} fontWeight={"bold"}> Loot </Typography>
+          <Typography fontSize={isNonMobile? "5rem" : "3rem"} color={ Role === "sponsor"? "primary" :"#834bff"} fontWeight={"bold"}> Loot </Typography>
+
           </Box>
-          <Button variant="outlined" onClick={clearFilters}>
+          {Role === "sponsor" && (
+ <Button 
+ variant="outlined" onClick={clearFilters}>
+  <Box>
+  <Box>
+  <Typography fontSize={"1.5rem"}>  Clear </Typography>
+  </Box>
+  <Box>
+  <Typography>Filters</Typography>
+  </Box>
+  </Box>
+</Button>
+        )}
+        {Role=== "eventcoordinator" && (
+           <Button sx={{
+            color:"#834bff",
+            borderColor:"#834bff"  ,
+            '&:hover': {
+              color: '#fff', // Change text color on hover
+              backgroundColor: '#834bff', // Change background color on hover
+              borderColor: '#834bff',
+            }
+          }}
+           variant="outlined" onClick={clearFilters}>
             <Box>
             <Box>
             <Typography fontSize={"1.5rem"}>  Clear </Typography>
@@ -131,10 +156,9 @@ const EventsWidget = ({ userId, isProfile = false }) => {
             <Typography>Filters</Typography>
             </Box>
             </Box>
-           
-         
-          
           </Button>
+        )}
+       
 
         </Box>
         <Box mt={2}>
@@ -161,6 +185,15 @@ const EventsWidget = ({ userId, isProfile = false }) => {
         />
         </Box>
       </Box>
+{Role === "sponsor" && (
+  <Box textAlign={"center"}>
+            <Typography fontSize={isNonMobile? "3rem" : "1.5rem"} color={"primary"} mt={"1rem"} > Events for you </Typography>
+          </Box>
+)}
+
+
+
+      
       {/* Event Listings */}
       <Box>
         {Array.isArray(events.events) &&

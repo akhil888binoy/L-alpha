@@ -255,7 +255,20 @@ const addHighlight=()=>{
     </Box>
    
     <Box mt={2} display="flex" alignItems="center"  marginBottom="1rem" >
-      <Celebration color="primary" fontSize="large" />
+    <Box
+      sx={{
+        backgroundColor: '#834bff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        padding: '0.5rem',
+      }}
+    >
+            <Celebration color="primry" fontSize="large" />
+
+    </Box>
+      
       <InputBase
       multiline
         placeholder="write down event Name"
@@ -275,7 +288,19 @@ const addHighlight=()=>{
     </Box>
 
     <Box mt={2} display="flex" alignItems="center"  marginBottom="1rem" >
-      <AccountCircle color="primary" fontSize="large" />
+    <Box
+      sx={{
+        backgroundColor: '#834bff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        padding: '0.5rem',
+      }}
+    >
+            <AccountCircle  fontSize="large" />
+
+    </Box>
       <InputBase
       multiline
         placeholder="write down event coordinator's name"
@@ -295,7 +320,19 @@ const addHighlight=()=>{
     </Box>
     
     <Box mt={2} display="flex" alignItems="center" marginBottom="1rem">
-  <InsertInvitation  fontSize="large" />
+    <Box
+      sx={{
+        backgroundColor: '#834bff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        padding: '0.5rem',
+      }}
+    >
+        <InsertInvitation  fontSize="large" />
+
+    </Box>
   <Box ml={4}>
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
@@ -322,7 +359,19 @@ const addHighlight=()=>{
 
          
        <Box display="flex" alignItems="center" marginBottom="1rem">
-      <LocationOn color="primary" fontSize="large" />
+       <Box
+      sx={{
+        backgroundColor: '#834bff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        padding: '0.5rem',
+      }}
+    >
+            <LocationOn  fontSize="large" />
+
+    </Box>
       <InputBase
       multiline
         placeholder="write down event location"
@@ -340,7 +389,18 @@ const addHighlight=()=>{
     </Box>
        
         <Box display="flex" alignItems="center" marginBottom="1rem">
-      <BorderColor color="primary" fontSize="large" />
+        <Box
+      sx={{
+        backgroundColor: '#834bff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        padding: '0.5rem',
+      }}
+    >
+            <BorderColor  fontSize="large" />
+    </Box>
       <TextField
       multiline
       fullWidth
@@ -360,7 +420,19 @@ const addHighlight=()=>{
     </Box>
     
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <Email color="primary" fontSize="large" />
+    <Box
+      sx={{
+        backgroundColor: '#834bff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        padding: '0.5rem',
+      }}
+    >
+            <Email  fontSize="large" />
+
+    </Box>
       <TextField
       multiline
       fullWidth
@@ -374,7 +446,19 @@ const addHighlight=()=>{
     </Box>
          
     <Box display="flex" alignItems="center" marginBottom="1rem">
-  <LocalPhone color="primary" fontSize="large" />
+    <Box
+      sx={{
+        backgroundColor: '#834bff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        padding: '0.5rem',
+      }}
+    >
+        <LocalPhone  fontSize="large" />
+
+    </Box>
   <TextField
     fullWidth
     multiline
@@ -396,7 +480,19 @@ const addHighlight=()=>{
 
         
     <Box display="flex" alignItems="center" marginBottom="1rem">
-        <Category color="primary" fontSize="large" />
+    <Box
+      sx={{
+        backgroundColor: '#834bff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        padding: '0.5rem',
+      }}
+    >
+              <Category  fontSize="large" />
+
+    </Box>
         <Select
           value={eventTheme}
           onChange={(e) => setEventTheme(e.target.value)}
@@ -423,7 +519,19 @@ const addHighlight=()=>{
       </Box>
         
         <Box display="flex" alignItems="center" marginBottom="1rem">
-      <LocalActivity color="primary" fontSize="large"/>
+        <Box
+      sx={{
+        backgroundColor: '#834bff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        padding: '0.5rem',
+      }}
+    >
+            <LocalActivity  fontSize="large"/>
+
+    </Box>
       <InputBase
         placeholder="write down ticket sold"
         onChange={(e) => setTicketSold(e.target.value)}
@@ -439,7 +547,19 @@ const addHighlight=()=>{
     </Box>
 
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <YouTube color="primary" fontSize="large"/>
+    <Box
+      sx={{
+        backgroundColor: '#834bff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        padding: '0.5rem',
+      }}
+    >
+            <YouTube  fontSize="large"/>
+
+    </Box>
       <TextField
       multiline
         placeholder="Youtube Link"
@@ -462,7 +582,19 @@ const addHighlight=()=>{
     </Box>
 
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <Language color="primary" fontSize="large"/>
+    <Box
+      sx={{
+        backgroundColor: '#834bff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        padding: '0.5rem',
+      }}
+    >
+            <Language  fontSize="large"/>
+
+    </Box>
       <TextField
       multiline
         placeholder="Website Link"
@@ -483,7 +615,19 @@ const addHighlight=()=>{
         {/* Highlights input */}
         {highlights.map((highlight, index) => (
         <Box key={index} display="flex" alignItems="center" marginBottom="1rem">
-          <Star color="primary" fontSize="large" />
+          <Box
+      sx={{
+        backgroundColor: '#834bff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        padding: '0.5rem',
+      }}
+    >
+                <Star  fontSize="large" />
+
+    </Box>
           <TextField
           multiline
             placeholder={`Event highlight ${index + 1}`}
@@ -514,7 +658,19 @@ const addHighlight=()=>{
                     </IconButton>
         </Box>
         <Box  display="flex" alignItems="center" marginBottom="1rem" mt={2}>
-          <MonetizationOn color="primary" fontSize="large"></MonetizationOn>
+        <Box
+      sx={{
+        backgroundColor: '#834bff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        padding: '0.5rem',
+      }}
+    >
+          <MonetizationOn  fontSize="large"></MonetizationOn>
+
+    </Box>
         <InputBase
           placeholder={`Budget of Marketing Plan ${index + 1}`}
           value={plan.budget}
@@ -529,7 +685,19 @@ const addHighlight=()=>{
         />
         </Box>
        <Box  display="flex" alignItems="center" marginBottom="1rem">
-        <Storefront color="primary" fontSize="large"></Storefront>
+       <Box
+      sx={{
+        backgroundColor: '#834bff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        padding: '0.5rem',
+      }}
+    >
+              <Storefront  fontSize="large"></Storefront>
+
+    </Box>
        <TextField
            placeholder={`Heading of Marketing Plan ${index + 1}`}
           value={plan.heading}
@@ -548,7 +716,19 @@ const addHighlight=()=>{
        </Box>
         
         <Box  display="flex" alignItems="center" marginBottom="1rem">
-          <Description color="primary" fontSize="large"></Description>
+        <Box
+      sx={{
+        backgroundColor: '#834bff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        padding: '0.5rem',
+      }}
+    >
+                <Description  fontSize="large"></Description>
+
+    </Box>
         <TextField
         multiline
            placeholder={`Description of Marketing Plan ${index + 1}`}
@@ -572,11 +752,11 @@ const addHighlight=()=>{
 
     {/* Button to add more marketing plans */}
     <Button onClick={addMarketingPlan} >
-      <AddOutlined /><Typography>Add event marketing Plan</Typography>
+      <Typography color={"#834bff"}>+ Add event marketing Plan</Typography>
     </Button>
 
     <Button onClick={addHighlight}   >
-      <AddOutlined /> <Typography >Add Event Highlights</Typography>
+     <Typography color={"#834bff"} > + Add Event Highlights</Typography>
     </Button>
 
        

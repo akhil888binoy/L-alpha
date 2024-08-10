@@ -63,7 +63,7 @@ import PlaceIcon from '@mui/icons-material/Place';
       });
       const updatedSponsor = await response.json();
       dispatch(setSponsor({ sponsor: updatedSponsor }));
-      navigate("/likedPage");
+     
   };
 
   const deleteSponsor = async () => {

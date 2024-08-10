@@ -15,9 +15,23 @@ import YouTube from "react-youtube";
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { Category, Construction, Language, LinkedIn, LocalActivity, LocationOn, MonetizationOn, Phone, Star, Twitter } from "@mui/icons-material";
 
-const SponsordetailWidget = ({sponsorId,sponsorpicturePath}) => {
+const SponsordetailWidget = ({
+  sponsorId,
+  sponsorpicturePath,
+  userId,
+  sponsorName,
+  sponsorphoneNumber,
+  interestedtheme,
+  sponsorInfo,
+  location,
+  sponsorEmail,
+  budget,
+  industry,
+  sponsortwitterLink,
+  sponsorlinkedinLink,
+  sponsorCoordinator
+}) => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
-    const [sponsor, setSponsor] = useState(null);
  const navigate = useNavigate();
  const token = useSelector((state)=> state.token);
  const loggedInUserId = useSelector((state) => state.user._id);
@@ -25,38 +39,7 @@ const SponsordetailWidget = ({sponsorId,sponsorpicturePath}) => {
     // Redirect to edit form with event ID as URL parameter
     navigate(`/sponsors/${sponsorId}/edit`);
   };  
-  const getSponsor = async()=>{
-    const response = await fetch(`http://localhost:3001/sponsors/${sponsorId}/sponsor`, {
-        method : "GET",
-        headers: {Authorization : `Bearer ${token}`},
-    });
-    const data = await response.json();
-    setSponsor(data);
-
- };
- useEffect(()=>{
-    getSponsor();
- }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
- if(!sponsor){
-    return null;
- }
-
- const{
-    userId,
-    sponsorName,
-    sponsorphoneNumber,
-    interestedtheme,
-    sponsorInfo,
-    location,
-    sponsorEmail,
-    budget,
-    industry,
-    sponsortwitterLink,
-    sponsorlinkedinLink,
-    sponsorCoordinator
-
- }=sponsor;
+   // eslint-disable-line react-hooks/exhaustive-deps
 
  return (
     <Box  bgcolor={"#080808"}>

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "theme";
+import EventProfilePage from "scenes/eventprofilePage";
 
 const HomePage = lazy(() => import("scenes/homePage"));
 const LoginPage = lazy(() => import("scenes/loginPage"));
@@ -11,7 +12,7 @@ const ProfilePage = lazy(() => import("scenes/profilePage"));
 const LandingPage = lazy(() => import("scenes/landingPage"));
 const MainFooter = lazy(() => import("scenes/MainFooter"));
 const EventDetailsPage = lazy(() => import("scenes/eventdetailsPage"));
-const EventForm = lazy(() => import("scenes/eventForm"));
+const RegisterForm = lazy(() => import("scenes/registerForm"));
 const DeletePage = lazy(() => import("scenes/deletePage"));
 const EditForm = lazy(() => import("scenes/editForm"));
 const SponsorHomePage = lazy(() => import("scenes/sponsorhomePage"));
@@ -44,16 +45,8 @@ function App() {
                 element={isAuth ? <HomePage /> : <Navigate to="/" />}
               />
               <Route
-                path="/sponsorhome"
-                element={isAuth ? <SponsorHomePage /> : <Navigate to="/" />}
-              />
-              <Route
-                path="/eventForm"
-                element={isAuth ? <EventForm /> : <Navigate to="/" />}
-              />
-              <Route
-                path="/sponsorForm"
-                element={isAuth ? <SponsorForm /> : <Navigate to="/" />}
+                path="/form"
+                element={isAuth ? <RegisterForm /> : <Navigate to="/" />}
               />
               <Route
                 path="/events/:eventId/event"
@@ -68,21 +61,14 @@ function App() {
                 element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
               />
               <Route
+                path="/profile/:userId/event"
+                element={isAuth ? <EventProfilePage /> : <Navigate to="/" />}
+              />
+              <Route
                 path="/profile/:userId/sponsor"
                 element={isAuth ? <SponsorProfilePage /> : <Navigate to="/" />}
               />
-              <Route
-                path="/deletePage"
-                element={isAuth ? <DeletePage /> : <Navigate to="/" />}
-              />
-              <Route
-                path="/sponsordeletePage"
-                element={isAuth ? <SponsorDeletePage /> : <Navigate to="/" />}
-              />
-              <Route
-                path="/likedPage"
-                element={isAuth ? <LikedPage /> : <Navigate to="/" />}
-              />
+
               <Route
                 path="/events/:eventId/edit"
                 element={isAuth ? <EditForm /> : <Navigate to="/" />}

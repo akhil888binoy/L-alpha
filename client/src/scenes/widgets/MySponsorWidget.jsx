@@ -196,9 +196,7 @@ const MySponsorWidget = ({picturePath}) => {
         <Typography  fontSize={"3rem"}>Sponsor Form</Typography>
     </Box>
     <Box mt={2} display="flex" alignItems="center"  marginBottom="1rem" >
-      <CardTravel  sx={{
-        color: '#834bff',
-      }} fontSize="large" />
+      <CardTravel   color = {"primary"} fontSize="large" />
       <TextField
         placeholder="write down Sponsor Name"
         onChange={(e) => setSponsorName(e.target.value)}
@@ -215,9 +213,7 @@ const MySponsorWidget = ({picturePath}) => {
       />
     </Box>
      <Box mt={2} display="flex" alignItems="center"  marginBottom="1rem" >
-      <AccountCircle  sx={{
-        color: '#834bff',
-      }} fontSize="large" />
+      <AccountCircle  color={"primary"} fontSize="large" />
       <TextField
         placeholder="write down sponsor coordinator's name"
         onChange={(e) => setSponsorCoordinator(e.target.value)}
@@ -235,9 +231,7 @@ const MySponsorWidget = ({picturePath}) => {
       />
     </Box>
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <LocationOn  sx={{
-        color: '#834bff',
-      }} fontSize="large" />
+      <LocationOn   color = {"primary"} fontSize="large" />
       <TextField
         placeholder="write down sponsor location"
         onChange={(e) => setSponsorLocation(e.target.value)}
@@ -253,9 +247,7 @@ const MySponsorWidget = ({picturePath}) => {
     </Box>
 
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <BorderColor  sx={{
-        color: '#834bff',
-      }} fontSize="large" />
+      <BorderColor   color = {"primary"} fontSize="large" />
       <TextField
         placeholder="write down sponsor information"
         onChange={(e) => setSponsorInfo(e.target.value)}
@@ -276,9 +268,7 @@ const MySponsorWidget = ({picturePath}) => {
       />
     </Box>
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <Email  sx={{
-        color: '#834bff',
-      }} fontSize="large" />
+      <Email   color = {"primary"} fontSize="large" />
       <TextField
         placeholder="write down sponsor email"
         onChange={(e) => setSponsorEmail(e.target.value)}
@@ -296,9 +286,7 @@ const MySponsorWidget = ({picturePath}) => {
     </Box>
     
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <MonetizationOn  sx={{
-        color: '#834bff',
-      }} fontSize="large"/>
+      <MonetizationOn   color = {"primary"} fontSize="large"/>
       <TextField
         placeholder="write down  budget"
         onChange={(e) => setBudget(e.target.value)}
@@ -313,9 +301,7 @@ const MySponsorWidget = ({picturePath}) => {
       />
     </Box>
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <Construction  sx={{
-        color: '#834bff',
-      }} fontSize="large"/>
+      <Construction   color = {"primary"} fontSize="large"/>
       <Select
         placeholder="write down  industry"
         onChange={(e) => setIndustry(e.target.value)}
@@ -338,9 +324,7 @@ const MySponsorWidget = ({picturePath}) => {
         </Select>
     </Box>
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <LinkedIn  sx={{
-        color: '#834bff',
-      }} fontSize="large"/>
+      <LinkedIn   color = {"primary"} fontSize="large"/>
       <TextField
         placeholder="Linkedin Link"
         onChange={(e) => setSponsorLinkedinLink(e.target.value)}
@@ -361,9 +345,7 @@ const MySponsorWidget = ({picturePath}) => {
       />
     </Box>
     <Box display="flex" alignItems="center" marginBottom="1rem">
-      <Twitter  sx={{
-        color: '#834bff',
-      }} fontSize="large"/>
+      <Twitter   color = {"primary"} fontSize="large"/>
       <TextField
         placeholder="Twitter Link"
         onChange={(e) => setSponsorTwitterLink(e.target.value)}
@@ -386,9 +368,7 @@ const MySponsorWidget = ({picturePath}) => {
     
     {interestedtheme.map((theme, index) => (
         <Box key={index} display="flex" alignItems="center" marginBottom="1rem">
-          <Category  sx={{
-        color: '#834bff',
-      }} fontSize="large" />
+          <Category   color = {"primary"} fontSize="large" />
           <Select
             placeholder={`Sponsor Interested theme ${index + 1}`}
             value={theme.theme}
@@ -416,16 +396,14 @@ const MySponsorWidget = ({picturePath}) => {
                 </IconButton>
         </Box>
       ))}
-   <Button onClick={addSponsorInterestedTheme} sx={{color:"#834bff"}}  >
+   <Button onClick={addSponsorInterestedTheme} sx={{color:"primary"}}  >
       <AddOutlined /> <Typography >Add Sponsor Interested theme</Typography>
     </Button>
 
       {/* Highlights input */}
       {sponsorphoneNumber.map((phoneNumber, index) => (
         <Box key={index} display="flex" alignItems="center" marginBottom="1rem">
-          <Phone  sx={{
-        color: '#834bff',
-      }} fontSize="large" />
+          <Phone   color = {"primary"} fontSize="large" />
           <TextField
             placeholder={`Sponsor Phone Number ${index + 1}`}
             value={phoneNumber.phoneNumber}
@@ -449,7 +427,7 @@ const MySponsorWidget = ({picturePath}) => {
                 </IconButton>
         </Box>
       ))}
-   <Button onClick={addSponsorPhoneNumber} sx={{color:"#834bff"}}  >
+   <Button onClick={addSponsorPhoneNumber} sx={{color:"primary"}}  >
       <AddOutlined /> <Typography >Add Sponsor Phone Number</Typography>
     </Button>
     {isImage && (
@@ -522,7 +500,7 @@ const MySponsorWidget = ({picturePath}) => {
           onClick={handleSponsor}
           sx={{
             
-            backgroundColor: "#834bff",
+            backgroundColor: "primary",
             borderRadius: "3rem",
           }}
         >

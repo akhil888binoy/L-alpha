@@ -6,9 +6,9 @@ import Navbar from "scenes/navbar";
 import { Link } from "react-router-dom";
 import {Button} from "@mui/material";
 import {Typography} from "@mui/material";
-import SponsorsWidget from "scenes/widgets/SponsorsWidget";
+import EventsWidget from "scenes/widgets/EventsWidget";
 import UserWidget from "scenes/widgets/UserWidget";
-const SponsorProfilePage = () => {
+const EventProfilePage = () => {
     const [user, setUser] = useState(null);
     const { userId } = useParams();
     const token = useSelector((state) => state.token);
@@ -41,7 +41,7 @@ const SponsorProfilePage = () => {
           justifyContent="center"
         >
           <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-            <UserWidget userId={userId}/>
+            <UserWidget userId={userId} picturePath={user.picturePath} />
             <Box m="2rem 0" />
           </Box>
           <Box
@@ -52,31 +52,21 @@ const SponsorProfilePage = () => {
       <Button 
         variant="outlined"
         size="large"
-        sx={{ 
-          fontSize: '1.25rem', // Change font size here
-          padding: '12px 24px',
-          color:"#834bff",
-          borderColor:"#834bff"  ,
-          '&:hover': {
-            color: '#fff', // Change text color on hover
-            backgroundColor: '#834bff', // Change background color on hover
-            borderColor: '#834bff', // Change border color on hover
-          },       
-        }}
-      >
-        Add your Event
+       color="primary"
+       sx={{ fontSize: '1.25rem', padding: '12px 24px' }}
+      > Add your Sponsor
       </Button>
     </Link>
             <Box m="2rem 0" />
             <Box display={"flex"} gap={1.5}>
             <Typography fontSize={"3rem"} >{firstName}'s</Typography> 
-            <Typography fontSize={"3rem"} sx={{color:"#834bff"}}>  sponsorships</Typography>
+            <Typography fontSize={"3rem"} color={"primary"}>  Events</Typography>
             </Box>
-            <SponsorsWidget userId={userId} isProfile />
+            <EventsWidget userId={userId} isProfile />
           </Box>
         </Box>
       </Box>
   )
 }
 
-export default SponsorProfilePage
+export default EventProfilePage

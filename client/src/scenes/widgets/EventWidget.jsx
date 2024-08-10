@@ -11,7 +11,6 @@ import PlaceIcon from '@mui/icons-material/Place';
 import { useNavigate } from "react-router-dom";
 import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
-import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import {CardMedia} from '@mui/material';
@@ -76,10 +75,7 @@ const EventWidget =({
           },
         });
         const result = await response.json();
-        dispatch(setEvent({ event: result }));
-        navigate('/deletePage');
-
-       
+        dispatch(setEvent({ event: result }));  
     };
 
     const words = description.split(" ");
@@ -174,9 +170,13 @@ const EventWidget =({
             </Box>
             <Box display="flex" justifyContent="space-between" mt="1rem" gap={2}>
                 <Box display="flex" alignItems="center" >
-                    <IconButton onClick={patchLike}>
-                        {isLiked ? <FavoriteOutlined sx={{ color: primary }} /> : <FavoriteBorderOutlined />}
-                    </IconButton>
+                <IconButton onClick={patchLike}>
+              {isLiked ? (
+                <FavoriteOutlined sx={{ color: primary }} />
+              ) : (
+                <FavoriteBorderOutlined />
+              )}
+            </IconButton>
                     <Typography>{likeCount}</Typography>
                 </Box>
                 <Box style={{

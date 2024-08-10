@@ -8,6 +8,7 @@ import {
   Twitter,
   LinkedIn,
   EmailOutlined,
+  AccountCircle,
 } from "@mui/icons-material";
 import { Box, Typography, Divider, useTheme, TextField, Button, Link } from "@mui/material";
 import UserImage from "components/UserImage";
@@ -17,12 +18,13 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const UserWidget = ({ userId, picturePath }) => {
+const UserWidget = ({ userId }) => {
   const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false); // State to toggle edit mode
   const { palette } = useTheme();
   const navigate = useNavigate();
   const token = useSelector((state) => state.token);
+  const Role = useSelector((state)=>state.user.role);
   const loggedInUserId = useSelector((state) => state.user._id); // Assuming you have a way to get the logged-in user's ID
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
@@ -76,11 +78,10 @@ const UserWidget = ({ userId, picturePath }) => {
   const {
     firstName,
     lastName,
+    role,
     location,
-    viewedProfile,
-    impressions,
-    friends,
     email,
+    picturePath,
     twitterLink,
     phoneNumber,
     linkedinLink,
@@ -92,7 +93,7 @@ const UserWidget = ({ userId, picturePath }) => {
       <FlexBetween
         gap="0.5rem"
         pb="1.1rem"
-        onClick={() => navigate(`/profile/${userId}`)}
+        onClick={ userId=== loggedInUserId ?  () => navigate(`/profile/${userId}`): null }
       >
         <FlexBetween gap="1rem">
           <UserImage image={picturePath} />
@@ -141,6 +142,12 @@ const UserWidget = ({ userId, picturePath }) => {
 
       {/* SECOND ROW */}
       <Box p="1rem 0">
+      <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
+          <AccountCircle fontSize="large" sx={{ color: main }}></AccountCircle>
+            
+              <Typography color={medium}>{role}</Typography>
+           
+          </Box>
         <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
           <LocationOnOutlined fontSize="large" sx={{ color: main }} />
           {!editMode ? (
@@ -197,7 +204,7 @@ const UserWidget = ({ userId, picturePath }) => {
               {!editMode ? (
                 
                 <Typography color={main} fontWeight="500">
-                  <Link href={twitterLink} target="_blank" rel="noopener noreferrer" underline="hover">
+                  <Link  color={Role === "eventcoordinator" ? "#834bff" : "primary"} href={twitterLink} target="_blank" rel="noopener noreferrer" underline="hover">
                   Twitter
                   </Link>
                 </Typography>
@@ -223,7 +230,7 @@ const UserWidget = ({ userId, picturePath }) => {
             <Box>
               {!editMode ? (
                 <Typography color={main} fontWeight="500">
-                   <Link href={linkedinLink} target="_blank" rel="noopener noreferrer" underline="hover">
+                   <Link color={Role === "eventcoordinator" ? "#834bff" : "primary"} href={linkedinLink} target="_blank" rel="noopener noreferrer" underline="hover">
                   Linked in 
                   </Link>
                 </Typography>

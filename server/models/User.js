@@ -31,6 +31,7 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    role: String,
     location: String,
     twitterLink: String,
     linkedinLink: String,
@@ -39,11 +40,9 @@ const UserSchema = new mongoose.Schema(
     impressions: Number,
     securityQuestion: {
       type: String,
-      required: true,
     },
     securityAnswer: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true }

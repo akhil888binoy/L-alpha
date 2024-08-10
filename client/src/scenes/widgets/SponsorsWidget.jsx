@@ -17,7 +17,8 @@ const SponsorsWidget = ({userId, isProfile=false}) => {
     const dispatch = useDispatch();
     const sponsors = useSelector((state) => state.sponsors);
     const token = useSelector((state) => state.token);
-    const [sort, setSort] = useState(JSON.parse(localStorage.getItem("sponsorSort")) || { sort: "budget", order: "desc" });
+    const Role = useSelector((state)=>state.user.role);
+  const [sort, setSort] = useState(JSON.parse(localStorage.getItem("sponsorSort")) || { sort: "budget", order: "desc" });
   const [filterInterestedTheme, setFilterInterestedTheme] = useState(JSON.parse(localStorage.getItem("sponsorFilterTheme")) || []);
   const [filterLocation, setFilterLocation] = useState(JSON.parse(localStorage.getItem("sponsorFilterLocation")) || "");
   const [filterSponsorName , setFilterSponsorName] = useState(JSON.parse(localStorage.getItem("sponsorFilterSponsorName")) || "")
@@ -112,30 +113,43 @@ const SponsorsWidget = ({userId, isProfile=false}) => {
         <SponsorSort sort={sort} setSort={handleSortChange} />
         </Box>
         <Box textAlign={"center"}>
-          <Typography fontSize={isNonMobile? "5rem" : "3rem"} color={"#834bff"} fontWeight={"bold"}> Loot </Typography>
+          <Typography fontSize={isNonMobile? "5rem" : "3rem"} color={ Role === "sponsor"? "primary" :"#834bff"} fontWeight={"bold"}> Loot </Typography>
         </Box>
-        <Button sx={{
-          color:"#834bff",
-          borderColor:"#834bff"  ,
-          '&:hover': {
-            color: '#fff', // Change text color on hover
-            backgroundColor: '#834bff', // Change background color on hover
-            borderColor: '#834bff',
-          }
-        }}
-         variant="outlined" onClick={clearFilters}>
-          <Box>
-          <Box>
-          <Typography fontSize={"1.5rem"}>  Clear </Typography>
-          </Box>
-          <Box>
-          <Typography>Filters</Typography>
-          </Box>
-          </Box>
-         
+        {Role === "sponsor" && (
+ <Button 
+ variant="outlined" onClick={clearFilters}>
+  <Box>
+  <Box>
+  <Typography fontSize={"1.5rem"}>  Clear </Typography>
+  </Box>
+  <Box>
+  <Typography>Filters</Typography>
+  </Box>
+  </Box>
+</Button>
+        )}
+        {Role=== "eventcoordinator" && (
+           <Button sx={{
+            color:"#834bff",
+            borderColor:"#834bff"  ,
+            '&:hover': {
+              color: '#fff', // Change text color on hover
+              backgroundColor: '#834bff', // Change background color on hover
+              borderColor: '#834bff',
+            }
+          }}
+           variant="outlined" onClick={clearFilters}>
+            <Box>
+            <Box>
+            <Typography fontSize={"1.5rem"}>  Clear </Typography>
+            </Box>
+            <Box>
+            <Typography>Filters</Typography>
+            </Box>
+            </Box>
+          </Button>
+        )}
        
-        
-        </Button>
 
       </Box>
       <Box mt={2}>
@@ -162,6 +176,11 @@ const SponsorsWidget = ({userId, isProfile=false}) => {
       />
       </Box>
     </Box>
+{Role === "eventcoordinator" && (
+  <Box textAlign={"center"}>
+            <Typography fontSize={isNonMobile? "3rem" : "1.5rem"} color={"#834bff"} mt={"1rem"} > Sponsors for you </Typography>
+          </Box>
+)}
     {/* Event Listings */}
     <Box>
       {Array.isArray(sponsors.sponsors) &&

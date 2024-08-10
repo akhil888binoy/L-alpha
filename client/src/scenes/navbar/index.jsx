@@ -31,6 +31,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const Role = useSelector((state)=> state.user.role);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const theme = useTheme();
   const neutralLight = theme.palette.neutral.light;
@@ -49,7 +50,7 @@ const Navbar = () => {
         <Typography
           fontWeight="bold"
           fontSize="clamp(1rem, 2rem, 2.25rem)"
-          color="primary"
+         color={Role === "eventcoordinator" ? "#834bff" : "primary"}
           onClick={() => navigate("/home")}
           sx={{
             "&:hover": {
@@ -74,17 +75,17 @@ const Navbar = () => {
       }} >Home</Typography>
           </Button>
          
-         <Button onClick={() => navigate(`/home`)}>
+         {/* <Button onClick={() => navigate(`/home`)}>
          <Typography color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
       }}>Events</Typography>
-         </Button>
+         </Button> */}
            
-           <Button onClick={() => navigate(`/sponsorhome`)}><Typography color={"white"} sx={{
+           {/* <Button onClick={() => navigate(`/sponsorhome`)}><Typography color={"white"} sx={{
         fontSize: "14px",
         fontWeight: 'medium',
-      }}>Sponsors</Typography></Button>
+      }}>Sponsors</Typography></Button> */}
             
             <Button>
             <Typography color={"white"} sx={{

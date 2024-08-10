@@ -15,6 +15,11 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "state";
 import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 // const registerSchema = yup.object().shape({
 //   firstName: yup
@@ -356,6 +361,22 @@ const Form = () => {
                     },
                   }}
                 />
+      <FormControl component="fieldset">
+        <FormLabel component="legend" id="role">Who are you?</FormLabel>
+        <RadioGroup
+          row
+          aria-labelledby="role"
+          name="role"
+          value={values.role}
+          onChange={handleChange}
+        >
+          <Box display={"flex"} >
+          <FormControlLabel value="sponsor" control={<Radio />} label="Sponsor" />
+          <FormControlLabel value="eventcoordinator" control={<Radio />} label="Event Coordinator" />
+          </Box>
+          
+        </RadioGroup>
+      </FormControl>
                 <TextField
                   label="Location"
                   onBlur={handleBlur}
